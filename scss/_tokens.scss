@@ -1,0 +1,44 @@
+@use "sass:color";
+
+// ---------------------------------------------------------------
+// Paleta (IDV) — os cinco tons da referência + neutros.
+// Desde o protótipo do hero, o fundo é branco e o texto, preto puro;
+// o bege virou cor de apoio (textos sobre fundos escuros, detalhes).
+// ---------------------------------------------------------------
+$beige:  #F2D6BE; // apoio: texto sobre fundos escuros, detalhes
+$red:    #F2380F; // destaque principal: CTAs, palavras em script, seção de contato
+$lilac:  #DF98F2; // rabiscos, fundo da trajetória
+$blue:   #367FBE; // rabiscos, links e dados (gráfico)
+$orange: #F1913D; // rabiscos, números e detalhes
+$white:  #FFFFFF; // fundo de todas as páginas
+$ink:    #000000; // texto, botões e fundos escuros
+$mist:   #F8F4F4; // rabiscos "fantasma" do fundo e superfícies claras
+
+$paper: $mist; // superfícies claras (cards, gráficos)
+
+// Tipografia
+$font-body:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+$font-display: "Silver Crown", "Arial Narrow", sans-serif-condensed, Impact, sans-serif;
+$font-script:  "Pacifico", "Brush Script MT", cursive;
+
+// Layout
+$gutter: clamp(1rem, 3vw, 2.5rem);
+$container: 1320px;
+$radius: 18px;
+$nav-h: 72px;
+
+$bp-sm: 600px;
+$bp-md: 900px;
+$bp-lg: 1200px;
+
+@mixin up($bp) {
+  @media (min-width: $bp) { @content; }
+}
+@mixin down($bp) {
+  @media (max-width: $bp - 0.02px) { @content; }
+}
+
+// Estilos que só existem quando há JS + movimento permitido
+@mixin motion {
+  html.js.motion & { @content; }
+}

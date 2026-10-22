@@ -1,0 +1,166 @@
+@use "sass:color";
+@use "tokens" as *;
+
+// Unidade do protótipo (1366 × 768): 1u = 1px do protótipo na tela atual.
+// A nav usa a viewport; o hero usa o próprio container (ver _hero.scss).
+$u: var(--u);
+
+.nav {
+  --u: min(calc(100vw / 1366), calc(100vh / 768));
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(100 * #{$u});
+  // alinha com o "quadro" do hero, que fica centralizado em telas muito largas
+  padding: calc(24 * #{$u}) calc(50% - 637 * #{$u}) 0 calc(50% - 621 * #{$u});
+  background: $white;
+  transition: transform 0.5s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s;
+
+  &.is-solid { box-shadow: 0 1px 0 color.change($ink, $alpha: 0.08); }
+  &.is-hidden { transform: translateY(-110%); }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: calc(16 * #{$u});
+    color: $ink;
+    text-decoration: none;
+
+    .logo-mark {
+      height: calc(55 * #{$u});
+      margin-top: calc(-20 * #{$u});
+      transition: color 0.2s;
+    }
+    &:hover .logo-mark { color: $red; }
+  }
+
+  &__brand-text {
+    font-size: calc(20.5 * #{$u});
+    font-weight: 300;
+    letter-spacing: -0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    strong { font-weight: 700; }
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    gap: calc(53 * #{$u});
+
+    a {
+      position: relative;
+      font-size: calc(20.5 * #{$u});
+      font-weight: 400;
+      letter-spacing: -0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:not(.nav__cta)::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: -4px;
+        height: 2px;
+        background: $red;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s;
+      }
+      &:not(.nav__cta):hover::after { transform: scaleX(1); transform-origin: left; }
+    }
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    height: calc(52 * #{$u});
+    margin-top: calc(-4 * #{$u});
+    padding-inline: calc(19 * #{$u});
+    border-radius: 999px;
+    background: $ink;
+    color: $white;
+    transition: background-color 0.25s, color 0.25s;
+    &:hover { background: $red; color: $ink; }
+  }
+
+  &__toggle {
+    display: none;
+    position: relative;
+    z-index: 2;
+    width: 48px; height: 48px;
+    border: 2px solid $ink;
+    border-radius: 50%;
+    background: $white;
+    cursor: pointer;
+  }
+
+  &__toggle-bar {
+    position: absolute;
+    left: 12px; right: 12px;
+    height: 2px;
+    background: $ink;
+    transition: transform 0.3s;
+    &:nth-of-type(2) { top: 18px; }
+    &:nth-of-type(3) { top: 26px; }
+  }
+
+  // ---------- celular / tablet ----------
+  @include down($bp-md) {
+    height: $nav-h;
+    padding: 0 $gutter;
+
+    &__brand {
+      gap: 10px;
+      .logo-mark { height: 40px; margin-top: 0; }
+    }
+    &__brand-text { font-size: 15px; }
+
+    &__toggle { display: block; }
+
+    &__menu {
+      position: fixed;
+      inset: 0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: $nav-h $gutter 2rem;
+      background: $white;
+      transform: translateY(-100%);
+      visibility: hidden;
+      transition: transform 0.5s cubic-bezier(.7,0,.2,1), visibility 0s 0.5s;
+
+      a {
+        font-family: $font-display;
+        font-size: clamp(3rem, 14vw, 5rem);
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 1;
+      }
+      .nav__cta {
+        height: auto;
+        margin-top: 1rem;
+        padding: 0.8rem 1.4rem;
+        font-family: $font-body;
+        font-size: 1rem;
+        letter-spacing: -0.03em;
+      }
+    }
+
+    &.is-open {
+      transform: none;
+      .nav__menu {
+        transform: none;
+        visibility: visible;
+        transition: transform 0.5s cubic-bezier(.7,0,.2,1), visibility 0s;
+      }
+      .nav__toggle-bar:nth-of-type(2) { transform: translateY(4px) rotate(45deg); }
+      .nav__toggle-bar:nth-of-type(3) { transform: translateY(-4px) rotate(-45deg); }
+    }
+  }
+}

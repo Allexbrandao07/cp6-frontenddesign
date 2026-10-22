@@ -1,0 +1,210 @@
+@use "sass:color";
+@use "tokens" as *;
+
+.section-head { margin-bottom: clamp(3rem, 8vw, 6rem); }
+
+.project {
+  --accent: #{$blue};
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem 1.5rem;
+  align-items: start;
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+  border-top: 1.5px solid $ink;
+
+  &#datahive { --accent: #{$orange}; }
+  &#tama { --accent: #{$red}; }
+  &#titanic { --accent: #{$lilac}; }
+
+  &__media { grid-column: 1 / 8; }
+  &__body { grid-column: 8 / 13; display: grid; gap: 1rem; }
+
+  &--flip {
+    .project__media { grid-column: 6 / 13; grid-row: 1; }
+    .project__body { grid-column: 1 / 6; grid-row: 1; }
+  }
+
+  &__num {
+    font-size: clamp(4rem, 7vw, 6rem);
+    color: var(--accent);
+    -webkit-text-stroke: 1.5px $ink;
+  }
+
+  &__title {
+    font-size: clamp(3.2rem, 6.5vw, 6rem);
+    line-height: 0.85;
+  }
+
+  &__tagline {
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    line-height: 1.3;
+    margin-top: -0.25rem;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  @include down($bp-md) {
+    &__media, &__body,
+    &--flip .project__media, &--flip .project__body {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+  }
+}
+
+// ---------- Galeria ----------
+.gallery {
+  &__stage {
+    position: relative;
+  }
+
+  &__main,
+  &__panel {
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 2px solid $ink;
+    border-radius: $radius;
+    background: $ink;
+    box-shadow: 12px 12px 0 var(--accent);
+  }
+
+  &__main {
+    aspect-ratio: 16 / 10;
+    cursor: zoom-in;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.6s cubic-bezier(.2,.7,.2,1);
+    }
+    &:hover img { transform: scale(1.03); }
+
+    &--contain {
+      background: #fff;
+      img { object-fit: contain; padding: 0.75rem; }
+    }
+
+    &[hidden] { display: none; }
+  }
+
+  &__panel {
+    background: $paper;
+    &:not(.is-active) { display: none; }
+  }
+
+  &__thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+
+    button {
+      position: relative;
+      width: 78px;
+      aspect-ratio: 16 / 10;
+      padding: 0;
+      overflow: hidden;
+      border: 2px solid color.change($ink, $alpha: 0.25);
+      border-radius: 10px;
+      background: $paper;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+
+      img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+      &:hover { transform: translateY(-2px); }
+      &.is-active { border-color: $ink; box-shadow: 0 0 0 2px var(--accent); }
+    }
+  }
+
+  // miniatura de vídeo com "play"
+  &__video::after {
+    content: "▶";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: color.change($ink, $alpha: 0.45);
+    color: $beige;
+    font-size: 1rem;
+  }
+
+  &__chart-thumb {
+    display: grid;
+    place-items: center;
+    font-family: $font-script;
+    font-size: 1.4rem;
+    color: $blue;
+  }
+}
+
+// ---------- Gráfico KNN (acurácia × k) ----------
+.knn-chart {
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+
+  figcaption { display: grid; gap: 0.15rem; margin-bottom: 0.75rem; }
+
+  &__title { font-weight: 700; font-size: 1rem; }
+  &__sub { font-size: 0.8rem; opacity: 0.75; }
+
+  &__plot {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: 220px;
+
+    svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+    .grid line { stroke: color.change($ink, $alpha: 0.12); stroke-width: 1; }
+    .axis text { fill: color.change($ink, $alpha: 0.7); font: 500 11px $font-body; }
+    .axis-title { fill: color.change($ink, $alpha: 0.7); font: 500 11px $font-body; }
+    .line { fill: none; stroke: $blue; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .area { fill: color.change($blue, $alpha: 0.1); }
+    .mark { fill: $red; stroke: $paper; stroke-width: 2; }
+    .mark-label { fill: $ink; font: 700 12px $font-body; }
+    .crosshair { stroke: $ink; stroke-width: 1; stroke-dasharray: 3 3; opacity: 0; }
+    .hover-dot { fill: $blue; stroke: $paper; stroke-width: 2; opacity: 0; }
+    &.is-hover .crosshair, &.is-hover .hover-dot { opacity: 1; }
+  }
+
+  &__tip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    background: $ink;
+    color: $beige;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 12px));
+    transition: opacity 0.15s;
+  }
+  &__plot.is-hover &__tip { opacity: 1; }
+
+  &__table {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+
+    summary { cursor: pointer; font-weight: 500; }
+
+    table {
+      margin-top: 0.5rem;
+      border-collapse: collapse;
+      columns: 2;
+    }
+    th, td { padding: 0.15rem 1rem 0.15rem 0; text-align: left; font-variant-numeric: tabular-nums; }
+  }
+}

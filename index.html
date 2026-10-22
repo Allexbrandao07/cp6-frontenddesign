@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Állex Brandão — Portfólio</title>
+  <meta name="description" content="Portfólio de Állex Brandão: Engenheiro de IA, formado em Ciência de Dados e estudante de Engenharia de Software. Projetos, trajetória e o que move o lado de fora do código.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="icon" type="image/png" href="assets/img/logo-allex.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/silver-crown.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/retrato.webp" as="image">
+
+  <link rel="stylesheet" href="css/main.css">
+  <script>
+    // Ativa os estilos que dependem de JS antes do primeiro paint (evita "pulo" no layout)
+    document.documentElement.classList.add('js');
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('motion');
+    }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#sobre">Pular para o conteúdo</a>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" data-nav>
+    <a class="nav__brand" href="#topo" aria-label="Állex Brandão, portfólio 2026 — voltar ao topo">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="nav__brand-text" aria-hidden="true"><strong>Portfólio</strong> 2026</span>
+    </a>
+    <nav class="nav__menu" id="menu" aria-label="Seções">
+      <a href="#sobre">Sobre</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#trajetoria">Trajetória</a>
+      <a href="#fora-do-codigo">Fora do código</a>
+      <a class="nav__cta" href="#contato">Vamos conversar?</a>
+    </nav>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span class="sr-only">Abrir menu</span>
+      <span class="nav__toggle-bar" aria-hidden="true"></span>
+      <span class="nav__toggle-bar" aria-hidden="true"></span>
+    </button>
+  </header>
+
+  <main>
+    <!-- ============ HERO + ZOOM NA PUPILA ============
+         .zoom é a pista de rolagem; .zoom__stage fica "preso" (sticky) enquanto o JS
+         amplia o retrato até a pupila, atravessa o túnel de rabiscos e abre o portal
+         para a seção Sobre. Sem JS (ou com movimento reduzido) tudo vira fluxo normal. -->
+    <div class="zoom" id="topo" data-zoom>
+      <div class="zoom__stage" data-zoom-stage>
+
+        <section class="hero" aria-label="Apresentação">
+          <div class="hero__art">
+            <!-- Rabiscos do desktop: coordenadas do protótipo (1366 × 768).
+                 Ordem = empilhamento: fantasmas no fundo, fitas coloridas por cima.
+                 Cada fita colorida ganha uma "borda" branca via JS (eye-zoom.js). -->
+            <svg class="hero__ribbons hero__ribbons--desk" viewBox="0 0 1366 768" aria-hidden="true" data-hero-squiggles>
+              <path class="rb rb--ghost" pathLength="1" d="M-70 110C40 170 95 300 165 385C235 470 300 525 350 605C390 670 420 735 450 840"/>
+              <path class="rb rb--ghost" pathLength="1" d="M20 860C25 700 105 595 205 595C300 595 330 690 270 745C210 800 120 770 112 695"/>
+              <path class="rb rb--ghost" pathLength="1" d="M-50 250C40 330 62 460 22 560C2 610-20 640-70 665"/>
+              <path class="rb rb--ghost" pathLength="1" d="M930 55C995 95 1040 170 1050 240"/>
+              <path class="rb rb--ghost" pathLength="1" d="M1150 50C1235 115 1330 175 1440 195"/>
+              <path class="rb rb--ghost" pathLength="1" d="M1450 300C1340 330 1280 425 1300 525C1320 625 1260 690 1180 690C1120 690 1085 745 1095 850"/>
+
+              <path class="rb rb--lilac"  pathLength="1" d="M470 215C500 245 560 262 610 250C660 238 670 190 650 140C635 100 600 70 565 85C525 102 530 170 580 200C640 236 720 215 780 195C850 170 905 115 965 45"/>
+              <path class="rb rb--lilac"  pathLength="1" d="M1060 590C1110 660 1180 720 1260 728C1320 734 1352 690 1347 640C1342 595 1305 585 1295 620C1285 660 1330 722 1440 765"/>
+              <path class="rb rb--red"    pathLength="1" d="M-50 185C0 240 50 280 130 282C200 284 240 240 300 238C340 236 370 245 430 250"/>
+              <path class="rb rb--orange" pathLength="1" d="M988 115C995 152 1040 175 1110 172C1200 168 1300 140 1440 150"/>
+              <path class="rb rb--red"    pathLength="1" d="M690 455C720 500 760 545 830 570C880 588 930 585 980 570"/>
+              <path class="rb rb--blue"   pathLength="1" d="M-90 265C-20 200 60 150 130 140C175 135 200 160 220 200C245 250 260 320 300 330C340 340 380 300 430 280C480 260 495 200 470 170C445 140 395 155 385 205C375 255 410 300 470 308C540 318 620 300 690 288"/>
+              <path class="rb rb--orange" pathLength="1" d="M112 428C160 400 230 390 280 410C330 430 345 500 310 540C280 570 230 555 222 510C214 465 250 440 300 445C340 450 365 470 378 500C392 540 410 570 440 572C470 574 490 540 488 500C486 470 500 470 530 490C570 515 600 550 608 590C612 610 612 625 612 638"/>
+            </svg>
+
+            <!-- Rabiscos do celular (390 × 844) -->
+            <svg class="hero__ribbons hero__ribbons--mob" viewBox="0 0 390 844" preserveAspectRatio="xMidYMin slice" aria-hidden="true" data-hero-squiggles>
+              <path class="rb rb--ghost" pathLength="1" d="M-30 420C40 470 60 560 30 640C10 690-10 720-40 740"/>
+              <path class="rb rb--ghost" pathLength="1" d="M420 600C340 620 300 690 320 760C335 815 300 850 250 880"/>
+              <path class="rb rb--ghost" pathLength="1" d="M250 40C300 70 350 90 420 95"/>
+              <path class="rb rb--lilac"  pathLength="1" d="M180 160C210 175 250 178 275 160C300 140 300 110 285 95C270 80 245 88 248 110C251 135 290 160 340 150C370 144 395 125 420 100"/>
+              <path class="rb rb--red"    pathLength="1" d="M-30 250C10 290 60 300 120 290C170 282 220 300 260 340"/>
+              <path class="rb rb--orange" pathLength="1" d="M-30 380C20 350 70 350 100 380C125 405 115 445 85 450C55 455 45 420 70 405C110 382 160 400 200 430"/>
+              <path class="rb rb--blue"   pathLength="1" d="M-30 175C10 130 60 110 110 118C150 125 160 160 190 175C220 190 250 190 280 215C310 240 330 280 420 285"/>
+              <path class="rb rb--lilac"  pathLength="1" d="M300 860C320 800 350 760 375 770C395 778 392 805 372 805C350 805 360 760 420 740"/>
+            </svg>
+
+            <h1 class="hero__name" data-hero-fade>
+              <span class="sr-only">Állex Brandão</span>
+              <svg class="hero__name-svg" viewBox="110 135 640 405" aria-hidden="true">
+                <path class="hero__letter" style="--i:0" d="M136.2,382.9C136.2,382.9 136.1,347.1 136.1,303.5C136.1,233.1 136.2,223.9 136.3,222.1C136.4,220.9 136.6,219.7 136.7,219.3C136.8,218.9 136.9,218.5 136.9,218.3C136.9,218.2 137.1,217.4 137.3,216.7C137.6,215.9 137.9,215.1 137.9,215C138.2,214.3 139.5,211.8 140.2,210.8C141.9,208.3 145.2,205.4 147.8,204C149.3,203.2 150,202.8 150.3,202.7C150.5,202.7 150.9,202.5 151.2,202.4C152.7,201.8 154.4,201.4 155.7,201.2C156.9,201.1 156.8,201.6 156.8,196.3C156.8,191.7 156.8,191.7 156.5,191.5C156.4,191.3 156.2,191.2 156.1,191.2C155.8,191.2 154.7,190.7 153.8,190C152.7,189.2 151.6,187.8 151.1,186.7C150.6,185.3 150.6,185.2 150.5,184.3C150.3,182.4 150.5,181.1 151.1,179.9C151.2,179.8 151.2,179.5 151.2,179.4C151.2,179.2 152.6,177.5 153.1,177C154.3,175.9 155.5,175.3 157.1,174.9C158,174.6 159.9,174.6 160.8,174.9C162.3,175.2 164.1,176.2 165,177.1C165.5,177.7 166.4,179 166.8,179.8C167.3,181.2 167.5,182.2 167.4,183.8C167.3,186.3 166.1,188.5 163.9,190.1C163.3,190.5 162.8,190.9 162.7,190.9C162.6,190.9 162.4,190.9 161.4,191.4L161.2,191.6L161.2,196.3L161.2,201L161.9,201.2C164.8,201.7 165.1,201.8 166.6,202.4C167,202.5 167.4,202.7 167.5,202.7C167.7,202.8 169.2,203.5 170.1,204C172.8,205.5 175.9,208.3 177.8,211C178.6,212.2 179.9,214.6 180.1,215.3C180.1,215.5 180.3,216.1 180.5,216.7C180.7,217.2 180.9,218 181,218.4C181.1,218.8 181.2,219.5 181.3,220C181.5,220.7 181.5,226.7 181.5,301.9L181.5,382.9L172.6,382.9L163.7,382.9L163.6,328C163.6,297.8 163.5,273.1 163.5,273.1C163.5,273 161.5,273 159,273.1L154.6,273.1L154.5,328L154.4,382.9L145.4,383C140.4,383 136.3,383 136.2,382.9ZM163.5,254.9C163.6,254.8 163.6,250.6 163.6,238.8L163.6,222.8L163.2,222.2C162.8,221.3 162.4,220.8 161.5,220.2C160.5,219.6 159.3,219.3 158.4,219.5C158.1,219.6 157.7,219.7 157.5,219.7C157.1,219.7 155.8,220.6 155.3,221.4C154.4,222.7 154.5,221.8 154.5,239.2C154.5,247.8 154.5,254.9 154.6,254.9C154.6,255 156.6,255 159,255C162.5,255 163.4,255 163.5,254.9ZM132.8,244.8C130.3,244.5 127.5,241.1 126.7,237.5C126.5,236.9 126.3,236.1 126.2,235.7C126,234.8 126,231.2 126.2,230.2C126.3,229.9 126.5,229.1 126.7,228.5C127.2,226.1 128.6,223.8 130.2,222.5C131.2,221.6 132.2,221.1 133.1,221.1L133.8,221L133.8,233C133.8,244.8 133.8,244.9 133.6,244.9C133.4,244.9 133.1,244.9 132.8,244.8ZM184.2,244.8C184.1,244.7 184.1,239.3 184.2,232.8L184.2,221L184.9,221.1C186.6,221.2 188.6,222.7 190,225.1C190.1,225.2 190.5,226.2 191,227.3C191.2,227.8 191.6,229.3 191.8,230.6C192,231.7 191.9,235.4 191.6,236.4C191.1,238.5 191.2,238.2 190.5,239.8C190.3,240.3 190.1,240.7 190.1,240.7C190.1,240.7 189.8,241.2 189.4,241.8C188.5,243 187.5,243.9 186.5,244.4C185.6,244.9 184.3,245.1 184.2,244.8Z"/>
+                <path class="hero__letter" style="--i:1" d="M218.7,372.8C218.3,372.7 217.7,372.6 217.5,372.6C217.1,372.6 216.6,372.4 215.4,372C215.2,372 214.8,371.8 214.6,371.8C214.4,371.7 214,371.6 213.8,371.5C213.1,371.3 209.6,369.5 209.1,369.1C208.9,368.9 208.2,368.3 207.5,367.8C206.1,366.7 203.8,364.3 202.7,362.8C202.3,362.2 201.8,361.4 201.5,361.1C201,360.3 200.3,359.1 199.2,356.8C198.2,354.9 198.2,354.9 197.5,353C197.4,352.7 197.2,352.2 197.1,351.9C196.7,350.8 196.6,350.6 196.4,350C196.3,349.6 196.2,349 196.1,348.6C195.8,347.5 195.6,346.9 195.3,346.1C195,345 195,345 196.2,344.7C196.7,344.6 197.4,344.4 197.7,344.3C198.1,344.2 198.8,344.1 199.3,344C199.8,343.9 200.5,343.7 200.8,343.6C201.1,343.5 201.4,343.4 201.6,343.4C201.7,343.4 202.1,343.4 202.4,343.3C203.2,343 204.1,342.8 204.7,342.7C205,342.7 205.4,342.6 205.8,342.5C206.1,342.4 206.7,342.3 207,342.2C207.4,342.1 208,342 208.3,341.9C209.3,341.6 210.3,341.4 211,341.3C211.7,341.1 211.9,341.2 212,341.8C212,342 212.2,342.4 212.2,342.8C212.3,343.1 212.5,343.7 212.6,344.1C213,345.6 213.2,346.3 213.7,347.3C213.8,347.5 213.9,347.9 214,348.2C214.5,349.4 214.8,350 215.5,351.2C216.4,352.7 217.6,354 218.8,354.8C219.6,355.2 220.1,355.4 221.5,355.8C222.2,356 224.1,355.9 225,355.7C227.5,355.2 227.3,355.2 228.5,354.7C229.1,354.5 229.5,354.3 230.3,354C231.1,353.7 232.2,353.1 233.1,352.6C233.5,352.4 234.1,352.1 234.5,351.9C234.8,351.7 235.1,351.5 235.2,351.5C235.4,351.1 235.9,351.5 236.2,352.2C236.3,352.3 236.4,352.5 236.5,352.7C236.7,352.9 236.8,353.2 236.9,353.3C236.9,353.5 237.1,353.8 237.3,354C237.5,354.3 237.6,354.5 237.6,354.5C237.6,354.6 239.1,357 240.8,359.9C244.2,365.6 244.4,366 244.3,366C244.3,366.1 244,366.2 243.6,366.4C243.2,366.7 242.6,367 242.2,367.2C241.8,367.4 241.2,367.8 240.8,368C240.3,368.2 239.9,368.4 239.8,368.5C239.8,368.5 238.7,369 237.5,369.5C236.3,370 235.2,370.5 235.1,370.6C235,370.6 234.6,370.8 234.2,370.9C233.5,371.1 233.2,371.2 231.4,371.7C231.1,371.8 230.6,372 230.3,372.1C229.7,372.2 228.4,372.5 226.6,372.8C225,373 220,373 218.7,372.8ZM225.7,256.4L225.7,165.3L234.8,165.4L243.9,165.4L243.9,256.4L243.9,347.3L234.8,347.4L225.7,347.4L225.7,256.4ZM196,336.5C195.9,336.5 195.9,295.5 195.9,245.5L195.9,154.5L205.1,154.5L214.2,154.5L214.2,245.5L214.2,336.5L205.1,336.6C200.1,336.6 196,336.6 196,336.5Z"/>
+                <path class="hero__letter" style="--i:2" d="M252,383 V201 H297.4 V219.3 H270.3 V254.9 H288.3 V273 H270.3 V364.9 H297.4 V383 Z"/>
+                <path class="hero__letter" style="--i:3" d="M332.4,407 V319.8 Q332.4,317.9 331,316.5 Q329.6,315.2 327.8,315.2 Q325.9,315.2 324.6,316.5 Q323.3,317.9 323.3,319.8 V407 H305 V319.8 Q305,312 309.6,306.1 Q305,300.2 305,292.4 V225 H323.3 V292.4 Q323.3,294.4 324.6,295.7 Q325.9,297 327.8,297 Q329.6,297 331,295.7 Q332.4,294.4 332.4,292.4 V225 H350.4 V292.4 Q350.4,300.2 345.9,306.1 Q350.4,312 350.4,319.8 V407 Z"/>
+                <path class="hero__letter" style="--i:4" d="M362,473 V291 H384.8 Q389.4,291 393.5,292.9 Q397.7,294.7 400.8,297.7 Q404,300.8 405.7,304.9 Q407.4,309.1 407.4,313.8 V340.4 Q407.4,348 402.9,354.1 Q407.4,359.9 407.4,367.5 V450.4 Q407.4,455.2 405.7,459.3 Q404,463.4 400.8,466.5 Q397.7,469.5 393.5,471.3 Q389.4,473 384.8,473 ZM384.8,454.9 Q386.6,454.9 388,453.5 Q389.4,452.1 389.4,450.4 V367.5 Q389.4,365.8 388,364.4 Q386.6,363 384.8,363 H380.3 V454.9 ZM384.8,344.9 Q386.6,344.9 388,343.5 Q389.4,342.1 389.4,340.4 V313.8 Q389.4,311.9 388,310.6 Q386.6,309.3 384.8,309.3 H380.3 V344.9 Z"/>
+                <path class="hero__letter" style="--i:5" d="M443.4,473 V367.5 Q443.4,365.8 442,364.4 Q440.6,363 438.8,363 H434.3 V473 H416 V291 H438.8 Q443.4,291 447.5,292.9 Q451.7,294.7 454.8,297.7 Q458,300.8 459.7,304.9 Q461.4,309.1 461.4,313.8 V340.4 Q461.4,348 456.9,354.1 Q461.4,359.9 461.4,367.5 V473 ZM438.8,344.9 Q440.6,344.9 442,343.5 Q443.4,342.1 443.4,340.4 V313.8 Q443.4,311.9 442,310.6 Q440.6,309.3 438.8,309.3 H434.3 V344.9 Z"/>
+                <path class="hero__letter" style="--i:6" d="M497.4,498 V388 H488.3 V498 H470 V338.8 Q470,334.1 471.7,329.9 Q473.5,325.8 476.6,322.7 Q479.8,319.7 483.9,317.9 Q488.1,316 492.8,316 Q497.4,316 501.5,317.9 Q505.7,319.7 508.8,322.7 Q512,325.8 513.7,329.9 Q515.5,334.1 515.5,338.8 V498 ZM497.4,338.8 Q497.4,336.9 496,335.6 Q494.6,334.3 492.8,334.3 Q490.9,334.3 489.6,335.6 Q488.3,336.9 488.3,338.8 V369.9 H497.4 Z"/>
+                <path class="hero__letter" style="--i:7" d="M553.4,524 V364.8 Q553.4,362.9 552,361.6 Q550.6,360.3 548.8,360.3 Q546.9,360.3 545.6,361.6 Q544.3,362.9 544.3,364.8 V524 H526 V364.8 Q526,360.1 527.7,355.9 Q529.5,351.8 532.6,348.7 Q535.8,345.7 539.9,343.9 Q544,342 548.8,342 Q553.4,342 557.5,343.9 Q561.7,345.7 564.8,348.7 Q568,351.8 569.7,355.9 Q571.5,360.1 571.5,364.8 V524 Z"/>
+                <path class="hero__letter" style="--i:8" d="M582,507 V325 H604.8 Q609.4,325 613.5,326.9 Q617.7,328.7 620.8,331.7 Q624,334.8 625.7,338.9 Q627.5,343.1 627.5,347.8 V484.4 Q627.5,489.2 625.7,493.3 Q624,497.4 620.8,500.5 Q617.7,503.5 613.5,505.3 Q609.4,507 604.8,507 ZM604.8,488.9 Q606.6,488.9 608,487.5 Q609.4,486.1 609.4,484.4 V347.8 Q609.4,345.9 608,344.6 Q606.6,343.3 604.8,343.3 H600.3 V488.9 Z"/>
+                <path class="hero__letter" style="--i:9" d="M664.4,507 V397 H655.3 V507 H637 V347.8 Q637,343.1 638.7,338.9 Q640.5,334.8 643.6,331.7 Q646.8,328.7 650.9,326.9 Q655,325 659.8,325 Q664.4,325 668.5,326.9 Q672.7,328.7 675.8,331.7 Q679,334.8 680.7,338.9 Q682.5,343.1 682.5,347.8 V507 ZM664.4,347.8 Q664.4,345.9 663,344.6 Q661.6,343.3 659.8,343.3 Q657.9,343.3 656.6,344.6 Q655.3,345.9 655.3,347.8 V378.9 H664.4 ZM666.8,319.6 Q663.1,319.6 659.9,317.3 Q656.8,315 655.7,310.9 Q655.3,309.3 653.7,309.3 Q651.4,309.8 651.4,311.5 V314.1 H642.2 Q642.2,307.8 644.9,304 Q647.6,300.2 653.7,300.2 Q657.7,300.2 660.7,302.6 Q663.8,305 664.6,308.9 Q664.8,309.8 665.5,310.1 Q666.1,310.4 666.8,310.4 Q669.2,310.4 669.2,308.3 V306.1 H678.3 Q678.3,312.2 675.6,315.9 Q672.9,319.6 666.8,319.6 Z"/>
+                <path class="hero__letter" style="--i:10" d="M711.6,473 Q702.7,473 696.3,467 Q689.9,461 689,451.9 V312.3 Q689.6,303 696.1,297.2 Q702.5,291.4 712,291 Q721,291 727.4,297.1 Q733.8,303.2 734.5,312.3 V451.9 Q733.8,460.6 727.8,466.5 Q721.8,472.4 713.6,473 ZM711.8,454.9 Q713.6,454.9 715,453.5 Q716.4,452.1 716.4,450.4 V313.8 Q716.4,311.9 715,310.6 Q713.6,309.3 711.8,309.3 Q709.9,309.3 708.6,310.6 Q707.3,311.9 707.3,313.8 V450.4 Q707.3,452.1 708.6,453.5 Q709.9,454.9 711.8,454.9 Z"/>
+              </svg>
+            </h1>
+
+            <figure class="hero__photo" data-zoom-photo>
+              <img src="assets/img/retrato.webp" width="1080" height="1080"
+                   alt="Retrato de Állex Brandão, de camisa preta e braços cruzados, olhando para a câmera.">
+            </figure>
+
+            <div class="hero__intro" data-hero-fade>
+              <p class="hero__lead">
+                Engenheiro de IA. Transformo dados em decisões e ideias em produtos — com código, curiosidade e um pouco de ritmo.
+              </p>
+              <div class="hero__actions">
+                <a class="btn btn--ink btn--hero" href="#projetos">Ver projetos</a>
+                <a class="btn btn--ghost btn--hero" href="#contato">Fale comigo</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Camadas do zoom: íris estilizada, pupila e túnel (desenhadas pelo JS) -->
+        <div class="zoom__fx" aria-hidden="true">
+          <svg class="zoom__iris" viewBox="-100 -100 200 200" data-zoom-iris></svg>
+          <div class="zoom__pupil" data-zoom-pupil></div>
+          <svg class="zoom__tunnel" viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid slice" data-zoom-tunnel></svg>
+        </div>
+
+        <!-- Portal: o começo da seção Sobre, revelado pelo centro do túnel -->
+        <section class="portal section" id="sobre" aria-labelledby="sobre-titulo" data-zoom-portal>
+          <div class="container">
+            <p class="kicker">01 — Sobre</p>
+            <h2 class="section-title" id="sobre-titulo">
+              <span class="display">O que eu faço?</span>
+              <span class="script">(e amo fazer)</span>
+            </h2>
+            <svg class="title-squiggle" viewBox="0 0 600 120" aria-hidden="true">
+              <path class="sq sq--red" data-sq="loops:4;ratio:2;wave:.25;seed:2" data-box="10 10 580 100" data-rot="0" data-draw="portal"/>
+            </svg>
+            <p class="portal__lead">
+              Sou formado em Ciência de Dados pela FIAP e hoje curso Engenharia de Software.
+              Construo soluções que unem <em>dados</em>, <em>nuvem</em> e <em>inteligência artificial</em> —
+              do pipeline ao produto que alguém usa de verdade.
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============ SOBRE (continuação) ============ -->
+    <section class="about section" aria-label="Mais sobre mim">
+      <div class="container about__grid">
+        <div class="about__bio" data-reveal>
+          <p>
+            Tenho interesse em análise de dados, Inteligência Artificial, Machine Learning e Deep Learning.
+            Ao longo da formação e de projetos práticos, desenvolvi competências em Python, SQL, Power BI,
+            Docker e soluções em nuvem — com foco em <strong>Oracle Cloud Infrastructure</strong> e
+            <strong>Microsoft Azure</strong> —, além de automação e integração de dados aplicadas a projetos com IA.
+          </p>
+          <p>
+            Tenho um perfil colaborativo, gosto de resolver problemas e estou sempre ampliando o que sei.
+            Acredito na tecnologia — especialmente na IA — como ferramenta de transformação, e direciono
+            meus esforços para projetos que gerem impacto real.
+          </p>
+        </div>
+
+        <div class="about__facts" data-reveal>
+          <div class="fact"><span class="fact__num display">40k+</span><span class="fact__label">clientes segmentados no Data Hive</span></div>
+          <div class="fact"><span class="fact__num display">5</span><span class="fact__label">pessoas no time que construiu o Revi</span></div>
+          <div class="fact"><span class="fact__num display">79%</span><span class="fact__label">de acurácia máxima no KNN do Titanic</span></div>
+        </div>
+
+        <div class="about__skills" data-reveal>
+          <h3 class="label">O que faço</h3>
+          <ul class="skills-cloud">
+            <li>Ciência de Dados</li>
+            <li>Machine Learning</li>
+            <li>Deep Learning</li>
+            <li>Engenharia de Dados</li>
+            <li>Cloud (Azure &amp; OCI)</li>
+            <li>BI &amp; Dashboards</li>
+            <li>Automação</li>
+            <li>Front-end</li>
+          </ul>
+        </div>
+
+        <div class="about__stack" data-reveal>
+          <h3 class="label">Ferramentas</h3>
+          <ul class="chips">
+            <li class="chip chip--blue">Python</li>
+            <li class="chip chip--orange">SQL</li>
+            <li class="chip chip--lilac">Power BI</li>
+            <li class="chip chip--blue">Docker</li>
+            <li class="chip chip--red">Azure</li>
+            <li class="chip chip--orange">Oracle Cloud</li>
+            <li class="chip chip--lilac">Databricks</li>
+            <li class="chip chip--blue">Data Factory</li>
+            <li class="chip chip--red">Airflow</li>
+            <li class="chip chip--orange">Hadoop</li>
+            <li class="chip chip--lilac">scikit-learn</li>
+            <li class="chip chip--blue">Pandas</li>
+            <li class="chip chip--red">Keras</li>
+            <li class="chip chip--orange">HTML · SCSS · JS</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Faixa de skills: duas fitas em sentidos opostos -->
+    <div class="ribbons" aria-hidden="true">
+      <div class="ribbon ribbon--blue"><div class="ribbon__track" data-marquee>
+        <span>Python</span><span>Machine Learning</span><span>Azure</span><span>Power BI</span><span>Deep Learning</span><span>SQL</span><span>Docker</span><span>Oracle Cloud</span>
+      </div></div>
+      <div class="ribbon ribbon--orange"><div class="ribbon__track ribbon__track--reverse" data-marquee>
+        <span>Dados</span><span>Produto</span><span>Nuvem</span><span>IA</span><span>Ritmo</span><span>Curiosidade</span><span>Pipeline</span><span>Front-end</span>
+      </div></div>
+    </div>
+
+    <!-- ============ PROJETOS ============ -->
+    <section class="projects section" id="projetos" aria-labelledby="projetos-titulo">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="kicker">02 — Projetos</p>
+          <h2 class="section-title" id="projetos-titulo">
+            <span class="display">Projetos</span>
+            <span class="script">(com história)</span>
+          </h2>
+          <svg class="title-squiggle" viewBox="0 0 600 120" aria-hidden="true">
+            <path class="sq sq--blue" data-sq="loops:4;ratio:2.1;wave:.3;seed:9" data-box="10 10 580 100" data-rot="0" data-draw="scroll"/>
+          </svg>
+        </header>
+
+        <!-- 01 · REVI -->
+        <article class="project" id="revi" data-reveal>
+          <div class="project__media gallery" data-gallery>
+            <div class="gallery__stage">
+              <button class="gallery__main" type="button" data-gallery-main aria-label="Ampliar imagem">
+                <img src="assets/img/projetos/revi-home.webp" width="1440" height="900" loading="lazy"
+                     alt="Página inicial do Revi: “Fotografe o caderno. Estude o que está nele.” com pastas coloridas por disciplina.">
+              </button>
+            </div>
+            <ul class="gallery__thumbs" role="list">
+              <li><button type="button" class="is-active" aria-pressed="true" data-src="assets/img/projetos/revi-home.webp" data-alt="Página inicial do Revi: “Fotografe o caderno. Estude o que está nele.” com pastas coloridas por disciplina."><img src="assets/img/projetos/revi-home.webp" alt="" loading="lazy"><span class="sr-only">Página inicial</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/revi-home-2.webp" data-alt="Seção “Quatro jeitos de estudar a mesma foto”: flash cards, resumo e simulado."><img src="assets/img/projetos/revi-home-2.webp" alt="" loading="lazy"><span class="sr-only">Modos de estudo</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/revi-home-3.webp" data-alt="Mapa mental do Revi sobre equação do 3º grau, com ramos que se abrem um a um."><img src="assets/img/projetos/revi-home-3.webp" alt="" loading="lazy"><span class="sr-only">Mapa mental</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/revi-equipe.webp" data-alt="Equipe do Revi: cinco integrantes sentados lado a lado, com camisetas azuis do projeto."><img src="assets/img/projetos/revi-equipe.webp" alt="" loading="lazy"><span class="sr-only">Equipe</span></button></li>
+              <li><button type="button" aria-pressed="false" class="gallery__video" data-video="i9998Wxipas" data-alt="Vídeo pitch do Revi"><img src="https://i.ytimg.com/vi/i9998Wxipas/hqdefault.jpg" alt="" loading="lazy"><span class="sr-only">Vídeo pitch</span></button></li>
+            </ul>
+          </div>
+
+          <div class="project__body">
+            <p class="project__num display" aria-hidden="true">01</p>
+            <p class="kicker">Produto · equipe de 5 · 2026</p>
+            <h3 class="project__title display">Revi</h3>
+            <p class="project__tagline script">fotografe o caderno, estude o que está nele</p>
+            <p>
+              Plataforma de estudos que transforma fotos de material — caderno, lousa, apostila — em
+              <strong>flash cards, resumos, simulados e mapas mentais</strong> gerados por IA, com
+              acompanhamento de constância (Ascensão) e de desempenho (Trilha). Tem leitura em voz alta,
+              turmas compartilhadas, ranking e até Spotify tocando durante a sessão de foco.
+            </p>
+            <ul class="chips chips--sm">
+              <li class="chip">React 19</li><li class="chip">TypeScript</li><li class="chip">Tailwind</li>
+              <li class="chip">Spring Boot · Java</li><li class="chip">Keycloak</li><li class="chip">RabbitMQ</li>
+              <li class="chip">PostgreSQL</li><li class="chip">OpenAI</li>
+            </ul>
+            <div class="project__links">
+              <a class="btn btn--ink" href="https://revi-jovi.vercel.app/" target="_blank" rel="noopener">Abrir o app <span aria-hidden="true">↗</span></a>
+              <button class="btn btn--ghost" type="button" data-play="i9998Wxipas">▶ Ver pitch</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 · DATA HIVE -->
+        <article class="project project--flip" id="datahive" data-reveal>
+          <div class="project__media gallery" data-gallery>
+            <div class="gallery__stage">
+              <button class="gallery__main gallery__main--contain" type="button" data-gallery-main aria-label="Ampliar imagem">
+                <img src="assets/img/projetos/datahive-arquitetura.webp" width="1600" height="651" loading="lazy"
+                     alt="Arquitetura do Data Hive na Azure: Blob Storage, Data Factory, Databricks, Azure SQL e Power BI.">
+              </button>
+            </div>
+            <ul class="gallery__thumbs" role="list">
+              <li><button type="button" class="is-active" aria-pressed="true" data-src="assets/img/projetos/datahive-arquitetura.webp" data-alt="Arquitetura do Data Hive na Azure: Blob Storage, Data Factory, Databricks, Azure SQL e Power BI."><img src="assets/img/projetos/datahive-arquitetura.webp" alt="" loading="lazy"><span class="sr-only">Arquitetura</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/datahive-clusters-3d.webp" data-alt="Gráfico de dispersão 3D (PCA) com os cinco clusters de clientes encontrados pelo K-Means."><img src="assets/img/projetos/datahive-clusters-3d.webp" alt="" loading="lazy"><span class="sr-only">Clusters 3D</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/datahive-clusters-2d.webp" data-alt="Gráfico de dispersão 2D (PCA) com os clusters de clientes."><img src="assets/img/projetos/datahive-clusters-2d.webp" alt="" loading="lazy"><span class="sr-only">Clusters 2D</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/datahive-metodo-cotovelo.webp" data-alt="Método do cotovelo usado para escolher o número de clusters."><img src="assets/img/projetos/datahive-metodo-cotovelo.webp" alt="" loading="lazy"><span class="sr-only">Método do cotovelo</span></button></li>
+              <li><button type="button" aria-pressed="false" class="gallery__video" data-video="PKKbZ34w5K4" data-alt="Vídeo pitch do Data Hive"><img src="https://i.ytimg.com/vi/PKKbZ34w5K4/hqdefault.jpg" alt="" loading="lazy"><span class="sr-only">Vídeo pitch</span></button></li>
+            </ul>
+          </div>
+
+          <div class="project__body">
+            <p class="project__num display" aria-hidden="true">02</p>
+            <p class="kicker">Challenge FIAP × TOTVS · equipe Beekeepers · 2025</p>
+            <h3 class="project__title display">Data Hive</h3>
+            <p class="project__tagline script">clusterização inteligente na nuvem</p>
+            <p>
+              Pipeline de dados <strong>end-to-end na Azure</strong> que segmenta os mais de 40 mil clientes da TOTVS.
+              Um gatilho no Blob Storage dispara o Data Factory, que roda os notebooks no Databricks:
+              tratamento, <strong>K-Means</strong> (com método do cotovelo) e um sistema de recomendação que sugere
+              a ação certa para cada cluster — engajamento, upsell ou retenção — entregue num dashboard Power BI
+              com churn, MRR e NPS.
+            </p>
+            <ul class="chips chips--sm">
+              <li class="chip">Azure Data Factory</li><li class="chip">Databricks</li><li class="chip">Blob Storage</li>
+              <li class="chip">Azure SQL</li><li class="chip">Python · scikit-learn</li><li class="chip">Power BI</li>
+            </ul>
+            <div class="project__links">
+              <a class="btn btn--ink" href="https://app.powerbi.com/view?r=eyJrIjoiNGMzZTBkYTgtN2JiMC00Y2Q3LTg3OWMtM2Y1YjRmMzY5ZDMzIiwidCI6IjExZGJiZmUyLTg5YjgtNDU0OS1iZTEwLWNlYzM2NGU1OTU1MSIsImMiOjR9&amp;embedImagePlaceholder=true&amp;pageName=a29b04c93d59e1d44f35" target="_blank" rel="noopener">Abrir dashboard <span aria-hidden="true">↗</span></a>
+              <button class="btn btn--ghost" type="button" data-play="PKKbZ34w5K4">▶ Ver pitch</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 · TAMA -->
+        <article class="project" id="tama" data-reveal>
+          <div class="project__media gallery" data-gallery>
+            <div class="gallery__stage">
+              <button class="gallery__main" type="button" data-gallery-main aria-label="Ampliar imagem">
+                <img src="assets/img/projetos/tama-home.webp" width="1440" height="900" loading="lazy"
+                     alt="Hero do site TAMA Drums Brasil: “O nome mais forte da bateria” sobre fundo escuro com bumbo TAMA.">
+              </button>
+            </div>
+            <ul class="gallery__thumbs" role="list">
+              <li><button type="button" class="is-active" aria-pressed="true" data-src="assets/img/projetos/tama-home.webp" data-alt="Hero do site TAMA Drums Brasil: “O nome mais forte da bateria” sobre fundo escuro com bumbo TAMA."><img src="assets/img/projetos/tama-home.webp" alt="" loading="lazy"><span class="sr-only">Início</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/tama-kit.webp" data-alt="Seção “Escolha a sua arma” com as linhas de produto em rolagem horizontal."><img src="assets/img/projetos/tama-kit.webp" alt="" loading="lazy"><span class="sr-only">Linhas</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/tama-produtos.webp" data-alt="Catálogo de produtos com filtros por categoria, linha e busca."><img src="assets/img/projetos/tama-produtos.webp" alt="" loading="lazy"><span class="sr-only">Produtos</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/tama-artistas.webp" data-alt="Página de artistas: 835 artistas de 60 países."><img src="assets/img/projetos/tama-artistas.webp" alt="" loading="lazy"><span class="sr-only">Artistas</span></button></li>
+            </ul>
+          </div>
+
+          <div class="project__body">
+            <p class="project__num display" aria-hidden="true">03</p>
+            <p class="kicker">Site multipágina · 2026</p>
+            <h3 class="project__title display">TAMA Drums Brasil</h3>
+            <p class="project__tagline script">o nome mais forte da bateria</p>
+            <p>
+              Conceito de site para a TAMA no Brasil, em <strong>HTML, CSS e JavaScript puros</strong>:
+              catálogo com 475 produtos em 12 categorias (filtro, busca e carregamento por partes),
+              835 artistas de 60 países, linha do tempo de 1908 a 2024 e uma
+              <strong>bateria tocável</strong> feita com SVG e Web Audio, com samples reais de uma Starclassic.
+            </p>
+            <ul class="chips chips--sm">
+              <li class="chip">HTML</li><li class="chip">CSS</li><li class="chip">JavaScript</li>
+              <li class="chip">Web Audio API</li><li class="chip">SVG</li>
+            </ul>
+            <div class="project__links">
+              <a class="btn btn--ink" href="https://tama-drums-brasil.vercel.app" target="_blank" rel="noopener">Visitar o site <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 · TITANIC KNN -->
+        <article class="project project--flip" id="titanic" data-reveal>
+          <div class="project__media gallery" data-gallery>
+            <div class="gallery__stage">
+              <div class="gallery__panel is-active" data-panel="chart">
+                <figure class="knn-chart" data-knn-chart>
+                  <figcaption>
+                    <span class="knn-chart__title">Acurácia por número de vizinhos (k)</span>
+                    <span class="knn-chart__sub">Conjunto de teste (30%) · recriado a partir da saída do notebook</span>
+                  </figcaption>
+                  <div class="knn-chart__plot" data-knn-plot></div>
+                  <details class="knn-chart__table">
+                    <summary>Ver dados em tabela</summary>
+                    <table data-knn-table>
+                      <thead><tr><th scope="col">k</th><th scope="col">Acurácia</th></tr></thead>
+                      <tbody></tbody>
+                    </table>
+                  </details>
+                </figure>
+              </div>
+              <button class="gallery__main gallery__main--contain" type="button" data-gallery-main aria-label="Ampliar imagem" hidden>
+                <img src="assets/img/projetos/titanic-pairplot.webp" width="1082" height="986" loading="lazy"
+                     alt="Pairplot do notebook: idade, parentes, dependentes e tarifa, coloridos por sobrevivência.">
+              </button>
+            </div>
+            <ul class="gallery__thumbs" role="list">
+              <li><button type="button" class="is-active gallery__chart-thumb" aria-pressed="true" data-panel-target="chart"><span aria-hidden="true">k</span><span class="sr-only">Gráfico de acurácia por k</span></button></li>
+              <li><button type="button" aria-pressed="false" data-src="assets/img/projetos/titanic-pairplot.webp" data-alt="Pairplot do notebook: idade, parentes, dependentes e tarifa, coloridos por sobrevivência."><img src="assets/img/projetos/titanic-pairplot.webp" alt="" loading="lazy"><span class="sr-only">Pairplot</span></button></li>
+            </ul>
+          </div>
+
+          <div class="project__body">
+            <p class="project__num display" aria-hidden="true">04</p>
+            <p class="kicker">Machine Learning · 2025</p>
+            <h3 class="project__title display">Titanic × KNN</h3>
+            <p class="project__tagline script">quem sobreviveria?</p>
+            <p>
+              Fluxo completo de classificação para prever a sobrevivência de passageiros:
+              limpeza (712 registros válidos), <strong>teste de Shapiro-Wilk</strong> para decidir entre
+              normalizar ou padronizar, one-hot encoding e KNN com distância euclidiana implementada à mão.
+              Com k = 27 (≈ √n) o modelo chega a <strong>77,6%</strong>; a varredura de k ímpares
+              encontra o pico de <strong>79,0% em k = 23</strong>.
+            </p>
+            <ul class="chips chips--sm">
+              <li class="chip">Python</li><li class="chip">Pandas</li><li class="chip">scikit-learn</li>
+              <li class="chip">SciPy</li><li class="chip">Seaborn</li>
+            </ul>
+            <div class="project__links">
+              <a class="btn btn--ink" href="https://github.com/Allexbrandao07/predicao-sobreviventes-titanic-knn" target="_blank" rel="noopener">Ver no GitHub <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ TRAJETÓRIA ============ -->
+    <section class="journey section" id="trajetoria" aria-labelledby="trajetoria-titulo">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="kicker">03 — Trajetória</p>
+          <h2 class="section-title" id="trajetoria-titulo">
+            <span class="display">Trajetória</span>
+            <span class="script">(até aqui)</span>
+          </h2>
+          <svg class="title-squiggle" viewBox="0 0 600 120" aria-hidden="true">
+            <path class="sq sq--orange" data-sq="loops:3;ratio:2.3;wave:.3;seed:4" data-box="10 10 580 100" data-rot="0" data-draw="scroll"/>
+          </svg>
+        </header>
+
+        <div class="timeline" data-timeline>
+          <svg class="timeline__line" aria-hidden="true" data-responsive>
+            <path class="sq" data-sq="loops:10;ratio:1.7;wave:.12;seed:8" data-box="0.1 0 0.8 1" data-rot="90" data-fit="fill" data-draw="scroll" data-draw-span="long"/>
+          </svg>
+          <ol class="timeline__list">
+            <li class="timeline__item" data-reveal>
+              <span class="timeline__dot timeline__dot--red" aria-hidden="true"></span>
+              <p class="timeline__when">Em andamento</p>
+              <h3 class="timeline__what">Engenharia de Software <span>· FIAP</span></h3>
+              <p>Produto, front-end design e back-end. Daqui saíram o Revi e o site da TAMA.</p>
+            </li>
+            <li class="timeline__item" data-reveal>
+              <span class="timeline__dot timeline__dot--blue" aria-hidden="true"></span>
+              <p class="timeline__when">2026</p>
+              <h3 class="timeline__what">Revi <span>· produto em equipe</span></h3>
+              <p>App de estudos com IA, do front em React à API em Spring Boot com mensageria e autenticação.</p>
+            </li>
+            <li class="timeline__item" data-reveal>
+              <span class="timeline__dot timeline__dot--orange" aria-hidden="true"></span>
+              <p class="timeline__when">2025</p>
+              <h3 class="timeline__what">Challenge FIAP × TOTVS <span>· Data Hive</span></h3>
+              <p>Pipeline na Azure, clusterização com K-Means e recomendação estratégica para mais de 40 mil clientes.</p>
+            </li>
+            <li class="timeline__item" data-reveal>
+              <span class="timeline__dot timeline__dot--lilac" aria-hidden="true"></span>
+              <p class="timeline__when">Concluída</p>
+              <h3 class="timeline__what">Ciência de Dados <span>· FIAP</span></h3>
+              <p>Estatística, Machine Learning, Deep Learning, engenharia de dados e nuvem (Azure e OCI).</p>
+            </li>
+            <!-- Experiências profissionais (LinkedIn): copie um <li class="timeline__item"> acima e preencha. -->
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FORA DO CÓDIGO ============ -->
+    <section class="hobbies section" id="fora-do-codigo" aria-labelledby="hobbies-titulo" data-hscroll>
+      <div class="hobbies__stage" data-hscroll-stage>
+        <div class="hobbies__track" data-hscroll-track>
+          <header class="hobbies__intro">
+            <p class="kicker">04 — Fora do código</p>
+            <h2 class="section-title" id="hobbies-titulo">
+              <span class="display">Fora do código</span>
+              <span class="script">(o que me move)</span>
+            </h2>
+            <p>Quando a tela desliga, sobra ritmo: palco, baquetas e arquibancada.</p>
+            <svg class="title-squiggle" viewBox="0 0 600 120" aria-hidden="true">
+              <path class="sq sq--orange" data-sq="loops:4;ratio:2;wave:.3;seed:12" data-box="10 10 580 100" data-rot="0" data-draw="scroll"/>
+            </svg>
+          </header>
+
+          <figure class="hobby hobby--wide hobby--blue">
+            <img src="assets/img/hobby-voz.webp" width="1280" height="847" loading="lazy" alt="Állex cantando no palco, de olhos fechados e sorrindo, sob luz azul.">
+            <figcaption><span class="display">Voz</span><span class="script">no palco</span></figcaption>
+          </figure>
+
+          <figure class="hobby hobby--wide hobby--lilac">
+            <img src="assets/img/hobby-bateria.webp" width="1280" height="847" loading="lazy" alt="Állex tocando bateria em um show, de boné e fone de retorno.">
+            <figcaption><span class="display">Bateria</span><span class="script">não é à toa a TAMA</span></figcaption>
+          </figure>
+
+          <figure class="hobby hobby--tall hobby--orange">
+            <img src="assets/img/hobby-palmeiras.webp" width="1000" height="1298" loading="lazy" alt="Állex de braços abertos na arquibancada do estádio do Palmeiras, com a camisa do time.">
+            <figcaption><span class="display">Palmeiras</span><span class="script">coração verde</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTATO ============ -->
+    <section class="contact section" id="contato" aria-labelledby="contato-titulo">
+      <div class="container contact__grid">
+        <div class="contact__text" data-reveal>
+          <p class="kicker">05 — Contato</p>
+          <h2 class="contact__title" id="contato-titulo">
+            <span class="display">Vamos conversar?</span>
+          </h2>
+          <p class="contact__lead">
+            Aberto a oportunidades em dados, IA e engenharia de software — e a uma boa conversa
+            sobre música ou futebol.
+          </p>
+          <ul class="contact__links">
+            <li><a href="mailto:allexbranda07@gmail.com"><span class="label">E-mail</span><span>allexbranda07@gmail.com</span></a></li>
+            <li><a href="https://www.linkedin.com/in/%C3%A1llex-brand%C3%A3o/" target="_blank" rel="noopener"><span class="label">LinkedIn</span><span>in/állex-brandão <span aria-hidden="true">↗</span></span></a></li>
+            <li><a href="https://github.com/Allexbrandao07" target="_blank" rel="noopener"><span class="label">GitHub</span><span>Allexbrandao07 <span aria-hidden="true">↗</span></span></a></li>
+            <li><a href="https://www.instagram.com/allex__brandao/" target="_blank" rel="noopener"><span class="label">Instagram</span><span>@allex__brandao <span aria-hidden="true">↗</span></span></a></li>
+          </ul>
+        </div>
+        <figure class="contact__photo" data-reveal>
+          <img src="assets/img/retrato-bone.webp" width="900" height="1002" loading="lazy" alt="Állex de boné, sentado em uma plateia de cadeiras verdes, olhando para a câmera.">
+          <svg class="contact__squiggle" viewBox="0 0 500 500" aria-hidden="true">
+            <path class="sq sq--ink" data-sq="loops:5;ratio:1.8;wave:.4;seed:6" data-box="0 330 500 150" data-rot="-10" data-draw="scroll"/>
+          </svg>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="logo-mark logo-mark--footer" aria-hidden="true"></span>
+      <p>© 2026 Állex Brandão · feito à mão com HTML, SCSS e JavaScript</p>
+      <a href="#topo">Voltar ao topo <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
+
+  <!-- Visualizador de mídia (imagens ampliadas e vídeos) -->
+  <dialog class="viewer" data-viewer aria-label="Visualizador de mídia">
+    <button class="viewer__close" type="button" data-viewer-close><span class="sr-only">Fechar</span><span aria-hidden="true">×</span></button>
+    <div class="viewer__content" data-viewer-content></div>
+  </dialog>
+
+  <script src="js/squiggle.js"></script>
+  <script src="js/eye-zoom.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

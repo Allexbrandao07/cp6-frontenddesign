@@ -1,0 +1,81 @@
+@use "sass:color";
+@use "tokens" as *;
+
+.journey {
+  background: $lilac;
+  border-block: 2px solid $ink;
+
+  .script { color: $ink; }
+}
+
+.timeline {
+  position: relative;
+  max-width: 980px;
+
+  // o rabisco vertical que se desenha conforme a rolagem
+  &__line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 64px;
+    height: 100%;
+    overflow: visible;
+    --sq-w: 5px;
+
+    .sq { stroke: $blue; }
+  }
+
+  &__list {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    padding: 1rem 0 1rem clamp(5rem, 10vw, 8rem);
+  }
+
+  &__item {
+    position: relative;
+    display: grid;
+    gap: 0.4rem;
+    max-width: 58ch;
+
+    p:last-child { font-size: 1.05rem; }
+  }
+
+  &__dot {
+    position: absolute;
+    left: calc(-1 * clamp(5rem, 10vw, 8rem) + 16px);
+    top: 0.4rem;
+    width: 32px;
+    height: 32px;
+    border: 2px solid $ink;
+    border-radius: 50%;
+    background: $red;
+
+    &--blue { background: $blue; }
+    &--orange { background: $orange; }
+    &--lilac { background: $white; }
+  }
+
+  &__when {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  &__what {
+    font-family: $font-display;
+    font-weight: 400;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+
+    span {
+      font-family: $font-script;
+      font-size: 0.42em;
+      text-transform: none;
+      color: $ink;
+      white-space: nowrap;
+    }
+  }
+}

@@ -1,0 +1,156 @@
+@use "sass:color";
+@use "tokens" as *;
+
+.about {
+  padding-top: clamp(2rem, 5vw, 4rem);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(2.5rem, 5vw, 4rem) 1.5rem;
+  }
+
+  &__bio {
+    grid-column: 1 / 8;
+    display: grid;
+    gap: 1.25rem;
+    font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+    max-width: 62ch;
+  }
+
+  &__facts {
+    grid-column: 9 / 13;
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+  }
+
+  &__skills { grid-column: 1 / 8; }
+  &__stack { grid-column: 8 / 13; }
+
+  .label { margin-bottom: 1.25rem; }
+
+  @include down($bp-md) {
+    &__bio, &__facts, &__skills, &__stack { grid-column: 1 / -1; }
+    &__facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @include down($bp-sm) {
+    &__facts { grid-template-columns: 1fr; }
+  }
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: end;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1.5px solid $ink;
+
+  &__num {
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    color: $red;
+  }
+  &:nth-child(2) .fact__num { color: $blue; }
+  &:nth-child(3) .fact__num { color: $orange; }
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.35;
+    padding-bottom: 0.4rem;
+  }
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
+
+// Inspirado no "What I do?" da referência: palavras em negrito, soltas, respirando
+.skills-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 2.25rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    isolation: isolate; // o marca-texto (z-index -1) fica atrás só da palavra
+    font-size: clamp(1.15rem, 2vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    cursor: default;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: -2%;
+      right: -2%;
+      bottom: 0.05em;
+      height: 0.35em;
+      z-index: -1;
+      border-radius: 999px;
+      background: $lilac;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(.2,.7,.2,1);
+    }
+    &:nth-child(3n + 2)::after { background: $orange; }
+    &:nth-child(3n)::after { background: color.mix($blue, $white, 70%); }
+    &:hover::after { transform: scaleX(1); }
+  }
+}
+
+// ---------- Fitas de skills ----------
+.ribbons {
+  position: relative;
+  padding-block: clamp(2rem, 5vw, 4rem);
+  overflow: hidden;
+}
+
+.ribbon {
+  width: 110%;
+  margin-left: -5%;
+  padding-block: 0.6rem;
+  border-block: 2px solid $ink;
+  overflow: hidden;
+  white-space: nowrap;
+
+  &--blue {
+    background: $blue;
+    color: $beige;
+    transform: rotate(-3deg);
+  }
+  &--orange {
+    position: relative;
+    margin-top: -1.25rem;
+    background: $orange;
+    color: $ink;
+    transform: rotate(2deg);
+  }
+
+  &__track {
+    display: inline-flex;
+    gap: 2.5rem;
+    padding-right: 2.5rem;
+    font-family: $font-display;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1;
+    text-transform: uppercase;
+
+    span { display: inline-flex; align-items: center; gap: 2.5rem; }
+    span::after { content: "✺"; font-family: $font-body; font-size: 0.5em; }
+
+    @include motion {
+      animation: marquee 38s linear infinite;
+      &--reverse { animation-direction: reverse; }
+    }
+  }
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}

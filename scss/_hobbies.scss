@@ -1,0 +1,119 @@
+@use "sass:color";
+@use "tokens" as *;
+
+.hobbies {
+  padding-block: 0;
+  background: $ink;
+  color: $beige;
+
+  .kicker { color: $orange; }
+  .section-title .display { font-size: clamp(3.5rem, 9vw, 8rem); }
+
+  &__stage {
+    padding-block: clamp(5rem, 12vw, 8rem);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: $orange transparent;
+  }
+
+  &__track {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    width: max-content;
+    padding-inline: $gutter;
+  }
+
+  &__intro {
+    width: min(82vw, 460px);
+    flex: none;
+    scroll-snap-align: start;
+    display: grid;
+    gap: 1rem;
+
+    p:not(.kicker) { max-width: 32ch; font-size: 1.1rem; }
+  }
+
+  // No celular, empilha: nenhum card fica escondido atrás de um gesto lateral
+  @include down($bp-md) {
+    &__stage { overflow: visible; }
+    &__track {
+      flex-direction: column;
+      align-items: stretch;
+      width: auto;
+      gap: 3rem;
+    }
+    &__intro { width: auto; }
+    .hobby {
+      width: auto;
+      max-width: none;
+      margin-right: 14px;
+    }
+  }
+
+  // Rolagem horizontal presa (desktop + movimento): o JS define a altura da seção
+  html.hscroll-on & {
+    .hobbies__stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100svh;
+      display: flex;
+      align-items: center;
+      padding-block: $nav-h 2rem;
+      overflow: hidden;
+    }
+    .hobbies__track { will-change: transform; }
+  }
+}
+
+.hobby {
+  --tone: #{$blue};
+  position: relative;
+  flex: none;
+  height: min(62svh, 120vw);
+  margin: 0;
+  scroll-snap-align: center;
+  border: 2px solid $beige;
+  border-radius: $radius;
+  box-shadow: 14px 14px 0 var(--tone);
+
+  &--wide { aspect-ratio: 1280 / 847; max-width: 84vw; height: auto; width: min(84vw, calc(62svh * 1.511)); }
+  &--tall { aspect-ratio: 1000 / 1298; width: min(70vw, calc(62svh * 0.77)); height: auto; }
+  &--lilac { --tone: #{$lilac}; }
+  &--orange { --tone: #{$orange}; }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: calc(#{$radius} - 2px);
+    filter: saturate(1.05);
+  }
+
+  figcaption {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: none;
+
+    .display {
+      font-size: clamp(3rem, 7vw, 6rem);
+      color: $beige;
+      text-shadow: 0 2px 24px color.change($ink, $alpha: 0.6);
+    }
+    .script {
+      margin-top: -0.2em;
+      padding: 0.1rem 0.75rem;
+      border-radius: 999px;
+      background: var(--tone);
+      color: $ink;
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      transform: rotate(-4deg);
+    }
+  }
+}

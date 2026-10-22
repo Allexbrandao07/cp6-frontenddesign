@@ -1,0 +1,13 @@
+{
+  "name": "portfolio-allex-brandao",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfólio de Állex Brandão — HTML, SCSS e JavaScript puros.",
+  "scripts": {
+    "build:css": "sass scss/main.scss css/main.css --no-source-map --style=compressed",
+    "watch:css": "sass scss/main.scss css/main.css --watch"
+  },
+  "devDependencies": {
+    "sass": "^1.83.0"
+  }
+}

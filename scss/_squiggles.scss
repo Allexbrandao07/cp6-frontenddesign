@@ -1,0 +1,28 @@
+@use "tokens" as *;
+
+// Rabiscos: os caminhos são gerados pelo js/squiggle.js (trocoide com laços)
+// e "desenhados" com stroke-dashoffset (pathLength = 1).
+.sq {
+  fill: none;
+  stroke-width: var(--sq-w, 10px);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+
+  &--blue   { stroke: $blue; }
+  &--lilac  { stroke: $lilac; }
+  &--orange { stroke: $orange; }
+  &--red    { stroke: $red; }
+  &--ink    { stroke: $ink; }
+  &--beige  { stroke: $beige; }
+}
+
+.title-squiggle {
+  display: block;
+  width: min(440px, 70%);
+  height: auto;
+  margin-top: 0.5rem;
+  overflow: visible;
+  --sq-w: 9px;
+}
