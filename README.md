@@ -27,7 +27,7 @@ npm run build:css    # build final, minificado
 | `js/squiggle.js` | Gera os rabiscos (trocoide com laços) e controla o "desenho" deles |
 | `js/loader.js` | Preloader: logo + quatro blocos da paleta como barra de progresso real |
 | `js/eye-zoom.js` | Animação de rolagem do hero: zoom até a pupila (íris em círculos da paleta), túnel de anéis e portal para o Sobre |
-| `js/main.js` | Menu, revelação no scroll, fita das ferramentas, galerias, visualizador, gráfico do KNN, rolagem horizontal |
+| `js/main.js` | Menu, revelação no scroll, fita das ferramentas, fita dos projetos, galerias, visualizador, gráfico do KNN, rolagem horizontal |
 | `assets/` | Fotos otimizadas (WebP), logo, fonte Silver Crown, ícones das ferramentas (`assets/icons/`) e logos das certificações |
 | `docs/referencias/` | As imagens de referência citadas abaixo |
 
@@ -49,6 +49,7 @@ npm run build:css    # build final, minificado
 | 10 | `docs/referencias/sobre-parte1.png`: meu layout da 1ª parte do Sobre (rodada 9) | Título com fitas grossas passando por trás, texto curto à esquerda e uma foto com moldura preta e sombra vermelha deslocada à direita | Sobre, parte 1 (a que abre pelo portal) |
 | 11 | `docs/referencias/sobre-parte2.png`: meu layout da 2ª parte do Sobre (rodada 9) | Bloco inteiro em laranja: bio à esquerda, ferramentas à direita e "CERTIFICAÇÕES:" em Inter bold, caixa alta e tracking apertado | Sobre, parte 2 |
 | 12 | `docs/referencias/sobre-ferramentas-github.png` e `cert-*.png`: ícones do meu GitHub e prints das certificações do LinkedIn (rodada 9) | Os ícones oficiais de cada ferramenta e os dados de cada certificação (emissora, data, código, competências) | Ferramentas e Certificações |
+| 13 | `docs/referencias/prototipo-projetos.png`: meu protótipo da seção Projetos, com zoom reduzido (rodada 15) | Seção começando colada no bloco laranja, conteúdo numa coluna central mais estreita, "PROJETOS" com "(alguns)" como expoente, tagline em Inter bold na cor do projeto, rabiscos fantasma no fundo e uma fita grossa na margem esquerda | Projetos (a fita que acompanha a rolagem e muda de cor) |
 
 ---
 
@@ -82,7 +83,7 @@ npm run build:css    # build final, minificado
 0. **Preloader:** logo + barra de progresso em quatro blocos da paleta. A barra mostra o carregamento real (fontes, retrato, logo) e, ao terminar, a tela sobe e libera a entrada do hero.
 1. **Hero:** nome em degraus, uma frase sobre o que eu faço, retrato em círculo e CTAs, fiel ao meu protótipo. O retrato é a porta de entrada da animação.
 2. **Sobre**, em duas partes. A 1ª (branca) abre pela pupila no fim do túnel: título com fitas, quem sou em uma frase, uma foto e, na base, uma prévia do bloco laranja. A 2ª (laranja, com linha preta no topo e na base) traz a bio, as ferramentas como adesivos presos numa fita com laços e as certificações.
-3. **Projetos:** Revi, Data Hive, TAMA Drums Brasil e Titanic × KNN, com imagens, deploy e vídeos. Só o Titanic aponta para o GitHub, por ser um modelo sem interface (os gráficos do notebook estão na página).
+3. **Projetos:** Revi, Data Hive, TAMA Drums Brasil e Titanic × KNN, com imagens, deploy e vídeos, numa coluna central. Na margem esquerda, uma fita com laços se desenha com a rolagem e assume a cor do projeto na tela. Só o Titanic aponta para o GitHub, por ser um modelo sem interface (os gráficos do notebook estão na página).
 4. **Trajetória:** formação e marcos, numa linha do tempo que se desenha com a rolagem.
 5. **Fora do código:** música (voz e bateria) e Palmeiras, em rolagem horizontal no desktop.
 6. **Contato:** e-mail, LinkedIn, GitHub e Instagram.
@@ -238,6 +239,20 @@ E tire essas faixas com essas tags ai do final (essas escritao ritmo, curiosidad
 Cara, tá excelente, só na certificação da Open AI, tira esse Código da credencial 317957605 e deixa igual as outras duas, com essas tags embaixo
 ```
 
+**Ajuste 11: Seção Projetos** (enviado junto com `docs/referencias/prototipo-projetos.png`)
+
+```text
+Certo, agora vamos para a seção "Projetos". Está anexado aqui um protótipo dessa tela também (essa referencia esta com o zoom reduzido porque senoa ia ficar cortado e mais dificil de entender a estetica e o conceito).
+
+A ideia é que logo após o "bloco" amarelo que finaliza a seçao anterior ja entre a seção projetos com o primeiro projeto da Revi. Esse squizzle do lado esquerdo deve ser uma animação que vai acompanhando o scroll conforme o usuário for passando os projetos e deve ir mudando a cor dessa linha de acordo com a cor de moldura e detalhes de cada projeto (revi = azul, data hive = amarelo, site da tama = vermelho e knn = rosa/lilas)
+```
+
+**Ajuste 12: Créditos das equipes**
+
+```text
+Está quase ótimo, só preciso que voce, nos projetos que foram desenvolvidos em conjunto (Revi e Data Hive), voce de os creditos/mencione os demais integrantes dos grupos, tem tudo no github
+```
+
 _(Adicionar os próximos prompts aqui, na ordem e exatamente como foram enviados.)_
 
 ---
@@ -363,7 +378,21 @@ Uma ficha por prompt de correção, com os campos do PDF:
 | Resultado | Resolveu totalmente. O código saiu e entraram as tags "Codex" e "IA generativa", no mesmo estilo dos outros cartões. O CSS que só servia para o código foi removido. Obs.: o print do LinkedIn dessa certificação não lista competências, então as tags foram escolhidas a partir do nome da certificação |
 | Aprendizado | _(sugestão, revisar)_ Na rodada 9 a IA preencheu cada cartão com o que havia em cada print, e por isso um ficou diferente. Pedir "todos os cartões com a mesma estrutura" teria evitado essa rodada |
 
-| Campo | Rodada 15 |
+| Campo | Rodada 15: Seção Projetos |
+| --- | --- |
+| Problema | A seção Projetos ocupava a largura toda, com um rabisco pequeno embaixo do título e "(com história)", e nada ligava visualmente um projeto ao outro. Eu queria a seção colada no bloco laranja, mais enxuta, e uma fita na margem esquerda que acompanhasse a leitura dos projetos |
+| Prompt de correção | Mandei um protótipo da tela (com zoom reduzido) e pedi que a fita da esquerda acompanhasse a rolagem e mudasse de cor conforme o projeto: Revi azul, Data Hive laranja, TAMA vermelho e KNN lilás. Texto completo: Ajuste 11, em 3.3 |
+| Resultado | Resolveu totalmente. O conteúdo foi para uma coluna central de até 1100px. O título virou "PROJETOS" com "(alguns)" em Pacifico como expoente, sem o rabisco embaixo. As taglines dos projetos passaram de Pacifico para Inter bold em caixa alta, na cor do projeto (escurecida com `color-mix` para ter contraste no branco). O fundo ganhou rabiscos fantasma. **A fita:** é uma trocoide vertical (a mesma curva com laços das outras fitas) que nasce na linha preta do bloco laranja e desce pela margem esquerda, perto do conteúdo. A rolagem desenha a fita até 78% da altura da tela, com uma "ponta de caneta" branca no fim do traço, e a cor muda suavemente para a do projeto que cruza o meio da tela. A largura dos laços acompanha o espaço livre da margem; em telas estreitas a fita fica fina, só ondulada, colada na borda, e o conteúdo abre espaço para ela. No 1º teste a fita ficava longe do conteúdo em telas largas; ela foi alinhada ao lado direito da margem, como no protótipo. Testado em 1366×768, 1920×940, celular e com zoom de 50% (para comparar com o protótipo) |
+| Aprendizado | _(sugestão, revisar)_ Mandar o protótipo com zoom reduzido ajudou a passar o conceito, mas deixou as proporções ambíguas: a IA teve que deduzir o zoom pelo tamanho do texto. Vale dizer o zoom usado ou mandar também um recorte em 100% |
+
+| Campo | Rodada 16: Créditos das equipes |
+| --- | --- |
+| Problema | O Revi e o Data Hive foram feitos em grupo, mas a página só dizia "equipe de 5" e "equipe Beekeepers", sem nomear ninguém. Isso passava a impressão de um trabalho solo e não dava crédito aos colegas |
+| Prompt de correção | Pedi para mencionar os demais integrantes dos dois projetos, usando os dados do GitHub. Texto completo: Ajuste 12, em 3.3 |
+| Resultado | Resolveu totalmente. Cada projeto ganhou um bloco "Feito em equipe com", com cada integrante numa pílula com as iniciais na cor do projeto. **Revi** (`INTEGRANTES.txt` do repositório do front-end): Henrique Caruso Bueno, Erick Nathan Capito Pereira, Murilo Gomes Vasconcelos e Enzo Ribeiro Abreu. **Data Hive** (seção "Autores" do README): Diego Augusto Oliveira Rocha, Guilherme Agostinho Canella, Lorenzo Azevedo Frigoglietto e Vinicius Cremon Giomo. Decisões da IA: os RMs **não** foram publicados, por serem números de matrícula dos colegas; e os nomes ficaram sem link para o GitHub, porque os repositórios do Revi agora estão fechados para a API e só um integrante do Data Hive tem nome público no perfil, então não daria para linkar todos com certeza |
+| Aprendizado | _(sugestão, revisar)_ Em projetos de grupo, os créditos deveriam estar no prompt inicial ("nos projetos em equipe, cite os integrantes"). É uma questão de ética, não de layout, e não deveria depender de eu lembrar depois |
+
+| Campo | Rodada 17 |
 | --- | --- |
 | Problema | |
 | Prompt de correção | |

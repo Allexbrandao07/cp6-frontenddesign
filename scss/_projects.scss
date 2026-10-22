@@ -3,6 +3,88 @@
 
 .section-head { margin-bottom: clamp(3rem, 8vw, 6rem); }
 
+// =================================================================
+// PROJETOS — coluna central com a fita na margem esquerda
+// =================================================================
+.projects {
+  --trail: #{$blue};
+  --trail-w: 24px;
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(3rem, 7vw, 5rem);
+
+  .section-head { margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+
+  // rabiscos "fantasma" do fundo
+  &__ghosts {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    --sq-w: clamp(36px, 4.5vw, 64px);
+  }
+
+  // a fita: caminho montado em js/main.js (buildTrail / drawTrail)
+  &__trail {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+  }
+
+  // telas estreitas: a fita fica fina, colada na borda, e o conteúdo abre espaço
+  &.is-thin-trail &__inner { padding-left: calc(#{$gutter} + 30px); }
+}
+
+.trail__halo,
+.trail__line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1;
+}
+
+.trail__halo {
+  stroke: $white;
+  stroke-width: calc(var(--trail-w) + 10px);
+}
+
+.trail__line {
+  stroke: var(--trail);
+  stroke-width: var(--trail-w);
+  transition: stroke 0.6s ease;
+}
+
+// a "ponta da caneta" que desenha a fita
+.trail__tip {
+  r: calc(var(--trail-w) / 2 + 5px);
+  fill: $white;
+  stroke: $ink;
+  stroke-width: 2.5px;
+}
+
+// título com o comentário em script como "expoente" (protótipo)
+.section-title--sup {
+  align-items: flex-start;
+
+  .script {
+    font-size: clamp(1.8rem, 4.6vw, 3.6rem);
+    margin-left: -0.35em;
+    transform: rotate(-8deg) translateY(-0.25em);
+  }
+}
+
 .project {
   --accent: #{$blue};
   display: grid;
@@ -35,10 +117,15 @@
     line-height: 0.85;
   }
 
+  // Inter bold em caixa alta, na cor do projeto (escurecida para ter contraste no branco)
   &__tagline {
-    font-size: clamp(1.2rem, 2vw, 1.6rem);
-    line-height: 1.3;
     margin-top: -0.25rem;
+    color: color-mix(in srgb, var(--accent) 70%, #{$ink});
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
   }
 
   &__links {
@@ -46,6 +133,11 @@
     flex-wrap: wrap;
     gap: 0.75rem;
     margin-top: 0.5rem;
+  }
+
+  // créditos dos projetos em grupo
+  &__team {
+    .label { margin-bottom: 0.5rem; opacity: 1; }
   }
 
   @include down($bp-md) {
@@ -56,6 +148,43 @@
     }
   }
 }
+
+.team {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.2rem 0.75rem 0.2rem 0.2rem;
+    border: 1.5px solid $ink;
+    border-radius: 999px;
+    background: $white;
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  // iniciais num círculo na cor do projeto
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 1.5px solid $ink;
+    border-radius: 50%;
+    background: var(--accent);
+    color: $ink;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+}
+
 
 // ---------- Galeria ----------
 .gallery {

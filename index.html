@@ -285,17 +285,32 @@
     </section>
 
     <!-- ============ PROJETOS ============ -->
-    <section class="projects section" id="projetos" aria-labelledby="projetos-titulo">
-      <div class="container">
+    <section class="projects section" id="projetos" aria-labelledby="projetos-titulo" data-trail-section>
+      <!-- rabiscos "fantasma" do fundo, como no hero -->
+      <svg class="projects__ghosts" aria-hidden="true" data-responsive>
+        <path class="sq sq--mist" data-sq="loops:2;ratio:2.6;wave:.3;seed:91" data-box="0.66 0 0.48 0.2" data-rot="70"/>
+        <path class="sq sq--mist" data-sq="loops:2;ratio:2.4;wave:.3;seed:92" data-box="-0.12 0.06 0.42 0.18" data-rot="-25"/>
+        <path class="sq sq--mist" data-sq="loops:3;ratio:2.2;wave:.35;seed:93" data-box="0.05 0.3 0.55 0.18" data-rot="25"/>
+        <path class="sq sq--mist" data-sq="loops:2;ratio:2.5;wave:.3;seed:94" data-box="0.6 0.46 0.5 0.18" data-rot="-40"/>
+        <path class="sq sq--mist" data-sq="loops:3;ratio:2.3;wave:.3;seed:95" data-box="0.02 0.68 0.5 0.16" data-rot="15"/>
+        <path class="sq sq--mist" data-sq="loops:2;ratio:2.6;wave:.3;seed:96" data-box="0.62 0.82 0.45 0.16" data-rot="60"/>
+      </svg>
+
+      <!-- a fita da esquerda: se desenha com a rolagem e assume a cor do projeto na tela
+           (js/main.js monta o caminho, move a "ponta" e troca a cor) -->
+      <svg class="projects__trail" aria-hidden="true" data-trail>
+        <path class="trail__halo" data-trail-path/>
+        <path class="trail__line" data-trail-path/>
+        <circle class="trail__tip" r="0" data-trail-tip/>
+      </svg>
+
+      <div class="container projects__inner" data-trail-content>
         <header class="section-head" data-reveal>
           <p class="kicker">02 — Projetos</p>
-          <h2 class="section-title" id="projetos-titulo">
+          <h2 class="section-title section-title--sup" id="projetos-titulo">
             <span class="display">Projetos</span>
-            <span class="script">(com história)</span>
+            <span class="script">(alguns)</span>
           </h2>
-          <svg class="title-squiggle" viewBox="0 0 600 120" aria-hidden="true">
-            <path class="sq sq--blue" data-sq="loops:4;ratio:2.1;wave:.3;seed:9" data-box="10 10 580 100" data-rot="0" data-draw="scroll"/>
-          </svg>
         </header>
 
         <!-- 01 · REVI -->
@@ -320,13 +335,22 @@
             <p class="project__num display" aria-hidden="true">01</p>
             <p class="kicker">Produto · equipe de 5 · 2026</p>
             <h3 class="project__title display">Revi</h3>
-            <p class="project__tagline script">fotografe o caderno, estude o que está nele</p>
+            <p class="project__tagline">Fotografe o caderno, estude o que está nele</p>
             <p>
               Plataforma de estudos que transforma fotos de material — caderno, lousa, apostila — em
               <strong>flash cards, resumos, simulados e mapas mentais</strong> gerados por IA, com
               acompanhamento de constância (Ascensão) e de desempenho (Trilha). Tem leitura em voz alta,
               turmas compartilhadas, ranking e até Spotify tocando durante a sessão de foco.
             </p>
+            <div class="project__team">
+              <p class="label">Feito em equipe com</p>
+              <ul class="team" role="list">
+                <li><span class="team__avatar" aria-hidden="true">HB</span>Henrique Caruso Bueno</li>
+                <li><span class="team__avatar" aria-hidden="true">EP</span>Erick Nathan Capito Pereira</li>
+                <li><span class="team__avatar" aria-hidden="true">MV</span>Murilo Gomes Vasconcelos</li>
+                <li><span class="team__avatar" aria-hidden="true">EA</span>Enzo Ribeiro Abreu</li>
+              </ul>
+            </div>
             <ul class="chips chips--sm">
               <li class="chip">React 19</li><li class="chip">TypeScript</li><li class="chip">Tailwind</li>
               <li class="chip">Spring Boot · Java</li><li class="chip">Keycloak</li><li class="chip">RabbitMQ</li>
@@ -361,7 +385,7 @@
             <p class="project__num display" aria-hidden="true">02</p>
             <p class="kicker">Challenge FIAP × TOTVS · equipe Beekeepers · 2025</p>
             <h3 class="project__title display">Data Hive</h3>
-            <p class="project__tagline script">clusterização inteligente na nuvem</p>
+            <p class="project__tagline">Clusterização inteligente na nuvem</p>
             <p>
               Pipeline de dados <strong>end-to-end na Azure</strong> que segmenta os mais de 40 mil clientes da TOTVS.
               Um gatilho no Blob Storage dispara o Data Factory, que roda os notebooks no Databricks:
@@ -369,6 +393,15 @@
               a ação certa para cada cluster — engajamento, upsell ou retenção — entregue num dashboard Power BI
               com churn, MRR e NPS.
             </p>
+            <div class="project__team">
+              <p class="label">Feito em equipe com</p>
+              <ul class="team" role="list">
+                <li><span class="team__avatar" aria-hidden="true">DR</span>Diego Augusto Oliveira Rocha</li>
+                <li><span class="team__avatar" aria-hidden="true">GC</span>Guilherme Agostinho Canella</li>
+                <li><span class="team__avatar" aria-hidden="true">LF</span>Lorenzo Azevedo Frigoglietto</li>
+                <li><span class="team__avatar" aria-hidden="true">VG</span>Vinicius Cremon Giomo</li>
+              </ul>
+            </div>
             <ul class="chips chips--sm">
               <li class="chip">Azure Data Factory</li><li class="chip">Databricks</li><li class="chip">Blob Storage</li>
               <li class="chip">Azure SQL</li><li class="chip">Python · scikit-learn</li><li class="chip">Power BI</li>
@@ -401,7 +434,7 @@
             <p class="project__num display" aria-hidden="true">03</p>
             <p class="kicker">Site multipágina · 2026</p>
             <h3 class="project__title display">TAMA Drums Brasil</h3>
-            <p class="project__tagline script">o nome mais forte da bateria</p>
+            <p class="project__tagline">O nome mais forte da bateria</p>
             <p>
               Conceito de site para a TAMA no Brasil, em <strong>HTML, CSS e JavaScript puros</strong>:
               catálogo com 475 produtos em 12 categorias (filtro, busca e carregamento por partes),
@@ -453,7 +486,7 @@
             <p class="project__num display" aria-hidden="true">04</p>
             <p class="kicker">Machine Learning · 2025</p>
             <h3 class="project__title display">Titanic × KNN</h3>
-            <p class="project__tagline script">quem sobreviveria?</p>
+            <p class="project__tagline">Quem sobreviveria?</p>
             <p>
               Fluxo completo de classificação para prever a sobrevivência de passageiros:
               limpeza (712 registros válidos), <strong>teste de Shapiro-Wilk</strong> para decidir entre
