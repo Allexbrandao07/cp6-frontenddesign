@@ -1,156 +1,425 @@
 @use "sass:color";
 @use "tokens" as *;
 
+// =================================================================
+// SOBRE — parte 1 (branca): o "portal" que abre no fim do zoom
+// =================================================================
+.portal {
+  // altura da "prévia" do bloco laranja que aparece já na 1ª tela
+  --peek: clamp(56px, 11svh, 112px);
+  position: relative;
+  overflow: hidden;
+  padding-bottom: calc(var(--peek) + clamp(2.5rem, 6svh, 4rem));
+  background: $white;
+
+  // o começo do bloco laranja, com a mesma linha preta do topo dele; a seção
+  // .about continua daqui sem emenda (por isso ela não tem borda no topo)
+  &::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: var(--peek);
+    border-top: 2px solid $ink;
+    background: $orange;
+  }
+
+  // rabiscos "fantasma" do fundo, como no hero
+  &__ghosts {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    --sq-w: clamp(28px, 3.2vw, 44px);
+  }
+
+  &__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  &__title {
+    position: relative;
+    width: fit-content;
+    margin-top: 0.75rem;
+    isolation: isolate;
+
+    .section-title { margin-top: 0; }
+  }
+
+  // fitas atrás do título: o viewBox (-160 -60 820 260) usa a largura do
+  // título como régua (o título ocupa 0 0 470 120), por isso as % abaixo
+  &__ribbons {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: calc(820 / 470 * 100%);
+    height: auto;
+    overflow: visible;
+    transform: translate(calc(-160 / 820 * 100%), calc(-60 / 260 * 100%));
+    pointer-events: none;
+    --sq-w: 22px;
+  }
+
+  &__lead {
+    position: relative; // fica acima das fitas que escapam do título
+    max-width: 50ch;
+    margin-top: clamp(2.75rem, 7svh, 4.25rem);
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+    line-height: 1.55;
+  }
+
+  &__photo {
+    position: relative;
+    margin: 0 20px 20px 0;
+    border: 2px solid $ink;
+    background: $ink;
+    // a sombra vermelha deslocada, com contorno preto (como na referência)
+    box-shadow: 20px 20px 0 0 $red, 20px 20px 0 2px $ink;
+
+    img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 439 / 289;
+      object-fit: cover;
+    }
+  }
+
+  @include down($bp-md) {
+    &__grid { grid-template-columns: 1fr; gap: 1.75rem; }
+    &__photo {
+      max-width: 420px;
+      // dentro do palco preso a altura é limitada: a foto não pode empurrar o texto
+      max-height: 26svh;
+      overflow: hidden;
+    }
+    &__ribbons { --sq-w: 16px; }
+    .section-title .display { font-size: clamp(4rem, 20vw, 7rem); }
+  }
+
+  // celulares baixos: sem a foto, para título + texto + prévia caberem na tela presa
+  @media (max-width: $bp-md - 0.02px) and (max-height: 760px) {
+    &__photo { display: none; }
+  }
+}
+
+// contorno branco nas letras (igual ao nome do hero) para separar das fitas
+.section-title--outlined .display {
+  -webkit-text-stroke: 0.09em $white;
+  paint-order: stroke fill;
+}
+
+// palavras-chave com marca-texto nas cores da paleta
+.hl {
+  font-weight: 700;
+  box-shadow: inset 0 -0.38em 0 var(--hl);
+
+  &--blue { --hl: #{color.change($blue, $alpha: 0.35)}; }
+  &--lilac { --hl: #{color.change($lilac, $alpha: 0.6)}; }
+  &--orange { --hl: #{color.change($orange, $alpha: 0.6)}; }
+}
+
+// =================================================================
+// SOBRE — parte 2 (laranja inteira): bio, ferramentas, certificações
+// =================================================================
 .about {
-  padding-top: clamp(2rem, 5vw, 4rem);
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+  background: $orange;
+  border-bottom: 2px solid $ink;
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: clamp(2.5rem, 5vw, 4rem) 1.5rem;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
   }
 
   &__bio {
-    grid-column: 1 / 8;
     display: grid;
     gap: 1.25rem;
-    font-size: clamp(1.05rem, 1.3vw, 1.2rem);
     max-width: 62ch;
+    font-size: clamp(1.02rem, 1.25vw, 1.15rem);
+    font-weight: 400;
   }
 
-  &__facts {
-    grid-column: 9 / 13;
-    display: grid;
-    gap: 1.25rem;
-    align-content: start;
-  }
-
-  &__skills { grid-column: 1 / 8; }
-  &__stack { grid-column: 8 / 13; }
-
-  .label { margin-bottom: 1.25rem; }
-
-  @include down($bp-md) {
-    &__bio, &__facts, &__skills, &__stack { grid-column: 1 / -1; }
-    &__facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  }
-
-  @include down($bp-sm) {
-    &__facts { grid-template-columns: 1fr; }
-  }
-}
-
-.fact {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: end;
-  gap: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1.5px solid $ink;
-
-  &__num {
-    font-size: clamp(3.5rem, 6vw, 5.5rem);
-    color: $red;
-  }
-  &:nth-child(2) .fact__num { color: $blue; }
-  &:nth-child(3) .fact__num { color: $orange; }
-
-  &__label {
-    font-size: 0.9rem;
-    font-weight: 500;
-    line-height: 1.35;
-    padding-bottom: 0.4rem;
+  .label {
+    margin-bottom: 1.25rem;
+    opacity: 1;
   }
 
   @include down($bp-md) {
-    grid-template-columns: 1fr;
-    gap: 0.25rem;
+    &__grid { grid-template-columns: 1fr; }
   }
 }
 
-// Inspirado no "What I do?" da referência: palavras em negrito, soltas, respirando
-.skills-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 2.25rem;
-  padding: 0;
-  list-style: none;
-
-  li {
-    position: relative;
-    isolation: isolate; // o marca-texto (z-index -1) fica atrás só da palavra
-    font-size: clamp(1.15rem, 2vw, 1.6rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    cursor: default;
-
-    &::after {
-      content: "";
-      position: absolute;
-      left: -2%;
-      right: -2%;
-      bottom: 0.05em;
-      height: 0.35em;
-      z-index: -1;
-      border-radius: 999px;
-      background: $lilac;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.35s cubic-bezier(.2,.7,.2,1);
-    }
-    &:nth-child(3n + 2)::after { background: $orange; }
-    &:nth-child(3n)::after { background: color.mix($blue, $white, 70%); }
-    &:hover::after { transform: scaleX(1); }
-  }
-}
-
-// ---------- Fitas de skills ----------
-.ribbons {
+// ---------- Ferramentas: adesivos presos numa fita com laços ----------
+// js/main.js calcula a fita (4 fileiras de ida e volta, com um laço em
+// cada virada), posiciona os adesivos sobre ela e liga .is-on quando o
+// traço desenhado pela rolagem passa por cada um.
+.toolbelt {
+  --r: 36px;
   position: relative;
-  padding-block: clamp(2rem, 5vw, 4rem);
-  overflow: hidden;
+  min-height: 300px;
+
+  &__ribbon {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+
+    path {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1 1;
+    }
+  }
+
+  // fita lilás com contorno preto (o contorno é o mesmo traço, mais grosso, por baixo)
+  &__outline { stroke: $ink; stroke-width: calc(var(--r) * 0.62); }
+  &__fill { stroke: $lilac; stroke-width: calc(var(--r) * 0.5); }
+
+  &__list {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 }
 
-.ribbon {
-  width: 110%;
-  margin-left: -5%;
-  padding-block: 0.6rem;
-  border-block: 2px solid $ink;
-  overflow: hidden;
-  white-space: nowrap;
+.tool {
+  --tag: #{$blue};
+  --rot: 0deg; // inclinação "à mão", diferente em cada um (definida em js/main.js)
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  margin: calc(var(--r) * -1) 0 0 calc(var(--r) * -1);
+  border: 2px solid $ink;
+  border-radius: 50%;
+  background: $white;
+  box-shadow: 3px 3px 0 $ink;
+  cursor: default;
+  outline: none;
+  transform: rotate(var(--rot)) scale(1);
+  transition: transform 0.6s cubic-bezier(.3, 1.5, .5, 1), box-shadow 0.3s;
 
-  &--blue {
-    background: $blue;
-    color: $beige;
-    transform: rotate(-3deg);
-  }
-  &--orange {
-    position: relative;
-    margin-top: -1.25rem;
-    background: $orange;
-    color: $ink;
-    transform: rotate(2deg);
+  &:nth-child(4n + 2) { --tag: #{$red}; }
+  &:nth-child(4n + 3) { --tag: #{$ink}; }
+  &:nth-child(4n + 4) { --tag: #{$white}; }
+
+  img {
+    width: auto;
+    max-width: 66%;
+    height: 54%;
+    object-fit: contain;
+    pointer-events: none;
   }
 
-  &__track {
-    display: inline-flex;
-    gap: 2.5rem;
-    padding-right: 2.5rem;
-    font-family: $font-display;
-    font-size: clamp(2.2rem, 5vw, 4rem);
+  // etiqueta com o nome, em Pacifico, que aparece no hover/foco
+  &__name {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 6px);
+    z-index: 2;
+    padding: 0.15rem 0.7rem 0.3rem;
+    border: 2px solid $ink;
+    border-radius: 999px;
+    background: var(--tag);
+    color: $white;
+    font-family: $font-script;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, 6px) rotate(calc(var(--rot) * -1 - 4deg)) scale(0.8);
+    transition: opacity 0.2s, transform 0.35s cubic-bezier(.3, 1.6, .5, 1);
+  }
+  &:nth-child(4n + 4) .tool__name { color: $ink; }
+
+  &:hover,
+  &:focus-visible {
+    z-index: 3;
+    box-shadow: 6px 6px 0 $ink;
+    transform: rotate(calc(var(--rot) + 360deg)) scale(1.18);
+
+    .tool__name {
+      opacity: 1;
+      transform: translate(-50%, 0) rotate(calc(var(--rot) * -1 - 4deg)) scale(1);
+    }
+  }
+  &:focus-visible { outline: 3px solid $blue; outline-offset: 3px; }
+
+  // antes de a fita passar por ele, o adesivo ainda não "grudou"
+  @include motion {
+    &:not(.is-on) {
+      opacity: 0;
+      transform: rotate(calc(var(--rot) - 90deg)) scale(0.2);
+    }
+    &.is-on { opacity: 1; }
+  }
+}
+
+// ---------- Certificações ----------
+.certs {
+  margin-top: clamp(4rem, 9vw, 7rem);
+
+  &__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.5em;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 700;
     line-height: 1;
+    letter-spacing: -0.065em;
     text-transform: uppercase;
 
-    span { display: inline-flex; align-items: center; gap: 2.5rem; }
-    span::after { content: "✺"; font-family: $font-body; font-size: 0.5em; }
-
-    @include motion {
-      animation: marquee 38s linear infinite;
-      &--reverse { animation-direction: reverse; }
+    .script {
+      color: $ink;
+      font-size: 0.55em;
+      letter-spacing: 0;
+      text-transform: none;
+      transform: rotate(-6deg) translateY(-0.15em);
     }
+  }
+
+  &__squiggle {
+    width: min(360px, 60%);
+    margin-top: 0.4rem;
+    --sq-w: 7px;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.25rem, 3vw, 2rem);
+    margin-top: clamp(1.75rem, 4vw, 2.5rem);
+    padding: 0;
+  }
+
+  &__more { margin-top: clamp(2rem, 4vw, 2.75rem); }
+
+  @include down($bp-lg) {
+    &__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @include down($bp-sm) {
+    &__list { grid-template-columns: 1fr; }
   }
 }
 
-@keyframes marquee {
-  to { transform: translateX(-50%); }
+.cert {
+  --tone: #{$lilac};
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 2px solid $ink;
+  border-radius: $radius;
+  background: $white;
+  box-shadow: 10px 10px 0 $ink;
+  transition: transform 0.35s cubic-bezier(.3, 1.5, .5, 1), box-shadow 0.35s;
+
+  &--blue { --tone: #{$blue}; }
+  &--red { --tone: #{$red}; }
+
+  &:hover {
+    transform: translate(-3px, -3px) rotate(-1deg);
+    box-shadow: 14px 14px 0 $ink;
+  }
+  &:nth-child(even):hover { transform: translate(-3px, -3px) rotate(1deg); }
+
+  // faixa colorida com o logo da emissora num "selo" branco e uma fita
+  &__art {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 150px;
+    overflow: hidden;
+    border-bottom: 2px solid $ink;
+    background: var(--tone);
+  }
+
+  &__squiggle {
+    position: absolute;
+    left: -10%;
+    bottom: 6px;
+    width: 120%;
+    height: auto;
+    --sq-w: 9px;
+
+    .sq { stroke: $white; opacity: 0.85; }
+  }
+
+  &__logo {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 92px;
+    height: 92px;
+    border: 2px solid $ink;
+    border-radius: 50%;
+    background: $white;
+    box-shadow: 4px 4px 0 $ink;
+    transition: transform 0.5s cubic-bezier(.3, 1.6, .5, 1);
+
+    img { width: 56px; height: 56px; object-fit: contain; }
+
+    // o logo da Alura é uma foto quadrada escura: ocupa o selo inteiro
+    &--photo {
+      overflow: hidden;
+      img { width: 100%; height: 100%; object-fit: cover; }
+    }
+  }
+  &:hover &__logo { transform: rotate(-12deg) scale(1.06); }
+
+  &__body {
+    display: grid;
+    gap: 0.35rem;
+    align-content: start;
+    padding: 1.15rem 1.25rem 1.35rem;
+  }
+
+  &__issuer {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  &__name {
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  &__date { font-size: 0.88rem; }
+
+  &__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 0.2rem 0.65rem;
+      border: 1.5px solid $ink;
+      border-radius: 999px;
+      background: color.mix($white, $orange, 70%);
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+  }
 }

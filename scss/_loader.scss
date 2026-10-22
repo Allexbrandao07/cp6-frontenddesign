@@ -1,0 +1,77 @@
+@use "tokens" as *;
+
+// =================================================================
+// PRELOADER — logo + barra de progresso em quatro blocos da paleta
+// Medidas da referência (1366 × 768): logo com 154px de altura,
+// barra de 195 × 32px, 25px entre os dois. Em px, para acompanhar o
+// zoom do navegador. Só existe com JS (sem JS o site abre direto).
+// =================================================================
+.loader {
+  display: none;
+
+  html.js & {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    padding-top: 25px; // na referência o conjunto fica ~12px abaixo do centro
+    background: $white;
+    transition: transform 0.85s cubic-bezier(.7, 0, .2, 1) 0.35s;
+  }
+
+  &__logo {
+    width: auto;
+    height: 154px;
+    max-height: 22vh;
+    fill: $ink;
+    transition: transform 0.45s cubic-bezier(.6, 0, .4, 1), opacity 0.35s;
+  }
+
+  &__bar {
+    display: flex;
+    width: 195px;
+    height: 32px;
+    transition: transform 0.45s cubic-bezier(.6, 0, .4, 1) 0.05s, opacity 0.35s 0.05s;
+  }
+
+  &__block {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    background: $mist; // parte ainda "vazia" do bloco
+
+    i {
+      position: absolute;
+      inset: 0;
+      background: var(--fill);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    &--red    { --fill: #{$red}; }
+    &--lilac  { --fill: #{$lilac}; }
+    &--blue   { --fill: #{$blue}; }
+    &--orange { --fill: #{$orange}; }
+  }
+
+  // saída: logo e barra sobem e somem, depois a tela branca desliza para cima
+  &.is-done {
+    transform: translateY(-100%);
+    pointer-events: none;
+
+    .loader__logo { transform: translateY(-24px); opacity: 0; }
+    .loader__bar { transform: translateY(-24px); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js & { transition: none; }
+  }
+}
+
+// enquanto carrega: sem rolagem e com a entrada das letras do hero em pausa
+html.is-loading body { overflow: hidden; }
+html.js.motion.is-loading .hero__letter { animation-play-state: paused; }

@@ -30,6 +30,7 @@ $nav-h: 72px;
 $bp-sm: 600px;
 $bp-md: 900px;
 $bp-lg: 1200px;
+$bp-hero: 1280px; // abaixo disso o quadro do hero (1366u) não cabe: layout empilhado
 
 @mixin up($bp) {
   @media (min-width: $bp) { @content; }

@@ -21,6 +21,18 @@
     document.body.style.overflow = open ? 'hidden' : '';
   }
 
+  // Recarregar a página sempre abre no hero: o navegador não restaura a rolagem
+  // e a âncora (#sobre, #projetos…) é descartada. Link direto com âncora
+  // (navegação normal, não reload) continua indo para a seção.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const nav0 = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+  const isReload = (nav0 && nav0.type === 'reload') ||
+    (!nav0 && performance.navigation && performance.navigation.type === 1);
+  if (isReload) {
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    window.scrollTo(0, 0);
+  }
+
   // #sobre mora dentro do palco do zoom: com o zoom ligado, a âncora levaria ao hero.
   // Leva ao fim da pista, onde o portal já está todo aberto.
   document.querySelectorAll('a[href="#sobre"]').forEach((a) => {
@@ -30,7 +42,6 @@
       e.preventDefault();
       const top = zoom.getBoundingClientRect().top + window.scrollY + zoom.offsetHeight - window.innerHeight;
       window.scrollTo({ top, behavior: motion ? 'smooth' : 'auto' });
-      history.replaceState(null, '', '#sobre');
     });
   });
   if (location.hash === '#sobre') {
@@ -66,10 +77,113 @@
     revealables.forEach((el) => el.classList.add('is-in'));
   }
 
-  // ---------- Fitas: duplica o conteúdo para o loop não ter emenda ----------
-  document.querySelectorAll('[data-marquee]').forEach((track) => {
-    track.innerHTML += track.innerHTML;
-  });
+  // ---------- Ferramentas: adesivos presos numa fita com laços ----------
+  // A fita serpenteia em 4 fileiras (ida e volta), dando um laço em cada
+  // virada, como as fitas do hero. A rolagem desenha a fita e cada adesivo
+  // "gruda" quando o traço passa por ele.
+  const belt = document.querySelector('[data-toolbelt]');
+  const beltPaths = belt ? Array.from(belt.querySelectorAll('[data-toolbelt-path]')) : [];
+  const beltTools = belt ? Array.from(belt.querySelectorAll('.tool')) : [];
+  let beltMarks = []; // em que fração da fita cada adesivo fica
+
+  // Virada com laço: o traço sai na horizontal, gira 540° (meia-volta + um
+  // laço completo) e volta na horizontal, na direção oposta. A direção é
+  // integrada passo a passo; depois as pontas são ajustadas para sair em
+  // (0, 0) e chegar em (0, 1) — y em fração da distância entre as fileiras.
+  function loopTurn(width) {
+    const N = 48;
+    const raw = [[0, 0]];
+    let x = 0, y = 0;
+    for (let i = 1; i <= N; i++) {
+      const s = (i - 0.5) / N;
+      // gira mais devagar nas pontas e mais rápido no meio: o laço fica no meio
+      const phi = Math.PI * 3 * (s - Math.sin(Math.PI * 2 * s) / (Math.PI * 2) * 0.55);
+      x += Math.cos(phi);
+      y += Math.sin(phi);
+      raw.push([x, y]);
+    }
+    const [ex, ey] = raw[N];
+    const fixed = raw.map(([px, py], i) => [px - (ex * i) / N, py / ey]);
+    const maxX = Math.max(...fixed.map((p) => Math.abs(p[0]))) || 1;
+    return fixed.slice(1).map(([px, py]) => [(px / maxX) * width, py]);
+  }
+
+  function buildBelt() {
+    if (!belt) return;
+    const COLS = 4, ROWS = Math.ceil(beltTools.length / COLS);
+    const W = belt.clientWidth;
+    const R = Math.min(36, (W / COLS) * 0.36);   // raio do adesivo
+    const padX = R + 10;
+    const rowGap = R * 2 + Math.max(26, R);
+    const top = R + 18;
+    const H = top + (ROWS - 1) * rowGap + R + 18;
+    const span = (W - padX * 2) / COLS;
+    const wave = (x, r) => Math.sin((x / W) * Math.PI * 3 + r * 1.7) * R * 0.28;
+
+    const pts = [];
+    const marks = [];
+    let cum = 0;
+    const push = (x, y) => {
+      const last = pts[pts.length - 1];
+      if (last) cum += Math.hypot(x - last[0], y - last[1]);
+      pts.push([x, y]);
+    };
+
+    for (let r = 0; r < ROWS; r++) {
+      const y = top + r * rowGap;
+      const ltr = r % 2 === 0;
+      const x0 = ltr ? padX * 0.4 : W - padX * 0.4;
+      const x1 = ltr ? W - padX * 0.4 : padX * 0.4;
+      const steps = 28;
+      const order = [];
+      for (let c = 0; c < COLS; c++) order.push(ltr ? c : COLS - 1 - c);
+      for (let k = 0; k <= steps; k++) {
+        const x = x0 + ((x1 - x0) * k) / steps;
+        push(x, y + wave(x, r));
+        // registra a posição dos adesivos desta fileira quando o traço passa por eles
+        order.forEach((c) => {
+          const cx = padX + span * (c + 0.5);
+          const idx = r * COLS + c;
+          if (idx < beltTools.length && marks[idx] === undefined && (ltr ? x >= cx : x <= cx)) {
+            marks[idx] = { cum, x: cx, y: y + wave(cx, r) };
+          }
+        });
+      }
+      // laço na virada para a próxima fileira
+      if (r < ROWS - 1) {
+        const yN = top + (r + 1) * rowGap;
+        const sy = y + wave(x1, r), ey = yN + wave(x1, r + 1);
+        const out = ltr ? 1 : -1;
+        loopTurn(Math.min(rowGap * 0.62, padX + 14))  // o laço cabe na margem.forEach(([lx, ly]) => push(x1 + out * lx, sy + ly * (ey - sy)));
+      }
+    }
+
+    belt.style.height = `${H}px`;
+    belt.style.setProperty('--r', `${R}px`);
+    const svg = belt.querySelector('svg');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const d = Squiggle.toPath(pts);
+    beltPaths.forEach((path) => { path.setAttribute('d', d); path.setAttribute('pathLength', '1'); });
+
+    beltMarks = marks.map((m) => m.cum / cum);
+    beltTools.forEach((tool, i) => {
+      tool.style.left = `${marks[i].x}px`;
+      tool.style.top = `${marks[i].y}px`;
+      tool.style.setProperty('--rot', `${((i * 37) % 24) - 12}deg`); // inclinação "à mão"
+    });
+  }
+
+  function drawBelt() {
+    if (!belt) return;
+    let p = 1;
+    if (motion) {
+      const r = belt.getBoundingClientRect();
+      const vh = window.innerHeight;
+      p = clamp((vh * 0.88 - r.top) / (r.height * 0.95));
+    }
+    beltPaths.forEach((path) => Squiggle.setDraw(path, p));
+    beltTools.forEach((tool, i) => tool.classList.toggle('is-on', p >= beltMarks[i] - 0.01));
+  }
 
   // ---------- Rabiscos desenhados pela rolagem ----------
   // "scroll": desenha enquanto entra na tela; "long": acompanha a seção inteira;
@@ -132,16 +246,19 @@
       ticking = false;
       navState();
       if (motion) drawOnScroll();
+      drawBelt();
       hscroll();
     });
   }
 
   if (!motion) drawn.forEach((path) => Squiggle.setDraw(path, 1));
   if (hs) setupHScroll();
+  buildBelt();
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', () => {
     if (hs) setupHScroll();
+    buildBelt();
     onScroll();
   });
   window.addEventListener('load', () => {

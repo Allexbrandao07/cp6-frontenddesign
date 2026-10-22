@@ -1,10 +1,11 @@
 /* ==================================================================
    Eye zoom — do hero até a seção Sobre, passando pela pupila.
 
-   Linha do tempo (p = progresso da rolagem dentro de .zoom, 0 → 1):
-     0.00–0.10  textos do hero saem, rabiscos "desenrolam"
+   Linha do tempo (p = progresso da rolagem enquanto o palco está preso):
+     0.00–0.10  textos do hero saem, as fitas "desenrolam"
      0.04–0.50  o retrato amplia na direção da pupila (escala exponencial);
-                uma íris estilizada (rabiscos na paleta) e a pupila assumem
+                uma íris minimalista, com as cores e o reflexo do meu olho
+                na foto, assume quando a imagem real já estaria borrada
      0.50–0.95  túnel de anéis rabiscados vindo na direção da tela;
                 o portal no centro abre e revela a seção Sobre
      0.95–1.00  pausa com o portal aberto; depois a página segue normal
@@ -16,6 +17,7 @@
   const zoom = document.querySelector('[data-zoom]');
   if (!zoom || !window.Squiggle) return;
 
+  const NS = 'http://www.w3.org/2000/svg';
   const stage = zoom.querySelector('[data-zoom-stage]');
   const photo = zoom.querySelector('[data-zoom-photo]');
   const img = photo.querySelector('img');
@@ -44,9 +46,9 @@
     });
   });
 
-  // Olho esquerdo (da foto) em pixels da imagem original retrato.webp (1080 × 1080)
-  const EYE = { x: 512, y: 322, iris: 13, pupil: 5.2 };
-
+  // Olho esquerdo (da foto) em pixels da imagem retrato.webp (1080 × 1080):
+  // posição e proporção íris/pupila medidas na foto
+  const EYE = { x: 512, y: 322, iris: 10.5, pupil: 4.4 };
   const PALETTE = ['#F1913D', '#DF98F2', '#367FBE', '#F2380F', '#F2D6BE'];
 
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -69,95 +71,95 @@
       Squiggle.setDraw(path, easeOut(local) * (1 - unwind));
     });
   }
+  paintHeroSquiggles();
   if (!reduceMotion.matches) {
-    const start = performance.now();
-    (function tick(now) {
-      intro = clamp((now - start) / 2200);
-      paintHeroSquiggles();
-      if (intro < 1) requestAnimationFrame(tick);
-    })(start);
-  } else {
-    paintHeroSquiggles();
+    // começa quando o preloader sai (js/loader.js), junto com a queda das letras
+    (window.pageReady || Promise.resolve()).then(() => {
+      const start = performance.now();
+      (function tick(now) {
+        intro = clamp((now - start) / 2200);
+        paintHeroSquiggles();
+        if (intro < 1) requestAnimationFrame(tick);
+      })(start);
+    });
   }
 
-  // O zoom precisa de movimento liberado e de uma tela com altura mínima
+  // O efeito precisa de movimento liberado e de uma tela com altura mínima
   function canZoom() {
     return !reduceMotion.matches && window.innerHeight >= 480;
   }
-  if (!canZoom()) return;
+  if (reduceMotion.matches) return;
 
-  // ---------- Íris: fibras radiais rabiscadas na paleta ----------
+  const make = (parent, tag, attrs) => {
+    const el = document.createElementNS(NS, tag);
+    Object.entries(attrs || {}).forEach(([k, v]) => el.setAttribute(k, v));
+    parent.appendChild(el);
+    return el;
+  };
+
+  // =================================================================
+  // ÍRIS — minimalista, desenhada a partir do meu olho na foto
+  // (viewBox -100 -100 200 200; raio 98 = borda da íris)
+  // =================================================================
+  // Círculos concêntricos chapados, um por cor da paleta, de fora para dentro.
+  // A pupila (preta, .zoom__pupil) ocupa o centro: raio ≈ 41 = 98 × 4.4 / 10.5.
   (function buildIris() {
-    const NS = 'http://www.w3.org/2000/svg';
-    const rnd = Squiggle.random(42);
-    const make = (tag, attrs) => {
-      const el = document.createElementNS(NS, tag);
-      Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
-      iris.appendChild(el);
-      return el;
-    };
-    make('circle', { r: 99, fill: '#367FBE' });
-    make('circle', { r: 70, fill: '#F1913D', opacity: 0.85 });
-    for (let i = 0; i < 64; i++) {
-      const a = (i / 64) * Math.PI * 2 + rnd() * 0.05;
-      const pts = [];
-      for (let j = 0; j <= 8; j++) {
-        const r = 40 + (58 * j) / 8;
-        const wob = Math.sin(j * 1.7 + i) * 0.06 + (rnd() - 0.5) * 0.04;
-        pts.push([Math.cos(a + wob) * r, Math.sin(a + wob) * r]);
-      }
-      make('path', {
-        d: Squiggle.toPath(pts),
-        fill: 'none',
-        stroke: PALETTE[i % 4 === 0 ? 4 : i % 3 === 0 ? 1 : i % 2 === 0 ? 3 : 0],
-        'stroke-width': 1.6 + rnd() * 1.4,
-        'stroke-linecap': 'round',
-        opacity: 0.9
-      });
-    }
-    make('path', { d: Squiggle.wobblyCircle(98, 5, 0.015), fill: 'none', stroke: '#1C1714', 'stroke-width': 3 });
-    make('path', { d: Squiggle.wobblyCircle(44, 9, 0.04), fill: 'none', stroke: '#F2380F', 'stroke-width': 3 });
+    const IRIS_RINGS = [
+      { r: 98, fill: '#367FBE' }, // azul
+      { r: 83, fill: '#DF98F2' }, // lilás
+      { r: 68, fill: '#F1913D' }, // laranja
+      { r: 54, fill: '#F2380F' }  // vermelho-alaranjado
+    ];
+    IRIS_RINGS.forEach(({ r, fill }) => make(iris, 'circle', { r, fill }));
+    // contorno preto, como o da foto e das letras
+    make(iris, 'circle', { r: 98, fill: 'none', stroke: '#000000', 'stroke-width': 2 });
   })();
 
   // ---------- Túnel: anéis rabiscados (cada anel = 3 traços) ----------
   const RINGS = 9;
   const rings = [];
   (function buildTunnel() {
-    const NS = 'http://www.w3.org/2000/svg';
     for (let i = 0; i < RINGS; i++) {
-      const g = document.createElementNS(NS, 'g');
-      for (let s = 0; s < 3; s++) {
-        const p = document.createElementNS(NS, 'path');
-        p.setAttribute('d', Squiggle.wobblyCircle(40 + s * 2.2, i * 7 + s, 0.05 + s * 0.015));
-        p.setAttribute('stroke', PALETTE[(i + s) % 4]);
-        p.setAttribute('stroke-width', s === 0 ? 2.4 : 1.2);
-        p.setAttribute('opacity', s === 0 ? 1 : 0.7);
-        g.appendChild(p);
+      const g = make(tunnel, 'g');
+      for (let k = 0; k < 3; k++) {
+        make(g, 'path', {
+          d: Squiggle.wobblyCircle(40 + k * 2.2, i * 7 + k, 0.05 + k * 0.015),
+          stroke: PALETTE[(i + k) % 4],
+          'stroke-width': k === 0 ? 2.4 : 1.2,
+          opacity: k === 0 ? 1 : 0.7
+        });
       }
-      tunnel.appendChild(g);
       rings.push(g);
     }
   })();
 
-  root.classList.add('zoom-on');
-
   // ---------- Medidas ----------
-  let vw, vh, diag, box, P, irisR, pupilR, sMax;
+  // vw/vh: área visível. fxTop: quanto o palco é mais alto que a tela (só
+  // acontece com zoom no navegador); o palco rola isso antes de prender.
+  let vw, vh, diag, box, P, irisR, pupilR, sMax, fxTop, pinLength;
 
   function parsePosition(value) {
     const parts = (value || '50% 50%').split(' ');
-    const pct = (s) => (s && s.endsWith('%') ? parseFloat(s) / 100 : 0.5);
+    const pct = (v) => (v && v.endsWith('%') ? parseFloat(v) / 100 : 0.5);
     return [pct(parts[0]), pct(parts[1])];
   }
 
   function measure() {
     photo.style.transform = '';
+    vw = document.documentElement.clientWidth;
+    vh = window.innerHeight;
+    diag = Math.hypot(vw, vh);
+
+    // pista = altura do palco + a travessia; o palco prende alinhado pela base
+    const stageH = stage.offsetHeight;
+    fxTop = Math.max(0, stageH - vh);
+    pinLength = vh * 3.2;
+    stage.style.top = `${-fxTop}px`;
+    zoom.style.height = `${stageH + pinLength}px`;
+
     const sr = stage.getBoundingClientRect();
     const fr = photo.getBoundingClientRect();
     const ir = img.getBoundingClientRect();
-    vw = sr.width;
-    vh = sr.height;
-    diag = Math.hypot(vw, vh);
     box = { x: fr.left - sr.left, y: fr.top - sr.top };
 
     // object-fit: cover → onde a pupila cai dentro da caixa da imagem
@@ -177,8 +179,7 @@
 
   function update() {
     const r = zoom.getBoundingClientRect();
-    const total = r.height - vh;
-    const p = clamp(-r.top / total);
+    const p = clamp((-r.top - fxTop) / pinLength);
     if (p === lastP) return;
     lastP = p;
 
@@ -196,21 +197,22 @@
     const s = Math.exp(Math.log(sMax) * z);
     const m = easeOut(range(0, 0.5, z));
     const Tx = lerp(box.x + P.x, vw / 2, m);
-    const Ty = lerp(box.y + P.y, vh / 2, m);
-    const done = z >= 1;
+    const Ty = lerp(box.y + P.y, fxTop + vh / 2, m); // centro da área visível
+    const fy = Ty - fxTop; // o mesmo ponto nas coordenadas da camada de efeitos
     photo.style.transform = z > 0
       ? `translate3d(${Tx - box.x - P.x * s}px, ${Ty - box.y - P.y * s}px, 0) scale(${s})`
       : '';
-    photo.style.visibility = done ? 'hidden' : '';
+    photo.style.visibility = z >= 1 ? 'hidden' : '';
     photo.style.boxShadow = z > 0.02 ? 'none' : '';
 
+    // a íris assume quando a foto ampliada começaria a borrar (sem girar:
+    // o reflexo de luz fica parado, como num olho de verdade)
     const irisScale = (irisR * s) / 98;
-    const irisAlpha = range(0.26, 0.5, z);
-    iris.style.opacity = irisR * s > diag * 4 ? '0' : String(irisAlpha);
-    iris.style.transform = `translate3d(${Tx}px, ${Ty}px, 0) scale(${irisScale}) rotate(${z * 70}deg)`;
+    iris.style.opacity = irisR * s > diag * 4 ? '0' : String(range(0.22, 0.42, z));
+    iris.style.transform = `translate3d(${Tx}px, ${fy}px, 0) scale(${irisScale})`;
 
-    pupil.style.opacity = String(range(0.22, 0.42, z));
-    pupil.style.transform = `translate3d(${Tx}px, ${Ty}px, 0) scale(${(pupilR * s) / 50})`;
+    pupil.style.opacity = String(range(0.2, 0.38, z));
+    pupil.style.transform = `translate3d(${Tx}px, ${fy}px, 0) scale(${(pupilR * s) / 50})`;
 
     // 3) túnel de anéis + portal
     const t = range(0.5, 0.95, p);
@@ -256,21 +258,34 @@
     update();
   }
 
-  measure();
-  update();
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', () => {
-    if (!canZoom()) {
-      // a tela ficou baixa demais: volta para o fluxo normal
-      root.classList.remove('zoom-on');
-      [photo, iris, pupil, portal, ...fades].forEach((el) => el.removeAttribute('style'));
-      window.removeEventListener('scroll', onScroll);
-      unwind = 0;
-      paintHeroSquiggles();
-      return;
-    }
+  // Liga/desliga o efeito conforme a tela (o zoom do navegador muda a altura
+  // útil: com muito zoom a cena volta ao fluxo normal, e volta ao tirar o zoom)
+  let on = false;
+  function enable() {
+    on = true;
+    root.classList.add('zoom-on');
+    window.addEventListener('scroll', onScroll, { passive: true });
     refresh();
+  }
+  function disable() {
+    on = false;
+    root.classList.remove('zoom-on');
+    [zoom, stage, photo, iris, pupil, tunnel, portal, ...fades].forEach((el) => el.removeAttribute('style'));
+    window.removeEventListener('scroll', onScroll);
+    if (nav) nav.classList.remove('is-hidden');
+    unwind = 0;
+    paintHeroSquiggles();
+  }
+
+  if (canZoom()) enable();
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (!canZoom()) { if (on) disable(); return; }
+      if (!on) enable(); else refresh();
+    }, 100);
   });
-  if (!img.complete) img.addEventListener('load', refresh, { once: true });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+  if (!img.complete) img.addEventListener('load', () => on && refresh(), { once: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => on && refresh());
 })();

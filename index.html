@@ -13,17 +13,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="preload" href="assets/fonts/silver-crown.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/img/retrato.webp" as="image">
+  <link rel="preload" href="assets/img/logo-allex.png" as="image">
 
   <link rel="stylesheet" href="css/main.css">
   <script>
     // Ativa os estilos que dependem de JS antes do primeiro paint (evita "pulo" no layout)
-    document.documentElement.classList.add('js');
+    // "is-loading" segura as animações do hero até o preloader sair (js/loader.js)
+    document.documentElement.classList.add('js', 'is-loading');
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('motion');
     }
   </script>
 </head>
 <body>
+  <!-- ============ PRELOADER ============
+       Logo + quatro blocos da paleta. Cada bloco é 1/4 da barra de progresso
+       e se preenche conforme fontes e imagens do hero terminam de carregar. -->
+  <div class="loader" role="status" aria-live="polite" data-loader>
+    <svg class="loader__logo" viewBox="0 0 628 608" aria-hidden="true">
+      <path d="M255.5,606.5C254.2,606.3 252.6,606 252,606C250.9,606 249.5,605.6 246.3,604.5C245.7,604.3 244.6,603.9 244,603.7C243.4,603.5 242.4,603.2 241.8,603C239.9,602.6 230,597.4 228.7,596.2C228.2,595.8 226.3,594.2 224.3,592.7C220.4,589.7 214.1,583.1 211,578.7C209.9,577.1 208.4,575 207.7,574C206.2,571.9 204.4,568.5 201.1,562C198.6,556.8 198.6,556.8 196.6,551.5C196.3,550.8 195.8,549.5 195.5,548.7C194.2,545.4 194,544.8 193.6,543.2C193.3,542.2 192.8,540.5 192.5,539.3C191.7,536.4 191.2,534.5 190.5,532.5C189.6,529.3 189.6,529.3 192.8,528.5C194.3,528.2 196.2,527.7 197.2,527.5C198.1,527.3 200,526.8 201.5,526.5C203,526.2 204.8,525.7 205.6,525.5C206.5,525.2 207.4,525 207.8,525C208.1,525 209.2,524.8 210.1,524.5C212.5,523.9 214.9,523.3 216.5,523C217.2,522.9 218.6,522.6 219.5,522.3C220.4,522.1 222,521.7 223,521.5C224,521.3 225.6,520.9 226.5,520.7C229.3,520 232.1,519.4 233.9,519C236,518.6 236.5,518.8 236.8,520.4C236.9,521 237.2,522.2 237.5,523.2C237.7,524.1 238.2,525.7 238.5,526.8C239.7,531.2 240.2,532.9 241.5,535.8C241.7,536.4 242.2,537.4 242.4,538.2C243.8,541.7 244.5,543.2 246.5,546.5C249,550.8 252.4,554.3 255.8,556.5C258,557.8 259.2,558.3 263.2,559.3C265.2,559.8 270.5,559.8 273,559.2C279.9,557.7 279.4,557.8 282.7,556.4C284.3,555.7 285.6,555.2 287.7,554.3C289.9,553.4 292.8,552 295.5,550.5C296.6,549.9 298.3,549 299.2,548.5C300.2,548 301.1,547.5 301.2,547.3C301.7,546.4 303.3,547.5 304.1,549.3C304.2,549.6 304.6,550.3 305,550.8C305.4,551.4 305.8,552.1 306,552.5C306.1,552.9 306.7,553.7 307.1,554.4C307.6,555.1 308,555.7 308,555.8C308,555.9 312,562.7 316.9,570.9C326.4,586.7 326.9,587.6 326.6,587.8C326.6,587.9 325.6,588.4 324.6,589C323.5,589.5 321.8,590.5 320.8,591.1C319.7,591.6 317.9,592.6 316.7,593.2C315.5,593.8 314.4,594.5 314.2,594.6C314,594.8 311.1,596.1 307.7,597.5C304.3,598.9 301.2,600.2 300.9,600.4C300.6,600.5 299.5,600.9 298.4,601.3C296.7,601.8 295.6,602.2 290.8,603.6C289.9,603.8 288.5,604.3 287.7,604.5C285.9,605 282.3,605.7 277.3,606.5C272.9,607.2 259,607.2 255.5,606.5ZM28.2,596.8C28.1,596.7 28,497.3 28,376C28,180.5 28.1,154.8 28.5,149.7C28.8,146.5 29.2,143 29.5,142C29.8,140.9 30,139.7 30,139.3C30,138.9 30.6,136.8 31.4,134.7C32.1,132.6 32.8,130.5 33,130C33.6,128.1 37.3,121.3 39.3,118.5C44.1,111.5 53.2,103.4 60.3,99.5C64.7,97.2 66.6,96.2 67.3,96C67.8,95.8 69,95.4 70,95C74,93.5 78.8,92.2 82.3,91.8C85.6,91.4 85.3,92.7 85.3,78.2C85.3,65.4 85.3,65.4 84.6,64.7C84.2,64.3 83.7,64 83.5,64C82.5,64 79.6,62.4 77.1,60.6C74.1,58.3 70.9,54.4 69.7,51.3C68.2,47.7 68,47.1 67.8,44.7C67.3,39.5 67.9,35.8 69.5,32.6C69.8,32.1 70,31.5 70,31.2C70,30.6 73.6,25.8 75.2,24.3C78.4,21.4 81.8,19.6 86.2,18.5C88.8,17.8 93.9,17.8 96.5,18.5C100.7,19.6 105.6,22.2 108.2,24.8C109.7,26.4 112.1,30 113.1,32.3C114.7,36.1 115.1,38.9 114.9,43.4C114.5,50.4 111.2,56.4 105.2,60.8C103.6,62 102.1,63 101.8,63C101.4,63 100.9,63.2 98.3,64.5L97.5,65L97.5,78.1L97.5,91.2L99.7,91.6C107.6,93.1 108.4,93.4 112.7,95C113.7,95.4 114.8,95.8 115.1,95.9C115.7,96.1 119.7,98.1 122.3,99.5C130,103.7 138.5,111.5 143.7,119C145.9,122.2 149.5,129 150,130.8C150.2,131.4 150.7,133.1 151.3,134.7C151.8,136.2 152.4,138.4 152.7,139.5C152.9,140.6 153.3,142.5 153.6,143.8C154.1,146 154.2,162.4 154.2,371.5L154.2,596.8L129.3,596.8L104.5,596.8L104.3,444.2C104.2,360.2 104.1,291.5 104.1,291.4C104,291.4 98.4,291.4 91.6,291.4L79.2,291.5L79,444.2L78.8,596.8L53.6,596.9C39.8,597 28.3,596.9 28.2,596.8ZM351.2,596.6C351.1,596.4 351,482.5 351.1,343.7L351.2,91.2L414.2,91.2L477.2,91.2L477.2,116.5L477.2,141.8L439.6,141.9C414.9,142 402,142.1 402,142.3C402,142.5 402,164.6 402,191.5C402,218.4 402,240.5 402,240.7C402,240.9 410.7,241 426.9,241.1L451.8,241.2L451.8,266L451.8,290.8L426.9,290.9C410.7,291 402,291.1 402,291.3C402,291.5 402,349 402,419C402,489 402,546.5 402,546.7C402,546.9 414.9,547 439.6,547.1L477.2,547.2L477.2,572L477.2,596.8L414.2,596.9C364.1,597 351.3,596.9 351.2,596.6ZM501.5,596.6C501.2,595.7 501.6,351.2 501.9,347.3C502.1,345.2 502.4,343.1 502.6,342.5C502.8,341.9 503.2,340.3 503.5,338.8C504.1,336.2 505.1,332.8 505.6,331.7C505.8,331.4 506.2,330.6 506.5,329.8C506.8,329.1 507.3,328.1 507.5,327.6C507.8,327.1 508,326.6 508,326.4C508,326.2 508.4,325.4 508.9,324.6C509.4,323.8 509.9,323 510,322.8C510.1,322.7 511,321.2 512.1,319.6C513.1,318 514,316.6 514,316.5C514,316.4 513.1,315 512.1,313.4C511,311.8 510.1,310.3 510,310.2C509.9,310 509.4,309.2 508.9,308.4C508.4,307.6 508,306.8 508,306.6C508,306.4 507.8,305.9 507.5,305.4C507.3,304.9 506.8,303.9 506.5,303.3C506.2,302.6 505.8,301.5 505.5,300.9C504.5,298.6 504,297 504,296.2C504,295.8 503.8,294.8 503.5,294C502.6,290.8 502,287.7 501.8,283.5C501.6,281.1 501.5,236.9 501.5,185.2L501.5,91.2L526.8,91.1C546.8,91 552,91.1 552,91.4C552,91.6 552,133.6 552,184.7C552,274.8 552,277.6 552.6,280.6C553.2,283.4 554.3,285.6 555.8,287.2C557.2,288.5 559.6,289.8 562.1,290.4C564.7,291 564.9,291 567.3,290.4C572.2,289.3 576,285.7 577.2,281.2C577.3,280.6 577.5,237.6 577.6,185.7L577.8,91.2L602.2,91.1C615.6,91 626.8,91.1 627.2,91.2L628,91.3L628,185.5C628,251.6 627.9,279.9 627.6,280.6C627.4,281.1 627.2,283.1 627.1,285C627,288.4 626.4,291.5 625.5,294.6C625.2,295.5 625,296.5 625,296.9C625,297.3 624.8,298.2 624.5,298.9C624.2,299.6 623.7,300.7 623.5,301.3C623,302.3 622.5,303.5 621.5,305.8C621.3,306.3 621,307.1 620.8,307.3C620.6,308 620.3,308.5 617.5,312.7C616.3,314.6 615.2,316.3 615.2,316.5C615.2,316.7 616.3,318.4 617.5,320.3C620.3,324.5 620.6,325 620.8,325.7C621,325.9 621.3,326.7 621.5,327.2C622.5,329.5 623,330.7 623.5,331.7C623.7,332.3 624.2,333.4 624.5,334.1C624.8,334.8 625,335.7 625,336.1C625,336.5 625.2,337.5 625.5,338.4C626.4,341.5 627,344.6 627.1,348C627.2,349.9 627.4,351.9 627.6,352.4C627.9,353.1 628,389.4 628,475L628,596.7L627.2,596.8C626.8,596.9 615.6,597 602.2,596.9L577.8,596.8L577.7,474.8C577.5,407.7 577.3,352.4 577.2,351.8C576.7,350 575.7,348.1 574.3,346.5C573.5,345.7 572.8,345 572.6,345C572.5,345 571.7,344.6 570.9,344C570.1,343.5 568.4,342.8 567.2,342.5C564.9,342 564.7,342 562.1,342.6C559.5,343.2 556.9,344.6 555.8,346C554,348.1 553.1,350 552.6,352.7C552,355.3 552,363.8 552,475.8C552,542 552,596.4 552,596.6C552,597.2 501.7,597.2 501.5,596.6ZM275,283L275,30L300.2,30.1L325.5,30.2L325.5,283L325.5,535.8L300.2,535.9L275,536L275,283ZM192.2,505.8C192.1,505.7 192,391.8 192,252.8L192,0L217.5,-0L243,-0L242.9,252.9L242.8,505.8L217.6,505.9C203.8,506 192.3,505.9 192.2,505.8ZM104,240.9C104.3,240.5 104.3,228.9 104.3,196.1L104.2,151.8L103.3,150C102.1,147.5 101.1,146.3 98.6,144.6C95.8,142.7 92.3,141.9 89.8,142.6C88.9,142.8 87.8,143 87.5,143C86.1,143 82.7,145.6 81.3,147.7C78.9,151.4 79,148.9 79,197.5C79,221.3 79.1,241 79.2,241.1C79.3,241.2 84.9,241.3 91.5,241.3C101.4,241.3 103.7,241.2 104,240.9ZM18.7,213C11.8,212 4.1,202.7 1.7,192.5C1.3,190.8 0.8,188.6 0.5,187.6C-0.2,184.9 -0.2,175.1 0.5,172.4C0.8,171.4 1.3,169.2 1.7,167.5C3.2,161 7,154.5 11.4,150.8C14.3,148.4 17,147.1 19.5,146.9L21.5,146.8L21.5,180C21.5,212.9 21.5,213.2 20.8,213.2C20.5,213.2 19.5,213.2 18.7,213ZM161.5,212.9C161.4,212.7 161.4,197.7 161.4,179.7L161.5,146.8L163.6,146.9C168.3,147.2 173.7,151.4 177.7,158.1C178,158.5 179.2,161.2 180.5,164.2C181.2,165.7 182.1,169.8 182.7,173.5C183.2,176.5 182.9,186.8 182.2,189.5C180.8,195.3 181,194.7 179,199.1C178.5,200.3 178,201.4 178,201.5C178,201.6 177.1,202.9 176,204.5C173.6,207.8 170.8,210.3 167.8,211.8C165.4,213.1 161.8,213.7 161.5,212.9Z" fill-rule="evenodd"/>
+    </svg>
+    <div class="loader__bar" aria-hidden="true">
+      <span class="loader__block loader__block--red"><i data-loader-fill></i></span>
+      <span class="loader__block loader__block--lilac"><i data-loader-fill></i></span>
+      <span class="loader__block loader__block--blue"><i data-loader-fill></i></span>
+      <span class="loader__block loader__block--orange"><i data-loader-fill></i></span>
+    </div>
+    <span class="sr-only" data-loader-label>Carregando o portfólio…</span>
+  </div>
+
   <a class="skip-link" href="#sobre">Pular para o conteúdo</a>
 
   <!-- ============ NAV ============ -->
@@ -59,20 +77,22 @@
             <!-- Rabiscos do desktop: coordenadas do protótipo (1366 × 768).
                  Ordem = empilhamento: fantasmas no fundo, fitas coloridas por cima.
                  Cada fita colorida ganha uma "borda" branca via JS (eye-zoom.js). -->
-            <svg class="hero__ribbons hero__ribbons--desk" viewBox="0 0 1366 768" aria-hidden="true" data-hero-squiggles>
-              <path class="rb rb--ghost" pathLength="1" d="M-70 110C40 170 95 300 165 385C235 470 300 525 350 605C390 670 420 735 450 840"/>
+            <svg class="hero__ribbons hero__ribbons--desk" viewBox="0 0 1366 768" preserveAspectRatio="xMidYMid slice" aria-hidden="true" data-hero-squiggles>
+              <path class="rb rb--ghost" pathLength="1" d="M-400-60C-280 0-180 50-70 110C40 170 95 300 165 385C235 470 300 525 350 605C390 670 420 735 450 840"/>
+              <path class="rb rb--ghost" pathLength="1" d="M-150 820C-260 700-200 520-330 430C-420 370-380 250-260 260C-160 270-180 390-300 420"/>
+              <path class="rb rb--ghost" pathLength="1" d="M1700 40C1560 120 1600 300 1680 400C1760 500 1700 640 1560 600C1460 570 1520 450 1620 480"/>
               <path class="rb rb--ghost" pathLength="1" d="M20 860C25 700 105 595 205 595C300 595 330 690 270 745C210 800 120 770 112 695"/>
-              <path class="rb rb--ghost" pathLength="1" d="M-50 250C40 330 62 460 22 560C2 610-20 640-70 665"/>
+              <path class="rb rb--ghost" pathLength="1" d="M-50 250C40 330 62 460 22 560C2 610-20 640-70 665C-120 690-250 700-400 640"/>
               <path class="rb rb--ghost" pathLength="1" d="M930 55C995 95 1040 170 1050 240"/>
-              <path class="rb rb--ghost" pathLength="1" d="M1150 50C1235 115 1330 175 1440 195"/>
-              <path class="rb rb--ghost" pathLength="1" d="M1450 300C1340 330 1280 425 1300 525C1320 625 1260 690 1180 690C1120 690 1085 745 1095 850"/>
+              <path class="rb rb--ghost" pathLength="1" d="M1150 50C1235 115 1330 175 1440 195C1550 215 1680 260 1800 340"/>
+              <path class="rb rb--ghost" pathLength="1" d="M1800 200C1680 240 1560 270 1450 300C1340 330 1280 425 1300 525C1320 625 1260 690 1180 690C1120 690 1085 745 1095 850"/>
 
               <path class="rb rb--lilac"  pathLength="1" d="M470 215C500 245 560 262 610 250C660 238 670 190 650 140C635 100 600 70 565 85C525 102 530 170 580 200C640 236 720 215 780 195C850 170 905 115 965 45"/>
-              <path class="rb rb--lilac"  pathLength="1" d="M1060 590C1110 660 1180 720 1260 728C1320 734 1352 690 1347 640C1342 595 1305 585 1295 620C1285 660 1330 722 1440 765"/>
-              <path class="rb rb--red"    pathLength="1" d="M-50 185C0 240 50 280 130 282C200 284 240 240 300 238C340 236 370 245 430 250"/>
-              <path class="rb rb--orange" pathLength="1" d="M988 115C995 152 1040 175 1110 172C1200 168 1300 140 1440 150"/>
+              <path class="rb rb--lilac"  pathLength="1" d="M1060 590C1110 660 1180 720 1260 728C1320 734 1352 690 1347 640C1342 595 1305 585 1295 620C1285 660 1330 722 1440 765C1550 808 1680 830 1800 900"/>
+              <path class="rb rb--red"    pathLength="1" d="M-400-60C-260 20-100 130-50 185C0 240 50 280 130 282C200 284 240 240 300 238C340 236 370 245 430 250"/>
+              <path class="rb rb--orange" pathLength="1" d="M988 115C995 152 1040 175 1110 172C1200 168 1300 140 1440 150C1580 160 1700 200 1800 260"/>
               <path class="rb rb--red"    pathLength="1" d="M690 455C720 500 760 545 830 570C880 588 930 585 980 570"/>
-              <path class="rb rb--blue"   pathLength="1" d="M-90 265C-20 200 60 150 130 140C175 135 200 160 220 200C245 250 260 320 300 330C340 340 380 300 430 280C480 260 495 200 470 170C445 140 395 155 385 205C375 255 410 300 470 308C540 318 620 300 690 288"/>
+              <path class="rb rb--blue"   pathLength="1" d="M-420 560C-300 450-160 330-90 265C-20 200 60 150 130 140C175 135 200 160 220 200C245 250 260 320 300 330C340 340 380 300 430 280C480 260 495 200 470 170C445 140 395 155 385 205C375 255 410 300 470 308C540 318 620 300 690 288"/>
               <path class="rb rb--orange" pathLength="1" d="M112 428C160 400 230 390 280 410C330 430 345 500 310 540C280 570 230 555 222 510C214 465 250 440 300 445C340 450 365 470 378 500C392 540 410 570 440 572C470 574 490 540 488 500C486 470 500 470 530 490C570 515 600 550 608 590C612 610 612 625 612 638"/>
             </svg>
 
@@ -122,7 +142,7 @@
           </div>
         </section>
 
-        <!-- Camadas do zoom: íris estilizada, pupila e túnel (desenhadas pelo JS) -->
+        <!-- Camadas do zoom: íris minimalista, pupila e túnel (desenhadas pelo JS) -->
         <div class="zoom__fx" aria-hidden="true">
           <svg class="zoom__iris" viewBox="-100 -100 200 200" data-zoom-iris></svg>
           <div class="zoom__pupil" data-zoom-pupil></div>
@@ -131,93 +151,138 @@
 
         <!-- Portal: o começo da seção Sobre, revelado pelo centro do túnel -->
         <section class="portal section" id="sobre" aria-labelledby="sobre-titulo" data-zoom-portal>
-          <div class="container">
-            <p class="kicker">01 — Sobre</p>
-            <h2 class="section-title" id="sobre-titulo">
-              <span class="display">O que eu faço?</span>
-              <span class="script">(e amo fazer)</span>
-            </h2>
-            <svg class="title-squiggle" viewBox="0 0 600 120" aria-hidden="true">
-              <path class="sq sq--red" data-sq="loops:4;ratio:2;wave:.25;seed:2" data-box="10 10 580 100" data-rot="0" data-draw="portal"/>
-            </svg>
-            <p class="portal__lead">
-              Sou formado em Ciência de Dados pela FIAP e hoje curso Engenharia de Software.
-              Construo soluções que unem <em>dados</em>, <em>nuvem</em> e <em>inteligência artificial</em> —
-              do pipeline ao produto que alguém usa de verdade.
-            </p>
+          <svg class="portal__ghosts" aria-hidden="true" data-responsive>
+            <path class="sq sq--mist" data-sq="loops:3;ratio:2.5;wave:.3;seed:21" data-box="-0.12 0.42 0.42 0.7" data-box-sm="-0.3 0.55 1 0.5" data-rot="-35"/>
+            <path class="sq sq--mist" data-sq="loops:3;ratio:2.3;wave:.35;seed:34" data-box="0.7 -0.15 0.42 0.75" data-box-sm="0.4 -0.1 0.9 0.35" data-rot="65"/>
+          </svg>
+          <div class="container portal__grid">
+            <div class="portal__text">
+              <p class="kicker">01 — Sobre</p>
+              <div class="portal__title">
+                <!-- fitas atrás do título (viewBox em unidades do título: ele ocupa 0 0 470 120) -->
+                <svg class="portal__ribbons" viewBox="-160 -60 820 260" aria-hidden="true">
+                  <path class="sq sq--lilac"  data-draw="portal" pathLength="1" d="M180-10C200-50 260-55 280-25C300 5 260 30 240 10C220-10 260-45 320-40C380-35 420 0 470 10C500 15 520 5 535-12"/>
+                  <path class="sq sq--orange" data-draw="portal" pathLength="1" d="M240 118C268 98 300 106 306 128C312 150 282 164 270 144C258 124 296 110 330 118C364 126 372 154 354 164C336 174 320 152 338 136C356 120 400 124 422 146"/>
+                  <path class="sq sq--blue"   data-draw="portal" pathLength="1" d="M-175 75C-115 22-45 2-12 42C20 82-2 116 58 124C118 132 140 84 190 76C240 68 262 106 232 124C202 142 160 122 180 96C200 70 282 86 345 116"/>
+                </svg>
+                <h2 class="section-title section-title--outlined" id="sobre-titulo">
+                  <span class="display">O que eu faço?</span>
+                </h2>
+              </div>
+              <p class="portal__lead">
+                Sou <strong class="hl hl--blue">Engenheiro de IA</strong>, formado em <strong class="hl hl--lilac">Ciência de Dados</strong>
+                e estudante de <strong class="hl hl--orange">Engenharia de Software</strong>. Na prática: pego dados
+                bagunçados e transformo em algo útil — um modelo que acerta, um painel que ajuda a decidir,
+                um produto que alguém usa de verdade.
+              </p>
+            </div>
+            <figure class="portal__photo">
+              <img src="assets/img/sobre-setup.webp" width="439" height="289" loading="lazy"
+                   alt="Mesa de trabalho com monitor exibindo código e um computador com iluminação colorida.">
+            </figure>
           </div>
         </section>
       </div>
     </div>
 
-    <!-- ============ SOBRE (continuação) ============ -->
+    <!-- ============ SOBRE (continuação, fundo laranja) ============ -->
     <section class="about section" aria-label="Mais sobre mim">
-      <div class="container about__grid">
-        <div class="about__bio" data-reveal>
-          <p>
-            Tenho interesse em análise de dados, Inteligência Artificial, Machine Learning e Deep Learning.
-            Ao longo da formação e de projetos práticos, desenvolvi competências em Python, SQL, Power BI,
-            Docker e soluções em nuvem — com foco em <strong>Oracle Cloud Infrastructure</strong> e
-            <strong>Microsoft Azure</strong> —, além de automação e integração de dados aplicadas a projetos com IA.
-          </p>
-          <p>
-            Tenho um perfil colaborativo, gosto de resolver problemas e estou sempre ampliando o que sei.
-            Acredito na tecnologia — especialmente na IA — como ferramenta de transformação, e direciono
-            meus esforços para projetos que gerem impacto real.
-          </p>
+      <div class="container">
+        <div class="about__grid">
+          <div class="about__bio" data-reveal>
+            <p>
+              Tenho interesse em análise de dados, Inteligência Artificial, Machine Learning e Deep Learning.
+              Ao longo da formação e de projetos práticos, desenvolvi competências em Python, SQL, Power BI,
+              Docker e soluções em nuvem — com foco em <strong>Oracle Cloud Infrastructure</strong> e
+              <strong>Microsoft Azure</strong> —, além de automação e integração de dados aplicadas a projetos com IA.
+            </p>
+            <p>
+              Tenho um perfil colaborativo, gosto de resolver problemas e estou sempre ampliando o que sei.
+              Acredito na tecnologia — especialmente na IA — como ferramenta de transformação, e direciono
+              meus esforços para projetos que gerem impacto real.
+            </p>
+          </div>
+
+          <div class="about__stack" data-reveal>
+            <h3 class="label">Ferramentas</h3>
+            <!-- Os ícones são adesivos presos numa fita com laços (js/main.js monta a fita,
+                 posiciona os adesivos e os faz "grudar" conforme a rolagem) -->
+            <div class="toolbelt" data-toolbelt>
+              <svg class="toolbelt__ribbon" aria-hidden="true">
+                <path class="toolbelt__outline" data-toolbelt-path/>
+                <path class="toolbelt__fill" data-toolbelt-path/>
+              </svg>
+              <ul class="toolbelt__list" role="list">
+                <li class="tool" style="--i:0" tabindex="0"><img src="assets/icons/python.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Python</span></li>
+                <li class="tool" style="--i:1" tabindex="0"><img src="assets/icons/sql-developer.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">SQL Developer</span></li>
+                <li class="tool" style="--i:2" tabindex="0"><img src="assets/icons/data-modeler.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Data Modeler</span></li>
+                <li class="tool" style="--i:3" tabindex="0"><img src="assets/icons/oracle-cloud.png" alt="" width="83" height="44" loading="lazy"><span class="tool__name">Oracle Cloud</span></li>
+                <li class="tool" style="--i:4" tabindex="0"><img src="assets/icons/azure-sql.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Azure SQL</span></li>
+                <li class="tool" style="--i:5" tabindex="0"><img src="assets/icons/azure.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Azure</span></li>
+                <li class="tool" style="--i:6" tabindex="0"><img src="assets/icons/hadoop.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Hadoop</span></li>
+                <li class="tool" style="--i:7" tabindex="0"><img src="assets/icons/airflow.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Airflow</span></li>
+                <li class="tool" style="--i:8" tabindex="0"><img src="assets/icons/docker.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Docker</span></li>
+                <li class="tool" style="--i:9" tabindex="0"><img src="assets/icons/power-bi.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Power BI</span></li>
+                <li class="tool" style="--i:10" tabindex="0"><img src="assets/icons/pandas.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Pandas</span></li>
+                <li class="tool" style="--i:11" tabindex="0"><img src="assets/icons/scikit-learn.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">scikit-learn</span></li>
+                <li class="tool" style="--i:12" tabindex="0"><img src="assets/icons/keras.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Keras</span></li>
+                <li class="tool" style="--i:13" tabindex="0"><img src="assets/icons/databricks.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">Databricks</span></li>
+                <li class="tool" style="--i:14" tabindex="0"><img src="assets/icons/n8n.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">n8n</span></li>
+                <li class="tool" style="--i:15" tabindex="0"><img src="assets/icons/javascript.svg" alt="" width="44" height="44" loading="lazy"><span class="tool__name">JavaScript</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <div class="about__facts" data-reveal>
-          <div class="fact"><span class="fact__num display">40k+</span><span class="fact__label">clientes segmentados no Data Hive</span></div>
-          <div class="fact"><span class="fact__num display">5</span><span class="fact__label">pessoas no time que construiu o Revi</span></div>
-          <div class="fact"><span class="fact__num display">79%</span><span class="fact__label">de acurácia máxima no KNN do Titanic</span></div>
-        </div>
-
-        <div class="about__skills" data-reveal>
-          <h3 class="label">O que faço</h3>
-          <ul class="skills-cloud">
-            <li>Ciência de Dados</li>
-            <li>Machine Learning</li>
-            <li>Deep Learning</li>
-            <li>Engenharia de Dados</li>
-            <li>Cloud (Azure &amp; OCI)</li>
-            <li>BI &amp; Dashboards</li>
-            <li>Automação</li>
-            <li>Front-end</li>
-          </ul>
-        </div>
-
-        <div class="about__stack" data-reveal>
-          <h3 class="label">Ferramentas</h3>
-          <ul class="chips">
-            <li class="chip chip--blue">Python</li>
-            <li class="chip chip--orange">SQL</li>
-            <li class="chip chip--lilac">Power BI</li>
-            <li class="chip chip--blue">Docker</li>
-            <li class="chip chip--red">Azure</li>
-            <li class="chip chip--orange">Oracle Cloud</li>
-            <li class="chip chip--lilac">Databricks</li>
-            <li class="chip chip--blue">Data Factory</li>
-            <li class="chip chip--red">Airflow</li>
-            <li class="chip chip--orange">Hadoop</li>
-            <li class="chip chip--lilac">scikit-learn</li>
-            <li class="chip chip--blue">Pandas</li>
-            <li class="chip chip--red">Keras</li>
-            <li class="chip chip--orange">HTML · SCSS · JS</li>
-          </ul>
+        <div class="certs">
+          <div class="certs__head" data-reveal>
+            <h3 class="certs__title">Certificações: <span class="script">(e contando)</span></h3>
+            <svg class="title-squiggle certs__squiggle" viewBox="0 0 600 120" aria-hidden="true">
+              <path class="sq sq--ink" data-sq="loops:5;ratio:2.1;wave:.25;seed:77" data-box="10 10 580 100" data-rot="0" data-draw="scroll"/>
+            </svg>
+          </div>
+          <ol class="certs__list" role="list">
+            <li class="cert cert--lilac" data-reveal>
+              <div class="cert__art" aria-hidden="true">
+                <span class="cert__logo"><img src="assets/icons/openai.svg" alt="" width="56" height="56"></span>
+                <svg class="cert__squiggle" viewBox="0 0 300 80"><path class="sq" data-sq="loops:3;ratio:2.3;wave:.3;seed:41" data-box="0 8 300 64" data-rot="0"/></svg>
+              </div>
+              <div class="cert__body">
+                <p class="cert__issuer">OpenAI</p>
+                <h4 class="cert__name">Codex Solutions Practitioner</h4>
+                <p class="cert__date">Emitido em ago. de 2026 · expira em ago. de 2027</p>
+                <ul class="cert__skills" role="list"><li>Codex</li><li>IA generativa</li></ul>
+              </div>
+            </li>
+            <li class="cert cert--blue" data-reveal>
+              <div class="cert__art" aria-hidden="true">
+                <span class="cert__logo cert__logo--photo"><img src="assets/img/certificados/alura.png" alt="" width="72" height="72"></span>
+                <svg class="cert__squiggle" viewBox="0 0 300 80"><path class="sq" data-sq="loops:4;ratio:2;wave:.3;seed:52" data-box="0 8 300 64" data-rot="0"/></svg>
+              </div>
+              <div class="cert__body">
+                <p class="cert__issuer">Alura</p>
+                <h4 class="cert__name">Flash Skills: automação de processos com n8n e IA</h4>
+                <p class="cert__date">Emitido em set. de 2025</p>
+                <ul class="cert__skills" role="list"><li>n8n</li><li>Automação de processos</li></ul>
+              </div>
+            </li>
+            <li class="cert cert--red" data-reveal>
+              <div class="cert__art" aria-hidden="true">
+                <span class="cert__logo"><img src="assets/icons/aws.svg" alt="" width="56" height="56"></span>
+                <svg class="cert__squiggle" viewBox="0 0 300 80"><path class="sq" data-sq="loops:3;ratio:2.6;wave:.35;seed:63" data-box="0 8 300 64" data-rot="0"/></svg>
+              </div>
+              <div class="cert__body">
+                <p class="cert__issuer">Amazon Web Services (AWS)</p>
+                <h4 class="cert__name">AWS Educate Getting Started with Databases</h4>
+                <p class="cert__date">Emitido em mai. de 2025</p>
+                <ul class="cert__skills" role="list"><li>Cloud</li></ul>
+              </div>
+            </li>
+          </ol>
+          <a class="btn btn--ink certs__more" href="https://www.linkedin.com/in/%C3%A1llex-brand%C3%A3o/details/certifications/" target="_blank" rel="noopener">Ver credenciais no LinkedIn <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
-
-    <!-- Faixa de skills: duas fitas em sentidos opostos -->
-    <div class="ribbons" aria-hidden="true">
-      <div class="ribbon ribbon--blue"><div class="ribbon__track" data-marquee>
-        <span>Python</span><span>Machine Learning</span><span>Azure</span><span>Power BI</span><span>Deep Learning</span><span>SQL</span><span>Docker</span><span>Oracle Cloud</span>
-      </div></div>
-      <div class="ribbon ribbon--orange"><div class="ribbon__track ribbon__track--reverse" data-marquee>
-        <span>Dados</span><span>Produto</span><span>Nuvem</span><span>IA</span><span>Ritmo</span><span>Curiosidade</span><span>Pipeline</span><span>Front-end</span>
-      </div></div>
-    </div>
 
     <!-- ============ PROJETOS ============ -->
     <section class="projects section" id="projetos" aria-labelledby="projetos-titulo">
@@ -534,6 +599,7 @@
     <div class="viewer__content" data-viewer-content></div>
   </dialog>
 
+  <script src="js/loader.js"></script>
   <script src="js/squiggle.js"></script>
   <script src="js/eye-zoom.js"></script>
   <script src="js/main.js"></script>

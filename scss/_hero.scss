@@ -11,34 +11,36 @@
 
 .zoom__fx { display: none; }
 
+// A altura da pista (.zoom) e o "top" do palco são definidos pelo JS:
+// o palco tem a altura do hero, que pode passar da tela quando o
+// usuário dá zoom no navegador. Nesse caso o palco rola até o fim e só
+// então prende — por isso as camadas do efeito ficam ancoradas embaixo.
 html.zoom-on {
-  .zoom { height: 420vh; height: 420svh; }
-
   .zoom__stage {
     position: sticky;
     top: 0;
-    height: 100vh;
-    height: 100svh;
     overflow: hidden;
   }
-
-  .hero { height: 100%; }
 
   .zoom__fx {
     display: block;
     position: absolute;
-    inset: 0;
+    inset: auto 0 0;
+    height: 100vh;
+    height: 100svh;
     z-index: 5;
     pointer-events: none;
   }
 
   .portal {
     position: absolute;
-    inset: 0;
+    inset: auto 0 0;
+    height: 100vh;
+    height: 100svh;
     z-index: 6;
     display: flex;
     align-items: center;
-    padding-block: $nav-h 2rem;
+    padding-block: $nav-h calc(var(--peek) + 2rem);
     clip-path: circle(0 at 50% 50%);
     visibility: hidden;
   }
@@ -62,6 +64,7 @@ html.zoom-on {
   overflow: visible;
 }
 
+// pupila: o preto da paleta
 .zoom__pupil {
   width: 100px;
   height: 100px;
@@ -87,21 +90,22 @@ html.zoom-on {
 
 // =================================================================
 // HERO — reprodução do protótipo (quadro de 1366 × 768)
-// O quadro escala para caber na tela (1u = 1px do protótipo) e fica
-// centralizado; os rabiscos "vazam" além dele para preencher as bordas.
+// 1u = 1px do protótipo. O valor de --u vem em degraus fixos de px
+// (ver _base.scss), então o zoom do navegador amplia e reduz o hero
+// como o resto da página. O quadro fica centralizado e os rabiscos
+// "vazam" além dele para preencher as bordas.
 // =================================================================
 $u: var(--u);
 
 .hero {
   position: relative;
   height: 100vh;
-  height: 100svh;
+  // 740u = até a base dos botões; a faixa de baixo do quadro (fitas) pode sobrar
+  height: max(100svh, calc(740 * #{$u}));
   overflow: hidden;
   background: $white;
-  container-type: size;
 
   &__art {
-    --u: min(calc(100cqw / 1366), calc(100cqh / 768));
     position: absolute;
     // em telas mais "altas" que 16:9 o quadro centraliza na vertical
     top: calc(50% - 384 * #{$u});
@@ -221,28 +225,28 @@ $u: var(--u);
   }
 
   // =================================================================
-  // Celular e telas em retrato: composição empilhada
+  // Fora do quadro: abaixo de 1280px CSS (janela estreita ou zoom alto)
+  // o quadro de 1366u não cabe, e o hero vira um layout em fluxo com
+  // tamanhos em px/rem — que continuam crescendo com o zoom.
   // =================================================================
-  @media (max-width: $bp-md - 0.02px), (orientation: portrait) {
+  @media (max-width: $bp-hero - 0.02px), (orientation: portrait) {
+    height: auto;
+
     &__art {
       position: relative;
       top: auto;
       left: auto;
       width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      padding: calc(#{$nav-h} + 2cqh) $gutter clamp(1.25rem, 4cqh, 2.5rem);
+      height: auto;
+      min-height: 100vh;
+      min-height: 100svh;
+      padding: calc(#{$nav-h} + 16px) $gutter 24px;
     }
-
-    &__ribbons--desk { display: none; }
-    &__ribbons--mob { display: block; }
 
     &__name {
       position: relative;
       left: auto;
       top: auto;
-      width: min(100%, 30cqh * 1.58);
       height: auto;
       aspect-ratio: 640 / 405;
     }
@@ -251,11 +255,6 @@ $u: var(--u);
       position: relative;
       left: auto;
       top: auto;
-      align-self: flex-end;
-      width: min(64cqw, 33cqh);
-      height: min(64cqw, 33cqh);
-      // o espaço livre se divide entre nome → foto e foto → texto
-      margin: auto 3cqw 18px 0; // 18px: espaço para o círculo azul deslocado
       border-width: 2px;
       box-shadow: 4px 12px 0 2px $blue, 4px 12px 0 4px $ink;
     }
@@ -265,12 +264,10 @@ $u: var(--u);
       left: auto;
       top: auto;
       width: auto;
-      max-width: 34rem;
-      margin-top: auto;
     }
 
     &__lead {
-      font-size: clamp(1rem, 4.4cqw, 1.35rem);
+      font-size: 1.125rem;
       line-height: 1.3;
       letter-spacing: -0.035em;
     }
@@ -283,6 +280,69 @@ $u: var(--u);
       padding: 0 1.25rem;
       border-width: 2px;
       font-size: 0.8rem;
+    }
+  }
+
+  // ---------- Paisagem intermediária (900–1279px): duas colunas ----------
+  @media (min-width: $bp-md) and (max-width: $bp-hero - 0.02px) and (orientation: landscape) {
+    &__art {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      grid-template-rows: 1fr auto;
+      align-items: center;
+      gap: 32px 48px;
+      padding-bottom: 40px;
+    }
+
+    // as fitas do desktop viram um fundo que cobre a área toda
+    &__ribbons--desk { inset: 0; }
+
+    &__name {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: end;
+      width: min(100%, 600px);
+    }
+
+    &__photo {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      justify-self: center;
+      width: min(100%, 380px);
+      height: auto;
+      aspect-ratio: 1;
+    }
+
+    &__intro {
+      grid-column: 1;
+      grid-row: 2;
+      max-width: 460px;
+    }
+  }
+
+  // ---------- Celular e telas em retrato: empilhado ----------
+  @media (max-width: $bp-md - 0.02px), (orientation: portrait) {
+    &__art {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__ribbons--desk { display: none; }
+    &__ribbons--mob { display: block; }
+
+    &__name { width: min(100%, 520px); }
+
+    &__photo {
+      align-self: flex-end;
+      width: min(62vw, 260px);
+      height: min(62vw, 260px);
+      // o espaço livre se divide entre nome → foto e foto → texto
+      margin: auto 12px 18px 0; // 18px: espaço para o círculo azul deslocado
+    }
+
+    &__intro {
+      max-width: 34rem;
+      margin-top: auto;
     }
   }
 }
@@ -311,18 +371,4 @@ $u: var(--u);
   from { transform: translateY(-40%); opacity: 0; }
 }
 
-// =================================================================
-// PORTAL — início da seção Sobre (dentro do palco do zoom)
-// =================================================================
-.portal {
-  background: $white;
-
-  &__lead {
-    max-width: 52ch;
-    margin-top: clamp(1.25rem, 3svh, 2rem);
-    font-size: clamp(1.1rem, 1.9vw, 1.6rem);
-    line-height: 1.5;
-
-    em { box-shadow: inset 0 -0.35em 0 color.change($orange, $alpha: 0.55); }
-  }
-}
+// O conteúdo do portal (parte 1 do Sobre) está em _about.scss.

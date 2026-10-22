@@ -1,12 +1,10 @@
 @use "sass:color";
 @use "tokens" as *;
 
-// Unidade do protótipo (1366 × 768): 1u = 1px do protótipo na tela atual.
-// A nav usa a viewport; o hero usa o próprio container (ver _hero.scss).
+// Unidade do protótipo (1366 × 768), a mesma do hero: --u em _base.scss
 $u: var(--u);
 
 .nav {
-  --u: min(calc(100vw / 1366), calc(100vh / 768));
   position: fixed;
   inset: 0 0 auto;
   z-index: 50;
@@ -109,8 +107,9 @@ $u: var(--u);
     &:nth-of-type(3) { top: 26px; }
   }
 
-  // ---------- celular / tablet ----------
-  @include down($bp-md) {
+  // ---------- celular / tablet / janelas estreitas (ou com zoom) ----------
+  // mesmo ponto de quebra do hero: abaixo dele a nav em 1u não cabe
+  @include down($bp-hero) {
     height: $nav-h;
     padding: 0 $gutter;
 

@@ -21,6 +21,24 @@
   --paper: #{$paper};
   --nav-h: #{$nav-h};
   --gutter: #{$gutter};
+
+  // ---------- Unidade do protótipo (1u = 1px do quadro de 1366 × 768) ----------
+  // Valor FIXO em px, nunca uma conta com vw/vh: o zoom do navegador
+  // (Ctrl + / Ctrl −) encolhe a viewport em px CSS na mesma proporção,
+  // então qualquer regra de "encaixar na tela" anulava o zoom. Com px fixo
+  // o hero cresce com o zoom e, quando deixa de caber (< 1280px CSS), o
+  // layout passa para a composição empilhada (ver _hero.scss).
+  --u: 1px;
+
+  // Telas baixas (barra do navegador, notebooks): degraus para que o conteúdo
+  // útil do hero (até a base dos botões, ~740u) caiba sem rolar com zoom 100%.
+  // Cada degrau usa a MENOR altura da faixa: ex. 721px / 740 ≈ 0.97.
+  @media (max-height: 760px) { --u: 0.97px; }
+  @media (max-height: 720px) { --u: 0.92px; }
+  @media (max-height: 680px) { --u: 0.865px; }
+  @media (max-height: 640px) { --u: 0.81px; }
+  @media (max-height: 600px) { --u: 0.755px; }
+  @media (max-height: 560px) { --u: 0.7px; }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
