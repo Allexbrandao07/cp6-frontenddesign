@@ -2,8 +2,8 @@
 
 **Checkpoint 6 · Vibecoding** — landing page de portfólio construída com IA em **HTML, SCSS e JavaScript puros**.
 
-- **Deploy:** _(preencher após publicar)_
-- **Repositório:** _(preencher)_
+- **Deploy:** [allex-brandao.vercel.app](https://allex-brandao.vercel.app/)
+- **Repositório:** [github.com/Allexbrandao07/cp6-frontenddesign](https://github.com/Allexbrandao07/cp6-frontenddesign)
 
 ---
 
@@ -30,6 +30,7 @@ npm run build:css    # build final, minificado
 | `js/main.js` | Menu, revelação no scroll, fita das ferramentas, fitas de Projetos e Trajetória, galerias, visualizador, gráfico do KNN, rolagem horizontal |
 | `assets/` | Fotos otimizadas (WebP), logo, fonte Silver Crown, ícones das ferramentas (`assets/icons/`), logos das certificações e da trajetória |
 | `docs/referencias/` | As imagens de referência citadas abaixo |
+| `assets/favicon/` | Favicon (`.ico`, 32px e 192px) e ícone da tela inicial do iOS |
 
 ---
 
@@ -52,6 +53,8 @@ npm run build:css    # build final, minificado
 | 13 | `docs/referencias/prototipo-projetos.png`: meu protótipo da seção Projetos, com zoom reduzido (rodada 15) | Seção começando colada no bloco laranja, conteúdo numa coluna central mais estreita, "PROJETOS" com "(alguns)" como expoente, tagline em Inter bold na cor do projeto, rabiscos fantasma no fundo e uma fita grossa na margem esquerda | Projetos (a fita que acompanha a rolagem e muda de cor) |
 | 14 | `docs/referencias/linkedin-experiencia.png` e `linkedin-formacao.png`, e os logos de FIAP, Oaktech e NTT DATA (rodada 17) | Cargos, instituições e períodos exatos, além dos logos oficiais | Trajetória |
 | 15 | `docs/referencias/prototipo-fora-do-codigo.png`: meu protótipo da seção Fora do código (rodada 20) | Fundo branco com rabiscos fantasma, título com o comentário em script cruzando a base das letras, e as fotos numa faixa de painéis coloridos com cantos arredondados e uma linha preta deslocada embaixo | Fora do código |
+| 16 | `docs/referencias/prototipo-contato.png`: meu protótipo da seção de contato (rodada 23) | Tela dividida: painel vermelho com rabiscos claros, "COMO ME ENCONTRAR" com uma onda branca e quatro ícones redondos das redes; à direita a foto de boné, separada por uma faixa branca | Contato |
+| 17 | `docs/referencias/favicon-referencia.png`: o favicon que desenhei (rodada 25) | O "A" com antena do meu logo sozinho, com a barrinha nas quatro cores da paleta embaixo (a mesma do preloader) | Ícone da aba do navegador e da tela inicial do celular |
 
 ---
 
@@ -88,7 +91,7 @@ npm run build:css    # build final, minificado
 3. **Projetos:** Revi, Data Hive, TAMA Drums Brasil e Titanic × KNN, com imagens, deploy e vídeos, numa coluna central. Na margem esquerda, uma fita com laços se desenha com a rolagem e assume a cor do projeto na tela. Só o Titanic aponta para o GitHub, por ser um modelo sem interface (os gráficos do notebook estão na página).
 4. **Trajetória:** bloco lilás com formação e experiência profissional em ordem cronológica (FIAP Ciência de Dados → Oaktech → FIAP Engenharia de Software → NTT DATA), cada item com o ano, o logo, o cargo e o período. Na margem direita, uma fita branca se desenha com a rolagem.
 5. **Fora do código:** fundo branco, um texto sobre o que gosto de fazer no tempo livre e as fotos (voz, bateria, Palmeiras) numa faixa de painéis coloridos com rolagem horizontal no desktop; no hover, cada foto ganha a cor do seu painel.
-6. **Contato:** e-mail, LinkedIn, GitHub e Instagram.
+6. **Contato:** tela dividida, com o painel vermelho "Como me encontrar" e os ícones de e-mail, LinkedIn, GitHub e Instagram (clique abre a rede; o hover mostra o usuário) ao lado da foto.
 
 ---
 
@@ -307,6 +310,54 @@ Tá top. Só nao gostei desse subtitulos embaixo, troque pra algo menos comercia
 de jeito nenhum isso. Lá ele
 ```
 
+**Ajuste 18: Seção de contato** (enviado junto com `docs/referencias/prototipo-contato.png`)
+
+```text
+Certo, vamos ajustar agora a última seção "Vamos Conversar?"
+
+Tem aqui a referencia pra voce seguir. Tenha em mente que cada widget das minhas redes tem que redirecionar quando clicado e quando o mouse for passado por cima de cada um tem que aparecer o meu username de cada um (que nem tem nas ferramentas lá na seção de "sobre")
+```
+
+**Ajuste 19: Onda completa e rabiscos animados no contato** (enviado junto com uma captura do contato com a onda incompleta)
+
+```text
+Tá top, a unica coisa é que quando chegar nesse ponto do scroll, a linha branca embaixo do titulo tem que estar completa também 
+
+Os squiggles de fundo (com tranparecia baixa) vevem ser animados tambem
+```
+
+**Ajuste 20: Rodapé e favicon** (enviado junto com uma captura do rodapé e a imagem do favicon)
+
+```text
+Deixe o logo do rodape branco e mude essa escrita ai do meio, tire isso de feito a mao. coloca algo profissional
+
+Tem aqui o fav icon pra colocar
+```
+
+**Ajuste 21: Favicon redondo**
+
+```text
+deixa o fsv icon redondinho
+```
+
+**Ajuste 22: Novo texto da bio no Sobre**
+
+```text
+Tenho interesse em análise de dados, Inteligência Artificial, Machine Learning e Deep Learning. Ao longo da formação e de projetos práticos, desenvolvi competências em Python, SQL, Power BI, Docker e soluções em nuvem — com foco em Oracle Cloud Infrastructure e Microsoft Azure —, além de automação e integração de dados aplicadas a projetos com IA.
+
+Tenho um perfil colaborativo, gosto de resolver problemas e estou sempre ampliando o que sei. Acredito na tecnologia — especialmente na IA — como ferramenta de transformação, e direciono meus esforços para projetos que gerem impacto real.
+
+troque esse texto da seção sobre por esse aqui:
+
+Sou Engenheiro de IA Júnior na NTT DATA Europe & Latam, com inglês avançado e experiência prática em Python, SQL, modelagem e análise preditiva, engenharia de dados, estatística, Machine Learning e Deep Learning.
+ 
+Trabalho com algoritmos de classificação (SVM, Random Forest, Gradient Boosting, MLP, CNN), regressão (Linear Regression, Random Forest Regressor, Gradient Boosting Regressor) e clusterização (DBSCAN, GMM, Hierarchical Clustering, Autoencoders).
+ 
+Tenho conhecimento em Cloud Computing e boas práticas de projeto, incluindo versionamento, análise crítica de dados, ética em IA e comunicação técnica clara.
+ 
+Busco continuar me desenvolvendo e contribuir com soluções orientadas por dados, explorando desafios que unam tecnologia, inovação e impacto real.
+```
+
 _(Adicionar os próximos prompts aqui, na ordem e exatamente como foram enviados.)_
 
 ---
@@ -488,7 +539,42 @@ Uma ficha por prompt de correção, com os campos do PDF:
 | Resultado | Resolveu totalmente. A etiqueta virou "no compasso", termo musical e sem ambiguidade |
 | Aprendizado | _(sugestão, revisar)_ A IA não percebe bem gírias e duplos sentidos regionais. Todo texto gerado precisa de uma leitura humana antes de publicar, principalmente em português informal |
 
-| Campo | Rodada 23 |
+| Campo | Rodada 23: Seção de contato |
+| --- | --- |
+| Problema | O contato era um bloco vermelho com o título "Vamos conversar?", um parágrafo e uma lista de links em texto, com a foto num círculo. Funcionava, mas parecia um rodapé de formulário e não acompanhava a linguagem visual das outras seções |
+| Prompt de correção | Mandei um protótipo e pedi que cada ícone das redes levasse à rede quando clicado e mostrasse o meu usuário no hover, como as ferramentas do Sobre. Texto completo: Ajuste 18, em 3.3 |
+| Resultado | Resolveu totalmente. Tela dividida em toda a altura: à esquerda, painel vermelho com rabiscos claros, o kicker "05 — Vamos conversar?", o título "COMO ME ENCONTRAR" e uma onda branca que se desenha com a rolagem; à direita, a foto de boné; entre os dois, a faixa branca do protótipo. Quatro ícones redondos em SVG inline (envelope e "in" desenhados à mão; GitHub e Instagram do Simple Icons, CC0). Clique: e-mail abre o `mailto:`, as redes abrem em nova aba. **Hover/foco:** o ícone inverte (fundo branco), cresce e gira, e acima aparece a etiqueta em Pacifico com o usuário, cada rede numa cor da paleta (`allexbranda07@gmail.com`, `in/állex-brandão`, `Allexbrandao07`, `@allex__brandao`). Como no celular não há hover, o `aria-label` de cada link também leva o usuário. No 1º rascunho do CSS a etiqueta giraria junto com o ícone; o giro passou para o SVG e a etiqueta ficou parada. No celular, painel e foto ficam empilhados. O kicker ficou "05" (o protótipo dizia "04"), seguindo a numeração das seções |
+| Aprendizado | _(sugestão, revisar)_ Referenciar um comportamento que já existe no site ("que nem nas ferramentas do Sobre") é um jeito curto e preciso de pedir consistência: a IA reaproveitou o mesmo padrão de etiqueta, em vez de inventar outro |
+
+| Campo | Rodada 24: Onda incompleta e rabiscos parados no contato |
+| --- | --- |
+| Problema | (1) Com a seção de contato inteira na tela, a onda branca sob o título ainda estava pela metade. Ela se desenhava pela posição da própria onda na tela, mas o contato é a última seção: a página acaba antes de a onda chegar ao ponto em que terminaria. (2) Os rabiscos claros do fundo eram estáticos, enquanto todos os outros do site se desenham ou se movem |
+| Prompt de correção | Pedi que a onda estivesse completa quando o contato chega na tela e que os rabiscos do fundo também fossem animados. Texto completo: Ajuste 19, em 3.3 |
+| Resultado | Resolveu totalmente, na segunda tentativa. **1ª tentativa:** fazer a onda terminar "mais cedo", pela posição dela na tela. O teste numa tela 1513×694 mostrou a onda ainda em 63% com o contato no topo. **Solução final:** um novo modo de desenho, `data-draw-span="section"`, que acompanha a posição da seção, e não a do traço. Começa quando o contato entra na tela e fica 100% completo quando a seção encosta no topo, em qualquer altura de tela. Também como garantia: ao chegar ao fim da página, todo traço visível se completa. Os dois rabiscos claros do fundo usam o mesmo modo para se desenhar e depois flutuam devagar (deslocamento e leve rotação, 9–11s, em sentidos opostos), só quando o movimento não está reduzido. Medido em 1366×768, 1513×694 e 390×844: traços em 0% com o contato entrando e em 100% com ele no topo |
+| Aprendizado | _(sugestão, revisar)_ Animações ligadas à rolagem precisam ser testadas também no fim da página, onde não há mais o que rolar. No prompt inicial vale pedir: "toda animação de rolagem precisa estar completa quando a seção estiver inteira na tela" |
+
+| Campo | Rodada 25: Rodapé e favicon |
+| --- | --- |
+| Problema | O logo do rodapé estava laranja e o texto do meio dizia "feito à mão com HTML, SCSS e JavaScript", informal e com cara de bastidor. O favicon era o logo inteiro ("ÁLLEX"), que fica ilegível no tamanho de uma aba |
+| Prompt de correção | Pedi o logo do rodapé em branco, um texto profissional no lugar do "feito à mão" e o favicon que desenhei. Texto completo: Ajuste 20, em 3.3 |
+| Resultado | Resolveu totalmente. Logo do rodapé em branco. O texto passou a ser "© 2026 Állex Brandão · Engenheiro de IA · Todos os direitos reservados." O favicon foi gerado a partir da imagem enviada (o "A" com antena e a barrinha da paleta): recortado no desenho, centralizado num quadrado branco e exportado como `favicon.ico` (16/32/48px), PNG de 32px e de 192px, e `apple-touch-icon` de 180px para a tela inicial do iPhone. Os quatro arquivos foram conferidos no navegador. Obs.: a imagem enviada tem o desenho com só ~84×293px, então as versões grandes (180 e 192px) ficam levemente suaves |
+| Aprendizado | _(sugestão, revisar)_ O favicon deveria estar no prompt inicial, junto com o logo: ele é parte da identidade. E para gerar todos os tamanhos com nitidez, o ideal é mandar o desenho em SVG ou em alta resolução |
+
+| Campo | Rodada 26: Favicon redondo |
+| --- | --- |
+| Problema | O favicon era um quadrado branco, que destoava dos elementos redondos e "adesivos" do site e ficava como um bloco branco nas abas de tema escuro |
+| Prompt de correção | Pedi o favicon arredondado. Texto completo: Ajuste 21, em 3.3 |
+| Resultado | Resolveu totalmente. O favicon virou um círculo branco com contorno preto fino (o mesmo estilo dos adesivos do site), com fundo transparente fora do círculo e o "A" com a barrinha da paleta centralizado. Foi desenhado em 4× e reduzido, para as bordas ficarem suaves. Conferido em aba clara e escura, em 16, 32 e 64px. O `apple-touch-icon` continua quadrado e branco de propósito: o iOS não aceita transparência (pintaria o fundo de preto) e já arredonda o ícone sozinho |
+| Aprendizado | _(sugestão, revisar)_ Ícones aparecem em fundos claros e escuros. Pedir a forma e testar nos dois temas evita um quadrado branco "vazando" em abas escuras |
+
+| Campo | Rodada 27: Bio do Sobre desatualizada |
+| --- | --- |
+| Problema | A bio da parte laranja do Sobre tinha vindo do README do meu GitHub: genérica ("tenho interesse em…"), sem o cargo atual na NTT DATA e sem os algoritmos e práticas com que trabalho de fato |
+| Prompt de correção | Colei o texto antigo e o novo e pedi a troca. Texto completo: Ajuste 22, em 3.3 |
+| Resultado | Resolveu totalmente. Os dois parágrafos antigos foram substituídos pelos quatro do texto novo, sem alterar nenhuma palavra; só o trecho "Engenheiro de IA Júnior na NTT DATA Europe & Latam" ficou em negrito, como os destaques da versão anterior. Conferido no layout: o texto ocupa a mesma altura da fita de ferramentas ao lado |
+| Aprendizado | _(sugestão, revisar)_ A bio é o texto mais pessoal do portfólio e a IA só tinha o README do GitHub como fonte. Escrever esse texto eu mesmo e mandar no prompt inicial teria evitado uma versão genérica |
+
+| Campo | Rodada 28 |
 | --- | --- |
 | Problema | |
 | Prompt de correção | |
@@ -499,8 +585,8 @@ Uma ficha por prompt de correção, com os campos do PDF:
 
 ## 3.5 Resultado final
 
-- **Repositório:** _(link)_
-- **Deploy:** _(link)_
+- **Repositório:** [github.com/Allexbrandao07/cp6-frontenddesign](https://github.com/Allexbrandao07/cp6-frontenddesign)
+- **Deploy:** [allex-brandao.vercel.app](https://allex-brandao.vercel.app/) (Vercel, site estático, sem etapa de build: o CSS compilado vai no repositório)
 
 **Reflexão:** _(o que ficou como imaginei e o que ainda mudaria. Escrever com as minhas palavras.)_
 

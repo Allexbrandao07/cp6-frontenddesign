@@ -6,7 +6,10 @@
   <title>Állex Brandão — Portfólio</title>
   <meta name="description" content="Portfólio de Állex Brandão: Engenheiro de IA, formado em Ciência de Dados e estudante de Engenharia de Software. Projetos, trajetória e o que move o lado de fora do código.">
   <meta name="theme-color" content="#FFFFFF">
-  <link rel="icon" type="image/png" href="assets/img/logo-allex.png">
+  <link rel="icon" href="assets/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/favicon-192.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -191,15 +194,22 @@
         <div class="about__grid">
           <div class="about__bio" data-reveal>
             <p>
-              Tenho interesse em análise de dados, Inteligência Artificial, Machine Learning e Deep Learning.
-              Ao longo da formação e de projetos práticos, desenvolvi competências em Python, SQL, Power BI,
-              Docker e soluções em nuvem — com foco em <strong>Oracle Cloud Infrastructure</strong> e
-              <strong>Microsoft Azure</strong> —, além de automação e integração de dados aplicadas a projetos com IA.
+              Sou <strong>Engenheiro de IA Júnior na NTT DATA Europe &amp; Latam</strong>, com inglês avançado e experiência
+              prática em Python, SQL, modelagem e análise preditiva, engenharia de dados, estatística, Machine Learning
+              e Deep Learning.
             </p>
             <p>
-              Tenho um perfil colaborativo, gosto de resolver problemas e estou sempre ampliando o que sei.
-              Acredito na tecnologia — especialmente na IA — como ferramenta de transformação, e direciono
-              meus esforços para projetos que gerem impacto real.
+              Trabalho com algoritmos de classificação (SVM, Random Forest, Gradient Boosting, MLP, CNN), regressão
+              (Linear Regression, Random Forest Regressor, Gradient Boosting Regressor) e clusterização (DBSCAN, GMM,
+              Hierarchical Clustering, Autoencoders).
+            </p>
+            <p>
+              Tenho conhecimento em Cloud Computing e boas práticas de projeto, incluindo versionamento, análise crítica
+              de dados, ética em IA e comunicação técnica clara.
+            </p>
+            <p>
+              Busco continuar me desenvolvendo e contribuir com soluções orientadas por dados, explorando desafios que
+              unam tecnologia, inovação e impacto real.
             </p>
           </div>
 
@@ -623,38 +633,60 @@
     </section>
 
     <!-- ============ CONTATO ============ -->
-    <section class="contact section" id="contato" aria-labelledby="contato-titulo">
-      <div class="container contact__grid">
-        <div class="contact__text" data-reveal>
-          <p class="kicker">05 — Contato</p>
+    <section class="contact" id="contato" aria-labelledby="contato-titulo">
+      <div class="contact__panel">
+        <!-- rabiscos claros no fundo vermelho -->
+        <svg class="contact__ghosts" aria-hidden="true" data-responsive>
+          <path class="sq" data-sq="loops:2;ratio:2.5;wave:.3;seed:81" data-box="0.35 -0.25 0.75 0.7" data-box-sm="0.2 -0.2 1 0.5" data-rot="60" data-draw="scroll" data-draw-span="section"/>
+          <path class="sq" data-sq="loops:2;ratio:2.4;wave:.3;seed:82" data-box="-0.35 0.25 0.8 0.9" data-box-sm="-0.4 0.5 1.1 0.6" data-rot="-70" data-draw="scroll" data-draw-span="section"/>
+        </svg>
+        <div class="contact__content" data-reveal>
+          <p class="kicker">05 — Vamos conversar?</p>
           <h2 class="contact__title" id="contato-titulo">
-            <span class="display">Vamos conversar?</span>
+            <span class="display">Como me encontrar</span>
           </h2>
-          <p class="contact__lead">
-            Aberto a oportunidades em dados, IA e engenharia de software — e a uma boa conversa
-            sobre música ou futebol.
-          </p>
-          <ul class="contact__links">
-            <li><a href="mailto:allexbranda07@gmail.com"><span class="label">E-mail</span><span>allexbranda07@gmail.com</span></a></li>
-            <li><a href="https://www.linkedin.com/in/%C3%A1llex-brand%C3%A3o/" target="_blank" rel="noopener"><span class="label">LinkedIn</span><span>in/állex-brandão <span aria-hidden="true">↗</span></span></a></li>
-            <li><a href="https://github.com/Allexbrandao07" target="_blank" rel="noopener"><span class="label">GitHub</span><span>Allexbrandao07 <span aria-hidden="true">↗</span></span></a></li>
-            <li><a href="https://www.instagram.com/allex__brandao/" target="_blank" rel="noopener"><span class="label">Instagram</span><span>@allex__brandao <span aria-hidden="true">↗</span></span></a></li>
+          <svg class="contact__wave" viewBox="0 0 440 60" aria-hidden="true">
+            <path class="sq sq--white" data-draw="scroll" data-draw-span="section" pathLength="1" d="M10 42C50 42 70 14 110 14S170 46 215 46 280 16 320 16 380 40 430 30"/>
+          </svg>
+          <!-- cada ícone leva à rede; no hover/foco aparece o usuário (como as ferramentas do Sobre) -->
+          <ul class="socials" role="list">
+            <li class="social social--mail" style="--i:0">
+              <a href="mailto:allexbranda07@gmail.com" aria-label="E-mail: allexbranda07@gmail.com">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 6h18v12H3zM3 6l9 7 9-7"/></svg>
+                <span class="social__user" aria-hidden="true">allexbranda07@gmail.com</span>
+              </a>
+            </li>
+            <li class="social social--linkedin" style="--i:1">
+              <a href="https://www.linkedin.com/in/%C3%A1llex-brand%C3%A3o/" target="_blank" rel="noopener" aria-label="LinkedIn: in/állex-brandão (abre em nova aba)">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5.6" cy="5.8" r="2"/><path d="M3.9 9.3h3.4V20H3.9zM9.8 9.3H13v1.5c.5-.9 1.7-1.8 3.5-1.8 3.3 0 3.9 2.1 3.9 4.9V20H17v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V20H9.8z"/></svg>
+                <span class="social__user" aria-hidden="true">in/állex-brandão</span>
+              </a>
+            </li>
+            <li class="social social--github" style="--i:2">
+              <a href="https://github.com/Allexbrandao07" target="_blank" rel="noopener" aria-label="GitHub: Allexbrandao07 (abre em nova aba)">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                <span class="social__user" aria-hidden="true">Allexbrandao07</span>
+              </a>
+            </li>
+            <li class="social social--instagram" style="--i:3">
+              <a href="https://www.instagram.com/allex__brandao/" target="_blank" rel="noopener" aria-label="Instagram: @allex__brandao (abre em nova aba)">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
+                <span class="social__user" aria-hidden="true">@allex__brandao</span>
+              </a>
+            </li>
           </ul>
         </div>
-        <figure class="contact__photo" data-reveal>
-          <img src="assets/img/retrato-bone.webp" width="900" height="1002" loading="lazy" alt="Állex de boné, sentado em uma plateia de cadeiras verdes, olhando para a câmera.">
-          <svg class="contact__squiggle" viewBox="0 0 500 500" aria-hidden="true">
-            <path class="sq sq--ink" data-sq="loops:5;ratio:1.8;wave:.4;seed:6" data-box="0 330 500 150" data-rot="-10" data-draw="scroll"/>
-          </svg>
-        </figure>
       </div>
+      <figure class="contact__photo">
+        <img src="assets/img/retrato-bone.webp" width="900" height="1002" loading="lazy" alt="Állex de boné, sentado em uma plateia de cadeiras verdes, olhando para a câmera.">
+      </figure>
     </section>
   </main>
 
   <footer class="footer">
     <div class="container footer__inner">
       <span class="logo-mark logo-mark--footer" aria-hidden="true"></span>
-      <p>© 2026 Állex Brandão · feito à mão com HTML, SCSS e JavaScript</p>
+      <p>© 2026 Állex Brandão · Engenheiro de IA · Todos os direitos reservados.</p>
       <a href="#topo">Voltar ao topo <span aria-hidden="true">↑</span></a>
     </div>
   </footer>

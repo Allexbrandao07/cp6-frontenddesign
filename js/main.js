@@ -297,19 +297,28 @@
 
   // ---------- Rabiscos desenhados pela rolagem ----------
   // "scroll": desenha enquanto entra na tela; "long": acompanha a seção inteira;
+  // data-draw-span="section": acompanha a seção inteira e fica completo quando ela
+  // encosta no topo da tela (seções no fim da página, que não rolam muito);
   // "portal": igual a "scroll" quando o zoom está desligado (senão o eye-zoom cuida).
   const drawn = Array.from(document.querySelectorAll('path[data-draw]'));
 
   function drawOnScroll() {
     const vh = window.innerHeight;
     const zoomOn = root.classList.contains('zoom-on');
+    // no fim da página não dá mais para rolar: o que estiver visível se completa
+    const atBottom = window.scrollY + vh >= document.documentElement.scrollHeight - 4;
     drawn.forEach((path) => {
       if (path.dataset.draw === 'portal' && zoomOn) return;
       const svg = path.ownerSVGElement;
       const r = svg.getBoundingClientRect();
       let p;
-      if (path.dataset.drawSpan === 'long') {
+      if (atBottom && r.top < vh) {
+        p = 1;
+      } else if (path.dataset.drawSpan === 'long') {
         p = (vh * 0.75 - r.top) / Math.max(r.height, 1);
+      } else if (path.dataset.drawSpan === 'section') {
+        const sec = path.closest('section').getBoundingClientRect();
+        p = 1 - sec.top / (vh * 0.7);
       } else {
         p = (vh - r.top) / (vh * 0.55);
       }
