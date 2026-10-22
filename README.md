@@ -51,6 +51,7 @@ npm run build:css    # build final, minificado
 | 12 | `docs/referencias/sobre-ferramentas-github.png` e `cert-*.png`: ícones do meu GitHub e prints das certificações do LinkedIn (rodada 9) | Os ícones oficiais de cada ferramenta e os dados de cada certificação (emissora, data, código, competências) | Ferramentas e Certificações |
 | 13 | `docs/referencias/prototipo-projetos.png`: meu protótipo da seção Projetos, com zoom reduzido (rodada 15) | Seção começando colada no bloco laranja, conteúdo numa coluna central mais estreita, "PROJETOS" com "(alguns)" como expoente, tagline em Inter bold na cor do projeto, rabiscos fantasma no fundo e uma fita grossa na margem esquerda | Projetos (a fita que acompanha a rolagem e muda de cor) |
 | 14 | `docs/referencias/linkedin-experiencia.png` e `linkedin-formacao.png`, e os logos de FIAP, Oaktech e NTT DATA (rodada 17) | Cargos, instituições e períodos exatos, além dos logos oficiais | Trajetória |
+| 15 | `docs/referencias/prototipo-fora-do-codigo.png`: meu protótipo da seção Fora do código (rodada 20) | Fundo branco com rabiscos fantasma, título com o comentário em script cruzando a base das letras, e as fotos numa faixa de painéis coloridos com cantos arredondados e uma linha preta deslocada embaixo | Fora do código |
 
 ---
 
@@ -61,7 +62,7 @@ npm run build:css    # build final, minificado
 | Cor | Hex | Papel | Por quê |
 | --- | --- | --- | --- |
 | Branco | `#FFFFFF` | Fundo de todas as páginas (desde a rodada 1) | Deixa as cinco cores e a tipografia preta no máximo contraste, como no protótipo do hero |
-| Preto | `#000000` | Texto, botões, fundos escuros (túnel, Fora do código, rodapé) | O protótipo usa preto puro. Com fundo branco, o quase-preto quente da versão anterior perdeu o sentido |
+| Preto | `#000000` | Texto, botões, fundos escuros (túnel, rodapé) | O protótipo usa preto puro. Com fundo branco, o quase-preto quente da versão anterior perdeu o sentido |
 | Névoa | `#F8F4F4` | Rabiscos "fantasma" do fundo e superfícies claras (gráfico, miniaturas) | Dá textura ao fundo branco sem competir com as fitas coloridas |
 | Bege | `#F2D6BE` | Apoio: texto sobre fundos escuros e detalhes (era o fundo até a rodada 1) | Continua sendo a cor quente da paleta original |
 | Vermelho-alaranjado | `#F2380F` | Destaque: palavras em script, hover dos botões, fundo do Contato | A cor de maior energia vai para o que eu quero que a pessoa faça (falar comigo) |
@@ -86,7 +87,7 @@ npm run build:css    # build final, minificado
 2. **Sobre**, em duas partes. A 1ª (branca) abre pela pupila no fim do túnel: título com fitas, quem sou em uma frase, uma foto e, na base, uma prévia do bloco laranja. A 2ª (laranja, com linha preta no topo e na base) traz a bio, as ferramentas como adesivos presos numa fita com laços e as certificações.
 3. **Projetos:** Revi, Data Hive, TAMA Drums Brasil e Titanic × KNN, com imagens, deploy e vídeos, numa coluna central. Na margem esquerda, uma fita com laços se desenha com a rolagem e assume a cor do projeto na tela. Só o Titanic aponta para o GitHub, por ser um modelo sem interface (os gráficos do notebook estão na página).
 4. **Trajetória:** bloco lilás com formação e experiência profissional em ordem cronológica (FIAP Ciência de Dados → Oaktech → FIAP Engenharia de Software → NTT DATA), cada item com o ano, o logo, o cargo e o período. Na margem direita, uma fita branca se desenha com a rolagem.
-5. **Fora do código:** música (voz e bateria) e Palmeiras, em rolagem horizontal no desktop.
+5. **Fora do código:** fundo branco, um texto sobre o que gosto de fazer no tempo livre e as fotos (voz, bateria, Palmeiras) numa faixa de painéis coloridos com rolagem horizontal no desktop; no hover, cada foto ganha a cor do seu painel.
 6. **Contato:** e-mail, LinkedIn, GitHub e Instagram.
 
 ---
@@ -284,6 +285,28 @@ Anexei aqui os cargos com as datas
 Está quase bom, tire essas descriçõeszinhas embaixo de cada "experiencia" da seção de trajetoria arrume esse co eço da linha dessa seção apenas que começa assim cortada
 ```
 
+**Ajuste 15: Seção Fora do código** (enviado junto com `docs/referencias/prototipo-fora-do-codigo.png`)
+
+```text
+Certo, agora vamos para a penultima seção "fora do código". Coloquei uma referencia aqui para voce se basear, a premissa é que cada uma das fotos tem um "hover" de uma das cores da paleta diferentes.
+
+Nessa descrição (onde tem "subtitulo legal aqui na imagem de referencia) troque para uma descrição melhor e menos comercial e mais instrutiva, tipo o que gosto de fazer no meu tempo livre
+```
+
+**Ajuste 16: Etiquetas das fotos** (enviado junto com uma captura da faixa de fotos)
+
+```text
+Tá top. Só nao gostei desse subtitulos embaixo, troque pra algo menos comercial
+```
+
+**Ajuste 17: Etiqueta da bateria**
+
+```text
+"baquetas na mão"
+
+de jeito nenhum isso. Lá ele
+```
+
 _(Adicionar os próximos prompts aqui, na ordem e exatamente como foram enviados.)_
 
 ---
@@ -444,7 +467,28 @@ Uma ficha por prompt de correção, com os campos do PDF:
 | Resultado | Resolveu totalmente. As descrições saíram do HTML (e o estilo que só servia a elas, do SCSS). Cada item ficou com ano, logo, tipo, período, cargo e instituição. A fita ganhou a opção `data-trail-start="cap"`: a curva começa no ponto mais alto do primeiro laço, 36px abaixo do topo, então a ponta arredondada e o contorno preto aparecem inteiros. Projetos continua como antes, nascendo da linha do bloco laranja |
 | Aprendizado | _(sugestão, revisar)_ Em linha do tempo, menos texto funciona melhor: o cargo e a instituição já contam a história. E componentes reaproveitados (a fita) precisam ser revisados no novo contexto: o que funcionava numa seção com borda no topo não funcionou numa sem |
 
-| Campo | Rodada 20 |
+| Campo | Rodada 20: Seção Fora do código |
+| --- | --- |
+| Problema | A seção era preta, com as fotos soltas e uma frase de efeito ("Quando a tela desliga, sobra ritmo…") que soava mais slogan do que apresentação. Destoava das outras seções, que já seguiam os protótipos (fundo claro, painéis coloridos, contorno preto) |
+| Prompt de correção | Mandei um protótipo e pedi que cada foto tivesse um "hover" de uma cor diferente da paleta, e que o subtítulo virasse uma descrição menos comercial, sobre o que gosto de fazer no tempo livre. Texto completo: Ajuste 15, em 3.3 |
+| Resultado | Resolveu totalmente. Fundo branco com rabiscos fantasma. O título "FORA DO CÓDIGO" ganhou "(o que gosto de fazer)" em Pacifico vermelho cruzando a base das letras, os dois com contorno branco. Texto novo: *"Quando fecho o notebook, o ritmo muda: canto, toco bateria e acompanho o Palmeiras sempre que posso — de preferência na arquibancada. É nessas horas que recarrego a energia (e a criatividade) que levo de volta para o código."* As fotos ficaram numa faixa de painéis colados (azul, laranja, lilás) com cantos arredondados e a linha preta deslocada embaixo, como no protótipo. **Hover:** a foto inclina, cresce de leve, a etiqueta gira e a foto é recolorida na cor do próprio painel. A rolagem horizontal presa continua no desktop; no celular tudo fica empilhado. **Dois problemas apareceram no teste e foram corrigidos:** (1) o `overflow: hidden` usado para cortar os rabiscos quebrou o `position: sticky` e a faixa subia em vez de deslizar; trocado por `overflow: clip`, que corta sem criar contêiner de rolagem; (2) o banho de cor com `multiply` quase não aparecia nas fotos escuras de palco; trocado por `color`, que recolore de fato |
+| Aprendizado | _(sugestão, revisar)_ "Hover de uma cor" pode ser lido de várias formas (fundo, borda, filtro). O protótipo resolveu a parte estática, mas para estados interativos vale descrever o efeito ("a foto fica tingida da cor do painel"). E pedir o texto pela intenção ("menos comercial, sobre meu tempo livre") funcionou melhor do que deixar "subtítulo legal aqui" |
+
+| Campo | Rodada 21: Etiquetas das fotos em Fora do código |
+| --- | --- |
+| Problema | As etiquetas em Pacifico sob o nome de cada foto ("no palco", "não é à toa a TAMA", "coração verde") soavam como slogans: puxavam para piada e marketing em vez de dizer o que cada foto mostra |
+| Prompt de correção | Pedi para trocar as etiquetas por algo menos comercial. Texto completo: Ajuste 16, em 3.3 |
+| Resultado | Resolveu totalmente. As etiquetas passaram a descrever, em poucas palavras, o que aparece em cada foto: **Voz** "cantar ao vivo", **Bateria** "baquetas na mão" (trocado na rodada 22) e **Palmeiras** "da arquibancada". O estilo (pílula em Pacifico, inclinada, que gira no hover) foi mantido |
+| Aprendizado | _(sugestão, revisar)_ O tom do texto também faz parte da identidade. Se o prompt inicial dissesse "textos simples e pessoais, sem frases de efeito", a IA teria evitado slogans em todas as seções, e não só onde eu reclamei |
+
+| Campo | Rodada 22: Etiqueta da bateria com duplo sentido |
+| --- | --- |
+| Problema | A etiqueta "baquetas na mão", criada na rodada 21, tem duplo sentido em português informal, o que é inadequado num portfólio profissional |
+| Prompt de correção | Recusei a expressão. Texto completo: Ajuste 17, em 3.3 |
+| Resultado | Resolveu totalmente. A etiqueta virou "no compasso", termo musical e sem ambiguidade |
+| Aprendizado | _(sugestão, revisar)_ A IA não percebe bem gírias e duplos sentidos regionais. Todo texto gerado precisa de uma leitura humana antes de publicar, principalmente em português informal |
+
+| Campo | Rodada 23 |
 | --- | --- |
 | Problema | |
 | Prompt de correção | |

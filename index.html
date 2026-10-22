@@ -576,34 +576,48 @@
 
     <!-- ============ FORA DO CÓDIGO ============ -->
     <section class="hobbies section" id="fora-do-codigo" aria-labelledby="hobbies-titulo" data-hscroll>
+      <!-- rabiscos "fantasma" do fundo, como no hero -->
+      <svg class="hobbies__ghosts" aria-hidden="true" data-responsive>
+        <path class="sq sq--mist" data-sq="loops:2;ratio:2.5;wave:.3;seed:71" data-box="-0.12 0.35 0.36 0.7" data-box-sm="-0.3 0.6 0.9 0.4" data-rot="-60"/>
+        <path class="sq sq--mist" data-sq="loops:2;ratio:2.4;wave:.3;seed:72" data-box="0.72 -0.2 0.36 0.75" data-box-sm="0.5 -0.05 0.8 0.3" data-rot="55"/>
+      </svg>
       <div class="hobbies__stage" data-hscroll-stage>
         <div class="hobbies__track" data-hscroll-track>
           <header class="hobbies__intro">
             <p class="kicker">04 — Fora do código</p>
-            <h2 class="section-title" id="hobbies-titulo">
+            <h2 class="hobbies__title" id="hobbies-titulo">
               <span class="display">Fora do código</span>
-              <span class="script">(o que me move)</span>
+              <span class="script">(o que gosto de fazer)</span>
             </h2>
-            <p>Quando a tela desliga, sobra ritmo: palco, baquetas e arquibancada.</p>
-            <svg class="title-squiggle" viewBox="0 0 600 120" aria-hidden="true">
-              <path class="sq sq--orange" data-sq="loops:4;ratio:2;wave:.3;seed:12" data-box="10 10 580 100" data-rot="0" data-draw="scroll"/>
-            </svg>
+            <p class="hobbies__lead">
+              Quando fecho o notebook, o ritmo muda: canto, toco bateria e acompanho o Palmeiras
+              sempre que posso — de preferência na arquibancada. É nessas horas que recarrego
+              a energia (e a criatividade) que levo de volta para o código.
+            </p>
           </header>
 
-          <figure class="hobby hobby--wide hobby--blue">
-            <img src="assets/img/hobby-voz.webp" width="1280" height="847" loading="lazy" alt="Állex cantando no palco, de olhos fechados e sorrindo, sob luz azul.">
-            <figcaption><span class="display">Voz</span><span class="script">no palco</span></figcaption>
-          </figure>
-
-          <figure class="hobby hobby--wide hobby--lilac">
-            <img src="assets/img/hobby-bateria.webp" width="1280" height="847" loading="lazy" alt="Állex tocando bateria em um show, de boné e fone de retorno.">
-            <figcaption><span class="display">Bateria</span><span class="script">não é à toa a TAMA</span></figcaption>
-          </figure>
-
-          <figure class="hobby hobby--tall hobby--orange">
-            <img src="assets/img/hobby-palmeiras.webp" width="1000" height="1298" loading="lazy" alt="Állex de braços abertos na arquibancada do estádio do Palmeiras, com a camisa do time.">
-            <figcaption><span class="display">Palmeiras</span><span class="script">coração verde</span></figcaption>
-          </figure>
+          <!-- a faixa: cada foto num painel de uma cor da paleta; no hover a foto
+               ganha a cor do próprio painel -->
+          <ul class="hobbies__band" role="list">
+            <li class="hobby hobby--blue">
+              <figure>
+                <img src="assets/img/hobby-voz.webp" width="1280" height="847" loading="lazy" alt="Állex cantando no palco, de olhos fechados e sorrindo, sob luz azul.">
+                <figcaption><span class="display">Voz</span><span class="script">cantar ao vivo</span></figcaption>
+              </figure>
+            </li>
+            <li class="hobby hobby--orange">
+              <figure>
+                <img src="assets/img/hobby-bateria.webp" width="1280" height="847" loading="lazy" alt="Állex tocando bateria em um show, de boné e fone de retorno.">
+                <figcaption><span class="display">Bateria</span><span class="script">no compasso</span></figcaption>
+              </figure>
+            </li>
+            <li class="hobby hobby--lilac">
+              <figure>
+                <img src="assets/img/hobby-palmeiras.webp" width="1000" height="1298" loading="lazy" alt="Állex de braços abertos na arquibancada do estádio do Palmeiras, com a camisa do time.">
+                <figcaption><span class="display">Palmeiras</span><span class="script">da arquibancada</span></figcaption>
+              </figure>
+            </li>
+          </ul>
         </div>
       </div>
     </section>

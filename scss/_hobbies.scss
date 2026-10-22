@@ -1,55 +1,91 @@
 @use "sass:color";
 @use "tokens" as *;
 
+// =================================================================
+// FORA DO CÓDIGO — fundo branco, faixa de painéis coloridos com as fotos
+// (rolagem horizontal presa no desktop; empilhado no celular)
+// =================================================================
 .hobbies {
+  position: relative;
+  // "clip" e não "hidden": hidden cria um contêiner de rolagem e quebra o sticky do palco
+  overflow: clip;
   padding-block: 0;
-  background: $ink;
-  color: $beige;
+  background: $white;
 
-  .kicker { color: $orange; }
-  .section-title .display { font-size: clamp(3.5rem, 9vw, 8rem); }
+  &__ghosts {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    --sq-w: clamp(36px, 4.5vw, 64px);
+  }
 
   &__stage {
-    padding-block: clamp(5rem, 12vw, 8rem);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
-    scrollbar-color: $orange transparent;
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(4rem, 10vw, 7rem);
   }
 
   &__track {
     display: flex;
     align-items: center;
-    gap: clamp(1.5rem, 4vw, 4rem);
+    gap: clamp(2rem, 5vw, 4.5rem);
     width: max-content;
-    padding-inline: $gutter;
+    padding-inline: $gutter calc(#{$gutter} + 16px); // 16px: a "sombra" da faixa
   }
 
   &__intro {
-    width: min(82vw, 460px);
     flex: none;
-    scroll-snap-align: start;
     display: grid;
-    gap: 1rem;
-
-    p:not(.kicker) { max-width: 32ch; font-size: 1.1rem; }
+    gap: 1.25rem;
+    width: min(84vw, 440px);
   }
 
-  // No celular, empilha: nenhum card fica escondido atrás de um gesto lateral
-  @include down($bp-md) {
-    &__stage { overflow: visible; }
-    &__track {
-      flex-direction: column;
-      align-items: stretch;
-      width: auto;
-      gap: 3rem;
+  // título com o comentário em script cruzando a base das letras (protótipo);
+  // os dois ganham contorno branco para não embolar
+  &__title {
+    display: grid;
+    margin: 0;
+
+    .display {
+      font-size: clamp(3.6rem, 8vw, 7rem);
+      line-height: 0.85;
+      -webkit-text-stroke: 0.09em $white;
+      paint-order: stroke fill;
     }
-    &__intro { width: auto; }
-    .hobby {
-      width: auto;
-      max-width: none;
-      margin-right: 14px;
+
+    .script {
+      position: relative;
+      justify-self: start;
+      margin: -0.55em 0 0 0.25em;
+      color: $red;
+      font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+      line-height: 1.2;
+      white-space: nowrap;
+      transform: rotate(-6deg);
+      -webkit-text-stroke: 0.14em $white;
+      paint-order: stroke fill;
     }
+  }
+
+  &__lead {
+    max-width: 38ch;
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  // a faixa: painéis colados, cantos arredondados e uma "sombra" de contorno preto
+  &__band {
+    flex: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style: none;
+    border-radius: 32px;
+    box-shadow: 16px 16px 0 0 $white, 16px 16px 0 2px $ink;
   }
 
   // Rolagem horizontal presa (desktop + movimento): o JS define a altura da seção
@@ -62,58 +98,108 @@
       display: flex;
       align-items: center;
       padding-block: $nav-h 2rem;
-      overflow: hidden;
     }
     .hobbies__track { will-change: transform; }
+  }
+
+  // Celular: tudo empilhado, nada escondido atrás de gesto lateral
+  @include down($bp-md) {
+    &__track {
+      flex-direction: column;
+      align-items: stretch;
+      width: auto;
+      gap: 3rem;
+    }
+    &__intro { width: auto; }
+    &__band { flex-direction: column; border-radius: 24px; }
   }
 }
 
 .hobby {
   --tone: #{$blue};
-  position: relative;
+  --pill: #{$blue};
   flex: none;
-  height: min(62svh, 120vw);
-  margin: 0;
-  scroll-snap-align: center;
-  border: 2px solid $beige;
-  border-radius: $radius;
-  box-shadow: 14px 14px 0 var(--tone);
+  padding: 40px 20px;
+  background: var(--tone);
 
-  &--wide { aspect-ratio: 1280 / 847; max-width: 84vw; height: auto; width: min(84vw, calc(62svh * 1.511)); }
-  &--tall { aspect-ratio: 1000 / 1298; width: min(70vw, calc(62svh * 0.77)); height: auto; }
-  &--lilac { --tone: #{$lilac}; }
-  &--orange { --tone: #{$orange}; }
+  &:first-child { padding-left: clamp(40px, 9vw, 130px); }
+  &:last-child { padding-right: 40px; }
+
+  &--orange { --tone: #{$orange}; --pill: #{$lilac}; }
+  &--lilac { --tone: #{$lilac}; --pill: #{$orange}; }
+
+  figure {
+    position: relative;
+    height: min(40svh, 340px);
+    margin: 0;
+    overflow: hidden;
+    border: 2px solid $white;
+    border-radius: 14px;
+    transition: transform 0.45s cubic-bezier(.3, 1.5, .5, 1);
+
+    // o "hover" na cor do painel: a foto ganha um banho de cor
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--tone);
+      mix-blend-mode: color; // recolore a foto na cor do painel (multiply sumia nas fotos escuras)
+      opacity: 0;
+      transition: opacity 0.35s;
+      pointer-events: none;
+    }
+  }
 
   img {
-    width: 100%;
+    display: block;
+    width: auto;
     height: 100%;
-    object-fit: cover;
-    border-radius: calc(#{$radius} - 2px);
-    filter: saturate(1.05);
+    max-width: none;
+    transition: transform 0.6s cubic-bezier(.2, .7, .2, 1);
   }
+
+  &:hover figure {
+    transform: rotate(-1.5deg) translateY(-6px);
+    &::after { opacity: 0.6; }
+  }
+  &:hover img { transform: scale(1.05); }
+  &:nth-child(even):hover figure { transform: rotate(1.5deg) translateY(-6px); }
 
   figcaption {
     position: absolute;
-    left: 1.25rem;
-    bottom: 1rem;
+    left: 1rem;
+    bottom: 0.9rem;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     pointer-events: none;
 
     .display {
-      font-size: clamp(3rem, 7vw, 6rem);
+      font-size: clamp(2.6rem, 5vw, 4.5rem);
       color: $beige;
       text-shadow: 0 2px 24px color.change($ink, $alpha: 0.6);
     }
     .script {
       margin-top: -0.2em;
       padding: 0.1rem 0.75rem;
+      border: 1.5px solid $ink;
       border-radius: 999px;
-      background: var(--tone);
+      background: var(--pill);
       color: $ink;
-      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      font-size: clamp(0.95rem, 1.6vw, 1.25rem);
       transform: rotate(-4deg);
+      transition: transform 0.35s cubic-bezier(.3, 1.6, .5, 1);
     }
+  }
+  &:hover figcaption .script { transform: rotate(-8deg) scale(1.08); }
+
+  @include down($bp-md) {
+    padding: 20px;
+    &:first-child { padding-left: 20px; }
+    &:last-child { padding-right: 20px; }
+
+    figure { height: auto; }
+    img { width: 100%; height: auto; }
   }
 }
