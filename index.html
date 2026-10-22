@@ -504,54 +504,73 @@
           </div>
         </article>
       </div>
+      <!-- o começo do bloco lilás da Trajetória, já aparecendo aqui -->
+      <div class="peek peek--lilac" aria-hidden="true" data-trail-stop></div>
     </section>
 
     <!-- ============ TRAJETÓRIA ============ -->
-    <section class="journey section" id="trajetoria" aria-labelledby="trajetoria-titulo">
-      <div class="container">
+    <section class="journey section" id="trajetoria" aria-labelledby="trajetoria-titulo" data-trail-section data-trail-side="right" data-trail-start="cap">
+      <!-- a fita branca da margem direita (js/main.js), como a de Projetos -->
+      <svg class="journey__trail" aria-hidden="true" data-trail>
+        <path class="trail__halo" data-trail-path/>
+        <path class="trail__line" data-trail-path/>
+        <circle class="trail__tip" r="0" data-trail-tip/>
+      </svg>
+
+      <div class="container journey__inner" data-trail-content>
         <header class="section-head" data-reveal>
           <p class="kicker">03 — Trajetória</p>
-          <h2 class="section-title" id="trajetoria-titulo">
+          <h2 class="section-title section-title--sup" id="trajetoria-titulo">
             <span class="display">Trajetória</span>
             <span class="script">(até aqui)</span>
           </h2>
-          <svg class="title-squiggle" viewBox="0 0 600 120" aria-hidden="true">
-            <path class="sq sq--orange" data-sq="loops:3;ratio:2.3;wave:.3;seed:4" data-box="10 10 580 100" data-rot="0" data-draw="scroll"/>
-          </svg>
         </header>
 
-        <div class="timeline" data-timeline>
-          <svg class="timeline__line" aria-hidden="true" data-responsive>
-            <path class="sq" data-sq="loops:10;ratio:1.7;wave:.12;seed:8" data-box="0.1 0 0.8 1" data-rot="90" data-fit="fill" data-draw="scroll" data-draw-span="long"/>
-          </svg>
-          <ol class="timeline__list">
-            <li class="timeline__item" data-reveal>
-              <span class="timeline__dot timeline__dot--red" aria-hidden="true"></span>
-              <p class="timeline__when">Em andamento</p>
-              <h3 class="timeline__what">Engenharia de Software <span>· FIAP</span></h3>
-              <p>Produto, front-end design e back-end. Daqui saíram o Revi e o site da TAMA.</p>
-            </li>
-            <li class="timeline__item" data-reveal>
-              <span class="timeline__dot timeline__dot--blue" aria-hidden="true"></span>
-              <p class="timeline__when">2026</p>
-              <h3 class="timeline__what">Revi <span>· produto em equipe</span></h3>
-              <p>App de estudos com IA, do front em React à API em Spring Boot com mensageria e autenticação.</p>
-            </li>
-            <li class="timeline__item" data-reveal>
-              <span class="timeline__dot timeline__dot--orange" aria-hidden="true"></span>
-              <p class="timeline__when">2025</p>
-              <h3 class="timeline__what">Challenge FIAP × TOTVS <span>· Data Hive</span></h3>
-              <p>Pipeline na Azure, clusterização com K-Means e recomendação estratégica para mais de 40 mil clientes.</p>
-            </li>
-            <li class="timeline__item" data-reveal>
-              <span class="timeline__dot timeline__dot--lilac" aria-hidden="true"></span>
-              <p class="timeline__when">Concluída</p>
-              <h3 class="timeline__what">Ciência de Dados <span>· FIAP</span></h3>
-              <p>Estatística, Machine Learning, Deep Learning, engenharia de dados e nuvem (Azure e OCI).</p>
-            </li>
-            <!-- Experiências profissionais (LinkedIn): copie um <li class="timeline__item"> acima e preencha. -->
-          </ol>
-        </div>
+        <!-- ordem cronológica, como no LinkedIn (docs/referencias/linkedin-*.png) -->
+        <ol class="steps" role="list">
+          <li class="step" data-reveal>
+            <p class="step__year display" aria-hidden="true">2024</p>
+            <div class="step__logo"><img src="assets/img/trajetoria/fiap.png" alt="FIAP" width="640" height="173" loading="lazy"></div>
+            <div class="step__body">
+              <p class="step__when"><span class="step__kind">Formação</span> 2024 – 2025
+              </p>
+              <h3 class="step__title display">Ciência de Dados</h3>
+              <p class="step__org">FIAP <span>· Curso Superior de Tecnologia (CST)</span></p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <p class="step__year display" aria-hidden="true">2025</p>
+            <div class="step__logo"><img src="assets/img/trajetoria/oaktech.png" alt="Oaktech" width="267" height="65" loading="lazy"></div>
+            <div class="step__body">
+              <p class="step__when"><span class="step__kind">Estágio</span> set. 2025 – abr. 2026
+              </p>
+              <h3 class="step__title display">Estagiário em Integrações de Dados & IA</h3>
+              <p class="step__org">Oaktech <span>· Estágio · São Paulo · presencial</span></p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <p class="step__year display" aria-hidden="true">2026</p>
+            <div class="step__logo"><img src="assets/img/trajetoria/fiap.png" alt="FIAP" width="640" height="173" loading="lazy"></div>
+            <div class="step__body">
+              <p class="step__when"><span class="step__kind">Formação</span> jan. 2026 – dez. 2029
+                <span class="step__now">Cursando</span>
+              </p>
+              <h3 class="step__title display">Engenharia de Software</h3>
+              <p class="step__org">FIAP <span>· Bacharelado · previsão de conclusão em dez. 2029</span></p>
+            </div>
+          </li>
+          <li class="step" data-reveal>
+            <p class="step__year display" aria-hidden="true">2026</p>
+            <div class="step__logo"><img src="assets/img/trajetoria/ntt-data.png" alt="NTT DATA" width="564" height="116" loading="lazy"></div>
+            <div class="step__body">
+              <p class="step__when"><span class="step__kind">Experiência</span> abr. 2026 – atual
+                <span class="step__now">Agora</span>
+              </p>
+              <h3 class="step__title display">Engenheiro de IA Júnior</h3>
+              <p class="step__org">NTT DATA Europe & Latam <span>· Tempo integral · São Paulo</span></p>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 

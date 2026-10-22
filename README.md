@@ -27,8 +27,8 @@ npm run build:css    # build final, minificado
 | `js/squiggle.js` | Gera os rabiscos (trocoide com laços) e controla o "desenho" deles |
 | `js/loader.js` | Preloader: logo + quatro blocos da paleta como barra de progresso real |
 | `js/eye-zoom.js` | Animação de rolagem do hero: zoom até a pupila (íris em círculos da paleta), túnel de anéis e portal para o Sobre |
-| `js/main.js` | Menu, revelação no scroll, fita das ferramentas, fita dos projetos, galerias, visualizador, gráfico do KNN, rolagem horizontal |
-| `assets/` | Fotos otimizadas (WebP), logo, fonte Silver Crown, ícones das ferramentas (`assets/icons/`) e logos das certificações |
+| `js/main.js` | Menu, revelação no scroll, fita das ferramentas, fitas de Projetos e Trajetória, galerias, visualizador, gráfico do KNN, rolagem horizontal |
+| `assets/` | Fotos otimizadas (WebP), logo, fonte Silver Crown, ícones das ferramentas (`assets/icons/`), logos das certificações e da trajetória |
 | `docs/referencias/` | As imagens de referência citadas abaixo |
 
 ---
@@ -50,6 +50,7 @@ npm run build:css    # build final, minificado
 | 11 | `docs/referencias/sobre-parte2.png`: meu layout da 2ª parte do Sobre (rodada 9) | Bloco inteiro em laranja: bio à esquerda, ferramentas à direita e "CERTIFICAÇÕES:" em Inter bold, caixa alta e tracking apertado | Sobre, parte 2 |
 | 12 | `docs/referencias/sobre-ferramentas-github.png` e `cert-*.png`: ícones do meu GitHub e prints das certificações do LinkedIn (rodada 9) | Os ícones oficiais de cada ferramenta e os dados de cada certificação (emissora, data, código, competências) | Ferramentas e Certificações |
 | 13 | `docs/referencias/prototipo-projetos.png`: meu protótipo da seção Projetos, com zoom reduzido (rodada 15) | Seção começando colada no bloco laranja, conteúdo numa coluna central mais estreita, "PROJETOS" com "(alguns)" como expoente, tagline em Inter bold na cor do projeto, rabiscos fantasma no fundo e uma fita grossa na margem esquerda | Projetos (a fita que acompanha a rolagem e muda de cor) |
+| 14 | `docs/referencias/linkedin-experiencia.png` e `linkedin-formacao.png`, e os logos de FIAP, Oaktech e NTT DATA (rodada 17) | Cargos, instituições e períodos exatos, além dos logos oficiais | Trajetória |
 
 ---
 
@@ -64,7 +65,7 @@ npm run build:css    # build final, minificado
 | Névoa | `#F8F4F4` | Rabiscos "fantasma" do fundo e superfícies claras (gráfico, miniaturas) | Dá textura ao fundo branco sem competir com as fitas coloridas |
 | Bege | `#F2D6BE` | Apoio: texto sobre fundos escuros e detalhes (era o fundo até a rodada 1) | Continua sendo a cor quente da paleta original |
 | Vermelho-alaranjado | `#F2380F` | Destaque: palavras em script, hover dos botões, fundo do Contato | A cor de maior energia vai para o que eu quero que a pessoa faça (falar comigo) |
-| Lilás | `#DF98F2` | Rabiscos, fundo da Trajetória | Suaviza a paleta e marca a seção mais "pessoal" |
+| Lilás | `#DF98F2` | Rabiscos e fundo inteiro da Trajetória (com a prévia no fim de Projetos) | Suaviza a paleta e marca a seção mais "pessoal" |
 | Azul | `#367FBE` | Rabiscos, sombra do retrato, linha do gráfico | O tom mais "técnico": aparece nos dados (gráfico do KNN) e nos detalhes |
 | Laranja | `#F1913D` | Rabiscos, fita de skills e fundo inteiro da 2ª parte do Sobre (bio, ferramentas e certificações) | Faz a ponte entre o vermelho e o bege e dá energia ao bloco mais "currículo" da página |
 
@@ -84,7 +85,7 @@ npm run build:css    # build final, minificado
 1. **Hero:** nome em degraus, uma frase sobre o que eu faço, retrato em círculo e CTAs, fiel ao meu protótipo. O retrato é a porta de entrada da animação.
 2. **Sobre**, em duas partes. A 1ª (branca) abre pela pupila no fim do túnel: título com fitas, quem sou em uma frase, uma foto e, na base, uma prévia do bloco laranja. A 2ª (laranja, com linha preta no topo e na base) traz a bio, as ferramentas como adesivos presos numa fita com laços e as certificações.
 3. **Projetos:** Revi, Data Hive, TAMA Drums Brasil e Titanic × KNN, com imagens, deploy e vídeos, numa coluna central. Na margem esquerda, uma fita com laços se desenha com a rolagem e assume a cor do projeto na tela. Só o Titanic aponta para o GitHub, por ser um modelo sem interface (os gráficos do notebook estão na página).
-4. **Trajetória:** formação e marcos, numa linha do tempo que se desenha com a rolagem.
+4. **Trajetória:** bloco lilás com formação e experiência profissional em ordem cronológica (FIAP Ciência de Dados → Oaktech → FIAP Engenharia de Software → NTT DATA), cada item com o ano, o logo, o cargo e o período. Na margem direita, uma fita branca se desenha com a rolagem.
 5. **Fora do código:** música (voz e bateria) e Palmeiras, em rolagem horizontal no desktop.
 6. **Contato:** e-mail, LinkedIn, GitHub e Instagram.
 
@@ -253,6 +254,36 @@ A ideia é que logo após o "bloco" amarelo que finaliza a seçao anterior ja en
 Está quase ótimo, só preciso que voce, nos projetos que foram desenvolvidos em conjunto (Revi e Data Hive), voce de os creditos/mencione os demais integrantes dos grupos, tem tudo no github
 ```
 
+**Ajuste 13: Seção Trajetória** (enviado junto com uma imagem de referência e os logos de FIAP, Oaktech e NTT DATA; a imagem anexada era, por engano, a mesma do protótipo de Projetos)
+
+```text
+ótimo, agora vamos partir para a seção "Trajetória"
+
+Novamente, tenho aqui uma referencia que prototipei, mas o conceito é pareciso com a da seção anterior no que diz repeito a ter um squizzle acompanhando a rolagem do scroll, entretanto, essa linha agora ficará do lado oposto e será sempre branca.
+
+Assim como a dinamica do "bloco" amarelo nas seções anteriores, esse "bloco" lilas dessa seção deve ficar aparecendo um pouco ao final da seção anterior.
+
+Arrume também a ordem das experiencias/trajetoria e tire os projetos (Revi, Data Hive) e coloque as experiencias profissionais no lugar.
+
+Siga a ordem cronológica: FIAP Ciencia de Dados, Estário Oaktech, FIAP Engenharia de Softwre e NTT Data Brasil (sempre com as datas)
+
+Isso tem no meu LinkedIn nas partes de experiencia e formação academica, analise: https://www.linkedin.com/in/%C3%A1llex-brand%C3%A3o/?isSelfProfile=true
+
+Aqui tem tambem as logos da FIAP, Oaktech e NTT Data
+```
+
+A IA não conseguiu abrir o LinkedIn e perguntou como seguir; escolhi mandar prints. Mensagem seguinte (com `linkedin-experiencia.png` e `linkedin-formacao.png`):
+
+```text
+Anexei aqui os cargos com as datas
+```
+
+**Ajuste 14: Trajetória mais enxuta e início da fita** (enviado junto com uma captura da descrição de um item e outra do começo cortado da fita)
+
+```text
+Está quase bom, tire essas descriçõeszinhas embaixo de cada "experiencia" da seção de trajetoria arrume esse co eço da linha dessa seção apenas que começa assim cortada
+```
+
 _(Adicionar os próximos prompts aqui, na ordem e exatamente como foram enviados.)_
 
 ---
@@ -392,7 +423,28 @@ Uma ficha por prompt de correção, com os campos do PDF:
 | Resultado | Resolveu totalmente. Cada projeto ganhou um bloco "Feito em equipe com", com cada integrante numa pílula com as iniciais na cor do projeto. **Revi** (`INTEGRANTES.txt` do repositório do front-end): Henrique Caruso Bueno, Erick Nathan Capito Pereira, Murilo Gomes Vasconcelos e Enzo Ribeiro Abreu. **Data Hive** (seção "Autores" do README): Diego Augusto Oliveira Rocha, Guilherme Agostinho Canella, Lorenzo Azevedo Frigoglietto e Vinicius Cremon Giomo. Decisões da IA: os RMs **não** foram publicados, por serem números de matrícula dos colegas; e os nomes ficaram sem link para o GitHub, porque os repositórios do Revi agora estão fechados para a API e só um integrante do Data Hive tem nome público no perfil, então não daria para linkar todos com certeza |
 | Aprendizado | _(sugestão, revisar)_ Em projetos de grupo, os créditos deveriam estar no prompt inicial ("nos projetos em equipe, cite os integrantes"). É uma questão de ética, não de layout, e não deveria depender de eu lembrar depois |
 
-| Campo | Rodada 17 |
+| Campo | Rodada 17: Dinâmica da Trajetória (prévia lilás + fita branca) |
+| --- | --- |
+| Problema | A Trajetória não seguia a linguagem das seções novas. Tinha uma linha lilás à esquerda (que agora brigaria com a fita de Projetos) e começava com um corte seco depois de Projetos, sem a "prévia" que o bloco laranja ganhou |
+| Prompt de correção | Pedi o mesmo conceito de Projetos (uma fita acompanhando a rolagem), mas do lado oposto e sempre branca, e que o bloco lilás aparecesse um pouco no fim da seção anterior. Texto completo: Ajuste 13, em 3.3 |
+| Resultado | Resolveu totalmente. O código da fita de Projetos virou um componente reutilizável (`makeTrail`): cada seção com `data-trail-section` ganha sua fita, e `data-trail-side="right"` espelha para a margem direita. Na Trajetória a fita é branca com contorno preto (para destacar no lilás), com a mesma ponta de caneta e os mesmos laços que se ajustam à margem; em telas estreitas fica fina, colada na borda direita. Projetos ganhou na base uma faixa lilás com linha preta (`.peek`, agora genérica), e a Trajetória começa colada nela. A fita de Projetos foi ajustada para terminar antes da faixa. A linha lilás antiga da esquerda saiu. Obs.: a imagem anexada como protótipo era a mesma de Projetos; a IA avisou e seguiu a descrição do texto |
+| Aprendizado | _(sugestão, revisar)_ Quando uma seção repete o conceito de outra, dizer só o que muda ("lado oposto, sempre branca") foi eficiente e gerou um componente reaproveitável, em vez de código duplicado. Conferir os anexos antes de enviar evita confusão |
+
+| Campo | Rodada 18: Conteúdo da Trajetória |
+| --- | --- |
+| Problema | A trajetória misturava formação com projetos (Revi e Data Hive, que já estão em Projetos), não tinha nenhuma experiência profissional, não seguia a ordem cronológica e não tinha datas exatas: a IA não conseguia abrir o LinkedIn e só tinha o que estava no GitHub |
+| Prompt de correção | Pedi para tirar os projetos, colocar as experiências profissionais e seguir a ordem cronológica com datas (FIAP Ciência de Dados, Oaktech, FIAP Engenharia de Software, NTT DATA). Mandei os logos e, como a IA não conseguiu acessar o LinkedIn, os prints de Experiência e Formação acadêmica. Texto completo: Ajuste 13, em 3.3 |
+| Resultado | Resolveu totalmente. A IA tentou o LinkedIn de novo (bloqueado) e uma busca na web (sem resultado), então **perguntou** em vez de inventar datas, e parou até eu mandar os prints. Ficaram 4 itens: **FIAP, CST em Ciência de Dados** (2024–2025); **Oaktech, Estagiário em Integrações de Dados & IA** (set. 2025 – abr. 2026); **FIAP, Bacharelado em Engenharia de Software** (jan. 2026 – dez. 2029, "Cursando"); **NTT DATA Europe & Latam, Engenheiro de IA Júnior** (abr. 2026 – atual, "Agora"). Cada item tem o ano de início grande, o logo num adesivo branco, o tipo (Formação/Estágio/Experiência), cargo, empresa e uma descrição curta. Os logos foram recortados das imagens enviadas. As descrições ficaram só com o que é fato; a IA removeu uma frase que atribuía atividades à NTT DATA que não constavam no LinkedIn |
+| Aprendizado | _(sugestão, revisar)_ De novo: dados atrás de login (LinkedIn) precisam ir no prompt, como texto ou print. Foi positivo a IA perguntar em vez de inventar datas numa linha do tempo profissional. Vale escrever eu mesmo as descrições de cada experiência, porque só eu sei o que fiz em cada uma |
+
+| Campo | Rodada 19: Descrições e início da fita na Trajetória |
+| --- | --- |
+| Problema | (1) Cada item da Trajetória tinha uma descrição curta que deixava a seção pesada e repetia o que o cargo e a instituição já diziam. (2) A fita branca começava "cortada" no topo do bloco lilás: a curva nasce subindo, e o primeiro trecho saía pelo topo da seção. Em Projetos isso some porque a fita parece nascer da linha preta do bloco laranja, mas no lilás contínuo o corte ficava à mostra |
+| Prompt de correção | Pedi para tirar as descrições de cada item e arrumar o começo cortado da fita. Texto completo: Ajuste 14, em 3.3 |
+| Resultado | Resolveu totalmente. As descrições saíram do HTML (e o estilo que só servia a elas, do SCSS). Cada item ficou com ano, logo, tipo, período, cargo e instituição. A fita ganhou a opção `data-trail-start="cap"`: a curva começa no ponto mais alto do primeiro laço, 36px abaixo do topo, então a ponta arredondada e o contorno preto aparecem inteiros. Projetos continua como antes, nascendo da linha do bloco laranja |
+| Aprendizado | _(sugestão, revisar)_ Em linha do tempo, menos texto funciona melhor: o cargo e a instituição já contam a história. E componentes reaproveitados (a fita) precisam ser revisados no novo contexto: o que funcionava numa seção com borda no topo não funcionou numa sem |
+
+| Campo | Rodada 20 |
 | --- | --- |
 | Problema | |
 | Prompt de correção | |
@@ -416,4 +468,5 @@ Uma ficha por prompt de correção, com os campos do PDF:
 - Os dados do gráfico "Acurácia por k" foram copiados da saída da célula de varredura de *k* do notebook `analise_preditiva_titanic_knn.ipynb`. O pairplot é a imagem original gerada pelo notebook.
 - As capturas de tela do Revi e da TAMA foram tiradas dos deploys públicos. As imagens do Data Hive vêm da pasta `BlobStorage` do projeto.
 - Ícones das ferramentas: [Devicon](https://devicon.dev) (MIT) e [Simple Icons](https://simpleicons.org) (CC0). Power BI vem do Wikimedia Commons e Oracle Cloud e Data Modeler, dos sites da Oracle e da 1000logos. As marcas pertencem às respectivas empresas.
+- Logos da FIAP, Oaktech e NTT DATA: imagens enviadas por mim, recortadas para o site. As marcas pertencem às respectivas empresas.
 - A foto do setup na 1ª parte do Sobre foi recortada da minha referência de layout (`docs/referencias/sobre-parte1.png`) e tem só 439×289px; vale trocar pelo arquivo original. O logo da Alura também é um recorte do print do LinkedIn.

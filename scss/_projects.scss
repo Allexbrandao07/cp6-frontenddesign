@@ -9,9 +9,12 @@
 .projects {
   --trail: #{$blue};
   --trail-w: 24px;
+  --peek: clamp(56px, 11svh, 112px);
   position: relative;
   overflow: hidden;
   padding-top: clamp(3rem, 7vw, 5rem);
+  // espaço para a prévia do bloco lilás da Trajetória
+  padding-bottom: calc(var(--peek) + clamp(3rem, 7vw, 5rem));
 
   .section-head { margin-bottom: clamp(2rem, 5vw, 3.5rem); }
 
@@ -56,7 +59,7 @@
 }
 
 .trail__halo {
-  stroke: $white;
+  stroke: var(--trail-halo, #{$white});
   stroke-width: calc(var(--trail-w) + 10px);
 }
 
@@ -72,6 +75,18 @@
   fill: $white;
   stroke: $ink;
   stroke-width: 2.5px;
+}
+
+// prévia da próxima seção: a faixa colorida com a linha preta no topo,
+// presa na base da seção (a seção seguinte começa colada nela)
+.peek {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 3;
+  height: var(--peek);
+  border-top: 2px solid $ink;
+
+  &--lilac { background: $lilac; }
 }
 
 // título com o comentário em script como "expoente" (protótipo)

@@ -173,90 +173,115 @@
     });
   }
 
-  // ---------- Projetos: a fita da margem esquerda ----------
-  // Desce pela seção com laços (uma trocoide vertical), é desenhada até
-  // a altura da rolagem e assume a cor (--accent) do projeto que está na tela.
-  const trailSection = document.querySelector('[data-trail-section]');
-  const trailSvg = trailSection && trailSection.querySelector('[data-trail]');
-  const trailPaths = trailSvg ? Array.from(trailSvg.querySelectorAll('[data-trail-path]')) : [];
-  const trailTip = trailSvg && trailSvg.querySelector('[data-trail-tip]');
-  const trailProjects = trailSection ? Array.from(trailSection.querySelectorAll('.project')) : [];
-  let trailPts = [], trailCum = [], trailMaxY = [], trailTotal = 1;
+  // ---------- Fitas das seções (Projetos à esquerda, Trajetória à direita) ----------
+  // Cada [data-trail-section] tem uma fita que desce pela margem com laços
+  // (uma trocoide vertical), é desenhada até a altura da rolagem e, se a
+  // seção tiver projetos, assume a cor (--accent) do projeto na tela.
+  // data-trail-side="right" espelha a fita para a margem direita.
+  function makeTrail(section) {
+    const svg = section.querySelector('[data-trail]');
+    const paths = Array.from(svg.querySelectorAll('[data-trail-path]'));
+    const tip = svg.querySelector('[data-trail-tip]');
+    const content = section.querySelector('[data-trail-content]');
+    const stop = section.querySelector('[data-trail-stop]');
+    const projects = Array.from(section.querySelectorAll('.project'));
+    const right = section.dataset.trailSide === 'right';
+    let pts = [], cum = [], maxY = [], total = 1;
 
-  function buildTrail() {
-    if (!trailSection) return;
-    const W = trailSection.clientWidth;
-    const H = trailSection.clientHeight;
-    const content = trailSection.querySelector('[data-trail-content]');
-    const cs = getComputedStyle(content);
-    const contentLeft = content.offsetLeft + parseFloat(cs.paddingLeft);
-    const thin = contentLeft < 90; // telas estreitas: fita fina, só ondulada, colada na borda
-    trailSection.classList.toggle('is-thin-trail', thin);
+    function build() {
+      const W = section.clientWidth;
+      const H = section.clientHeight - (stop ? stop.offsetHeight : 0); // não invade a prévia da próxima seção
+      const cs = getComputedStyle(content);
+      // margem livre do lado da fita
+      const margin = right
+        ? W - (content.offsetLeft + content.offsetWidth - parseFloat(cs.paddingRight))
+        : content.offsetLeft + parseFloat(cs.paddingLeft);
+      const thin = margin < 90; // telas estreitas: fita fina, só ondulada, colada na borda
+      section.classList.toggle('is-thin-trail', thin);
 
-    const railW = thin ? 34 : Math.min(contentLeft - 16, 420);
-    // a fita corre perto do conteúdo (lado direito da margem), como no protótipo
-    const cx = thin ? railW / 2 + 4 : contentLeft - 16 - railW / 2;
-    const b = thin ? 9 : railW * 0.4;               // meia largura dos laços
-    const a = thin ? 70 : b / 1.35;                 // b > a → a curva faz laços
-    const rnd = Squiggle.random(13);
-    const phase = rnd() * 6.28;
+      const railW = thin ? 34 : Math.min(margin - 16, 420);
+      // a fita corre perto do conteúdo, como no protótipo
+      const near = thin ? railW / 2 + 4 : margin - 16 - railW / 2;
+      const cx = right ? W - near : near;
+      const b = thin ? 9 : railW * 0.4;               // meia largura dos laços
+      const a = thin ? 70 : b / 1.35;                 // b > a → a curva faz laços
+      const rnd = Squiggle.random(right ? 31 : 13);
+      const phase = rnd() * 6.28;
+      const dir = right ? -1 : 1;
 
-    const pts = [];
-    for (let t = 0; ; t += 0.08) {
-      // trocoide vertical com variação "à mão" no tamanho de cada laço
-      const k = thin ? 1 : 0.82 + 0.25 * Math.sin(t * 0.37 + phase);
-      const y = a * t - (thin ? 0 : b * k * Math.sin(t)) + 2;
-      const x = cx - b * k * Math.cos(t) + Math.sin(t * 0.21 + phase) * (thin ? 0 : railW * 0.06);
-      pts.push([x, y]);
-      if (y > H - 30) break;
-    }
-    trailPts = pts;
-    trailCum = [0];
-    trailMaxY = [pts[0][1]];
-    for (let i = 1; i < pts.length; i++) {
-      trailCum.push(trailCum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
-      trailMaxY.push(Math.max(trailMaxY[i - 1], pts[i][1]));
-    }
-    trailTotal = trailCum[trailCum.length - 1] || 1;
-
-    trailSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-    const d = Squiggle.toPath(pts);
-    trailPaths.forEach((path) => { path.setAttribute('d', d); path.setAttribute('pathLength', '1'); });
-    trailSection.style.setProperty('--trail-w', `${thin ? 10 : Math.max(14, Math.min(30, railW * 0.11))}px`);
-  }
-
-  function drawTrail() {
-    if (!trailSection) return;
-    const r = trailSection.getBoundingClientRect();
-    const vh = window.innerHeight;
-
-    // até onde desenhar: a "ponta" acompanha uma linha a 78% da tela
-    let i = trailPts.length - 1;
-    if (motion) {
-      const targetY = vh * 0.78 - r.top;
-      let lo = 0, hi = trailPts.length - 1;
-      while (lo < hi) { // último ponto cuja altura máxima até ali não passa da linha
-        const mid = (lo + hi + 1) >> 1;
-        if (trailMaxY[mid] <= targetY) lo = mid; else hi = mid - 1;
+      // data-trail-start="cap": a fita começa dentro da seção, com a ponta
+      // arredondada visível (sem "nascer" de uma linha preta, como em Projetos)
+      const cap = section.dataset.trailStart === 'cap';
+      pts = [];
+      for (let t = 0; ; t += 0.08) {
+        // trocoide vertical com variação "à mão" no tamanho de cada laço
+        const k = thin ? 1 : 0.82 + 0.25 * Math.sin(t * 0.37 + phase);
+        const y = a * t - (thin ? 0 : b * k * Math.sin(t)) + 2;
+        const x = cx - dir * (b * k * Math.cos(t) - Math.sin(t * 0.21 + phase) * (thin ? 0 : railW * 0.06));
+        pts.push([x, y]);
+        if (y > H - 30) break;
       }
-      i = targetY <= 0 ? 0 : lo;
-    }
-    const p = trailCum[i] / trailTotal;
-    trailPaths.forEach((path) => Squiggle.setDraw(path, p));
-    if (trailTip) {
-      trailTip.setAttribute('cx', trailPts[i][0].toFixed(1));
-      trailTip.setAttribute('cy', trailPts[i][1].toFixed(1));
-      trailTip.style.visibility = p > 0.002 && p < 0.998 ? '' : 'hidden';
+      if (cap) {
+        // começa no ponto mais alto do primeiro laço (onde a curva já desce)
+        let top = 0;
+        for (let i = 1; i < Math.min(pts.length, 90); i++) if (pts[i][1] < pts[top][1]) top = i;
+        const dy = 36 - pts[top][1];
+        pts = pts.slice(top).map(([x, y]) => [x, y + dy]).filter(([, y]) => y <= H - 30);
+      }
+      cum = [0];
+      maxY = [pts[0][1]];
+      for (let i = 1; i < pts.length; i++) {
+        cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+        maxY.push(Math.max(maxY[i - 1], pts[i][1]));
+      }
+      total = cum[cum.length - 1] || 1;
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${section.clientHeight}`);
+      const d = Squiggle.toPath(pts);
+      paths.forEach((path) => { path.setAttribute('d', d); path.setAttribute('pathLength', '1'); });
+      section.style.setProperty('--trail-w', `${thin ? 10 : Math.max(14, Math.min(30, railW * 0.11))}px`);
     }
 
-    // cor: o projeto que cruza a linha de 55% da tela (antes do 1º: o 1º; depois do último: o último)
-    let active = trailProjects[0];
-    trailProjects.forEach((proj) => { if (proj.getBoundingClientRect().top < vh * 0.55) active = proj; });
-    if (active && active !== trailSection._active) {
-      trailSection._active = active;
-      trailSection.style.setProperty('--trail', getComputedStyle(active).getPropertyValue('--accent').trim());
+    function draw() {
+      if (!pts.length) return;
+      const r = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // até onde desenhar: a "ponta" acompanha uma linha a 78% da tela
+      let i = pts.length - 1;
+      if (motion) {
+        const targetY = vh * 0.78 - r.top;
+        let lo = 0, hi = pts.length - 1;
+        while (lo < hi) { // último ponto cuja altura máxima até ali não passa da linha
+          const mid = (lo + hi + 1) >> 1;
+          if (maxY[mid] <= targetY) lo = mid; else hi = mid - 1;
+        }
+        i = targetY <= 0 ? 0 : lo;
+      }
+      const p = cum[i] / total;
+      paths.forEach((path) => Squiggle.setDraw(path, p));
+      if (tip) {
+        tip.setAttribute('cx', pts[i][0].toFixed(1));
+        tip.setAttribute('cy', pts[i][1].toFixed(1));
+        tip.style.visibility = p > 0.002 && p < 0.998 ? '' : 'hidden';
+      }
+
+      // cor: o projeto que cruza a linha de 55% da tela (antes do 1º: o 1º; depois do último: o último)
+      if (!projects.length) return;
+      let active = projects[0];
+      projects.forEach((proj) => { if (proj.getBoundingClientRect().top < vh * 0.55) active = proj; });
+      if (active !== section._active) {
+        section._active = active;
+        section.style.setProperty('--trail', getComputedStyle(active).getPropertyValue('--accent').trim());
+      }
     }
+
+    return { section, build, draw };
   }
+
+  const trails = Array.from(document.querySelectorAll('[data-trail-section]')).map(makeTrail);
+  const buildTrails = () => trails.forEach((t) => t.build());
+  const drawTrails = () => trails.forEach((t) => t.draw());
 
   function drawBelt() {
     if (!belt) return;
@@ -332,7 +357,7 @@
       navState();
       if (motion) drawOnScroll();
       drawBelt();
-      drawTrail();
+      drawTrails();
       hscroll();
     });
   }
@@ -340,21 +365,21 @@
   if (!motion) drawn.forEach((path) => Squiggle.setDraw(path, 1));
   if (hs) setupHScroll();
   buildBelt();
-  buildTrail();
+  buildTrails();
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', () => {
     if (hs) setupHScroll();
     buildBelt();
-    buildTrail();
+    buildTrails();
     onScroll();
   });
   window.addEventListener('load', () => {
     if (hs) setupHScroll();
     // fontes e imagens já carregadas: alturas definitivas para a fita e os rabiscos
-    if (trailSection) Squiggle.build(trailSection);
+    trails.forEach((t) => Squiggle.build(t.section));
     buildBelt();
-    buildTrail();
+    buildTrails();
     onScroll();
   });
 
