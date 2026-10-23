@@ -85,7 +85,7 @@
   }
 
   function exit() {
-    label.textContent = 'Portfólio carregado';
+    label.textContent = window.I18N ? window.I18N.t('Portfólio carregado') : 'Portfólio carregado';
     loader.classList.add('is-done');
     root.classList.remove('is-loading');
     markReady();

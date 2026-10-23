@@ -23,6 +23,12 @@
     // Ativa os estilos que dependem de JS antes do primeiro paint (evita "pulo" no layout)
     // "is-loading" segura as animações do hero até o preloader sair (js/loader.js)
     document.documentElement.classList.add('js', 'is-loading');
+    // tema e idioma salvos antes do primeiro paint (sem "piscar").
+    // Primeira visita: sempre o tema claro; o escuro só com o botão.
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+      if (localStorage.getItem('lang') === 'en') document.documentElement.lang = 'en';
+    } catch (e) { document.documentElement.dataset.theme = 'light'; }
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('motion');
     }
@@ -53,6 +59,17 @@
       <span class="logo-mark" aria-hidden="true"></span>
       <span class="nav__brand-text" aria-hidden="true"><strong>Portfólio</strong> 2026</span>
     </a>
+    <!-- preferências: idioma e tema (js/prefs.js) -->
+    <div class="nav__prefs">
+      <div class="lang" role="group" aria-label="Idioma / Language">
+        <button type="button" class="lang__btn" data-lang="pt" aria-pressed="true" lang="pt-BR" title="Português">PT</button>
+        <button type="button" class="lang__btn" data-lang="en" aria-pressed="false" lang="en" title="English">EN</button>
+      </div>
+      <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Ativar modo escuro">
+        <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/></svg>
+        <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.6"/><path d="M12 1.8v2.6M12 19.6v2.6M4.8 4.8l1.8 1.8M17.4 17.4l1.8 1.8M1.8 12h2.6M19.6 12h2.6M4.8 19.2l1.8-1.8M17.4 6.6l1.8-1.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
     <nav class="nav__menu" id="menu" aria-label="Seções">
       <a href="#sobre">Sobre</a>
       <a href="#projetos">Projetos</a>
@@ -697,6 +714,7 @@
     <div class="viewer__content" data-viewer-content></div>
   </dialog>
 
+  <script src="js/prefs.js"></script>
   <script src="js/loader.js"></script>
   <script src="js/squiggle.js"></script>
   <script src="js/eye-zoom.js"></script>

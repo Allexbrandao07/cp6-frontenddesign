@@ -35,7 +35,7 @@
     --sq-w: clamp(40px, 5vw, 72px);
 
     .sq {
-      stroke: color.change($white, $alpha: 0.13);
+      stroke: color.change($snow, $alpha: 0.13);
       transform-box: fill-box;
       transform-origin: center;
       // depois de desenhados (pela rolagem), flutuam devagar
@@ -53,8 +53,8 @@
 
   &__title .display {
     display: block;
-    max-width: 8ch;
-    font-size: clamp(4.5rem, 12vw, 10.5rem);
+    max-width: 9ch; // "ENCONTRAR" inteiro na 2ª linha
+    font-size: clamp(3.4rem, 12vw, 10.5rem);
   }
 
   &__wave {
@@ -167,7 +167,7 @@
 
 .footer {
   padding-block: 2rem;
-  background: $ink;
+  background: $black; // preto nos dois temas
   color: $beige;
   font-size: 0.85rem;
 
@@ -179,7 +179,7 @@
     gap: 1rem;
   }
 
-  .logo-mark--footer { height: 36px; color: $white; }
+  .logo-mark--footer { height: 36px; color: $snow; }
   a { font-weight: 500; text-underline-offset: 4px; }
 }
 
@@ -190,11 +190,11 @@
   padding: 0;
   border: 2px solid $beige;
   border-radius: $radius;
-  background: $ink;
+  background: $black;
   color: $beige;
   overflow: visible;
 
-  &::backdrop { background: color.change($ink, $alpha: 0.85); }
+  &::backdrop { background: color.change($black, $alpha: 0.85); }
 
   &__content {
     img { width: 100%; max-height: 86svh; object-fit: contain; border-radius: calc(#{$radius} - 2px); }

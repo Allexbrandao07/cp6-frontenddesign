@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "sass:color";
 @use "tokens" as *;
 
@@ -11,14 +12,15 @@
 
 :root {
   --beige: #{$beige};
-  --white: #{$white};
-  --mist: #{$mist};
   --red: #{$red};
   --lilac: #{$lilac};
   --blue: #{$blue};
   --orange: #{$orange};
-  --ink: #{$ink};
-  --paper: #{$paper};
+  // neutros do tema claro (o escuro está logo abaixo)
+  --paper: #{map.get($light, paper)};
+  --ink: #{map.get($light, ink)};
+  --mist: #{map.get($light, mist)};
+  color-scheme: light;
   --nav-h: #{$nav-h};
   --gutter: #{$gutter};
 
@@ -39,6 +41,27 @@
   @media (max-height: 640px) { --u: 0.81px; }
   @media (max-height: 600px) { --u: 0.755px; }
   @media (max-height: 560px) { --u: 0.7px; }
+}
+
+// ---------- Tema escuro (botão na nav; js/theme.js grava a escolha) ----------
+html[data-theme="dark"] {
+  --paper: #{map.get($dark, paper)};
+  --ink: #{map.get($dark, ink)};
+  --mist: #{map.get($dark, mist)};
+  color-scheme: dark;
+
+  // "Ilhas claras": seções e peças de fundo colorido mantêm texto e contornos
+  // pretos e superfícies brancas, como no tema claro (legibilidade no colorido)
+  .about,
+  .journey,
+  .contact__panel,
+  .hobby,
+  .peek {
+    --paper: #{map.get($light, paper)};
+    --ink: #{map.get($light, ink)};
+    --mist: #{map.get($light, mist)};
+    color: var(--ink);
+  }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -209,10 +232,10 @@ ul[role="list"], ol { list-style: none; padding: 0; }
   font-weight: 500;
   line-height: 1.3;
 
-  &--blue   { --chip: #{color.mix($blue, $white, 45%)}; }
-  &--orange { --chip: #{color.mix($orange, $white, 55%)}; }
-  &--lilac  { --chip: #{color.mix($lilac, $white, 60%)}; }
-  &--red    { --chip: #{color.mix($red, $white, 40%)}; }
+  &--blue   { --chip: color-mix(in srgb, #{$blue} 45%, #{$white}); }
+  &--orange { --chip: color-mix(in srgb, #{$orange} 55%, #{$white}); }
+  &--lilac  { --chip: color-mix(in srgb, #{$lilac} 60%, #{$white}); }
+  &--red    { --chip: color-mix(in srgb, #{$red} 40%, #{$white}); }
 }
 
 .chips--sm .chip {

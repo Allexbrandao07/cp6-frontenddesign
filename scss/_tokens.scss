@@ -10,11 +10,26 @@ $red:    #F2380F; // destaque principal: CTAs, palavras em script, seção de co
 $lilac:  #DF98F2; // rabiscos, fundo da trajetória
 $blue:   #367FBE; // rabiscos, links e dados (gráfico)
 $orange: #F1913D; // rabiscos, números e detalhes
-$white:  #FFFFFF; // fundo de todas as páginas
-$ink:    #000000; // texto, botões e fundos escuros
-$mist:   #F8F4F4; // rabiscos "fantasma" do fundo e superfícies claras
+// Neutros que mudam com o tema (claro/escuro): são variáveis CSS, definidas
+// em _base.scss. "white" = superfície, "ink" = texto e contornos.
+$white:  var(--paper); // fundo de todas as páginas
+$ink:    var(--ink);   // texto, botões e contornos
+$mist:   var(--mist);  // rabiscos "fantasma" do fundo e superfícies claras
 
 $paper: $mist; // superfícies claras (cards, gráficos)
+
+// Neutros FIXOS (não mudam com o tema): pupila, rodapé, sombras sobre fotos
+$black: #000000;
+$snow:  #FFFFFF;
+
+// Valores de cada tema
+$light: (paper: #FFFFFF, ink: #000000, mist: #F8F4F4);
+$dark:  (paper: #121212, ink: #F2EEE9, mist: #1D1D1D);
+
+// transparência que funciona com variáveis CSS (o color.change do Sass não aceita var())
+@function fade($c, $a) {
+  @return color-mix(in srgb, #{$c} #{$a * 100%}, transparent);
+}
 
 // Tipografia
 $font-body:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;

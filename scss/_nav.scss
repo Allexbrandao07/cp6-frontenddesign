@@ -17,7 +17,7 @@ $u: var(--u);
   background: $white;
   transition: transform 0.5s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s;
 
-  &.is-solid { box-shadow: 0 1px 0 color.change($ink, $alpha: 0.08); }
+  &.is-solid { box-shadow: 0 1px 0 fade($ink, 0.12); }
   &.is-hidden { transform: translateY(-110%); }
 
   &__brand {
@@ -45,10 +45,20 @@ $u: var(--u);
     strong { font-weight: 700; }
   }
 
+  // ---------- idioma + tema (ao lado da marca) ----------
+  &__prefs {
+    position: relative;
+    z-index: 2; // fica acima do menu aberto no celular
+    display: flex;
+    align-items: center;
+    gap: calc(10 * #{$u});
+    margin: 0 auto 0 calc(26 * #{$u});
+  }
+
   &__menu {
     display: flex;
     align-items: center;
-    gap: calc(53 * #{$u});
+    gap: calc(44 * #{$u});
 
     a {
       position: relative;
@@ -108,6 +118,13 @@ $u: var(--u);
   }
 
   // ---------- celular / tablet / janelas estreitas (ou com zoom) ----------
+  @include down($bp-hero) {
+    &__prefs { gap: 8px; margin: 0 10px 0 auto; }
+  }
+  @media (max-width: 420px) {
+    &__brand-text { display: none; }
+  }
+
   // mesmo ponto de quebra do hero: abaixo dele a nav em 1u não cabe
   @include down($bp-hero) {
     height: $nav-h;
@@ -161,5 +178,74 @@ $u: var(--u);
       .nav__toggle-bar:nth-of-type(2) { transform: translateY(4px) rotate(45deg); }
       .nav__toggle-bar:nth-of-type(3) { transform: translateY(-4px) rotate(-45deg); }
     }
+  }
+}
+
+// ---------- Seletor de idioma (PT | EN) ----------
+.lang {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 2px solid $ink;
+  border-radius: 999px;
+  background: $white;
+
+  &__btn {
+    min-width: calc(38 * var(--u));
+    height: calc(30 * var(--u));
+    padding: 0 calc(8 * var(--u));
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: $ink;
+    font-size: calc(13 * var(--u));
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover { background: fade($ink, 0.1); }
+    &[aria-pressed="true"] { background: $ink; color: $white; }
+  }
+
+  @include down($bp-hero) {
+    &__btn { min-width: 38px; height: 34px; font-size: 13px; }
+  }
+}
+
+// ---------- Botão de tema (lua no claro, sol no escuro) ----------
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: calc(42 * var(--u));
+  height: calc(42 * var(--u));
+  padding: 0;
+  border: 2px solid $ink;
+  border-radius: 50%;
+  background: $white;
+  color: $ink;
+  cursor: pointer;
+  transition: transform 0.45s cubic-bezier(.3, 1.6, .5, 1), box-shadow 0.25s;
+
+  svg {
+    grid-area: 1 / 1;
+    width: 52%;
+    height: 52%;
+    fill: currentColor;
+    transition: transform 0.45s cubic-bezier(.3, 1.6, .5, 1), opacity 0.25s;
+  }
+
+  // no claro mostra a lua (ativar escuro); no escuro, o sol
+  &__sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  html[data-theme="dark"] & {
+    .theme-toggle__moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+    .theme-toggle__sun { opacity: 1; transform: none; }
+  }
+
+  &:hover { transform: rotate(-15deg); box-shadow: 3px 3px 0 $ink; }
+
+  @include down($bp-hero) {
+    width: 42px;
+    height: 42px;
   }
 }

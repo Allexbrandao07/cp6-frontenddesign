@@ -8,6 +8,8 @@
 
   const root = document.documentElement;
   const motion = root.classList.contains('motion');
+  // textos montados aqui passam pelo dicionário de js/prefs.js (PT → EN)
+  const tr = (pt) => (window.I18N ? window.I18N.t(pt) : pt);
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
   // ---------- Navegação ----------
@@ -17,7 +19,7 @@
   function setMenu(open) {
     nav.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.querySelector('.sr-only').textContent = open ? 'Fechar menu' : 'Abrir menu';
+    toggle.querySelector('.sr-only').textContent = tr(open ? 'Fechar menu' : 'Abrir menu');
     document.body.style.overflow = open ? 'hidden' : '';
   }
 
@@ -412,7 +414,7 @@
   function openVideo(id, title) {
     const frame = document.createElement('iframe');
     frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0`;
-    frame.title = title || 'Vídeo';
+    frame.title = title || tr('Vídeo');
     frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
     frame.allowFullscreen = true;
     openViewer(frame);
@@ -426,7 +428,7 @@
   document.querySelectorAll('[data-play]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const title = btn.closest('.project').querySelector('.project__title').textContent;
-      openVideo(btn.dataset.play, `Vídeo pitch — ${title}`);
+      openVideo(btn.dataset.play, `${tr('Vídeo pitch')} — ${title}`);
     });
   });
 
@@ -449,7 +451,7 @@
       btn.addEventListener('click', () => {
         if (btn.dataset.video) {
           const title = gallery.closest('.project').querySelector('.project__title').textContent;
-          openVideo(btn.dataset.video, `Vídeo pitch — ${title}`);
+          openVideo(btn.dataset.video, `${tr('Vídeo pitch')} — ${title}`);
           return;
         }
         activate(btn);
@@ -475,14 +477,15 @@
     [27, 0.7757], [29, 0.7710], [31, 0.7804], [33, 0.7757], [35, 0.7757], [37, 0.7757],
     [39, 0.7664], [41, 0.7710], [43, 0.7710], [45, 0.7757], [47, 0.7757], [49, 0.7757]
   ];
-  const pct = (v) => `${(v * 100).toFixed(1).replace('.', ',')}%`;
+  const pct = (v) => `${window.I18N ? window.I18N.num(v * 100, 1) : (v * 100).toFixed(1).replace('.', ',')}%`;
 
   const plot = document.querySelector('[data-knn-plot]');
   const table = document.querySelector('[data-knn-table] tbody');
 
-  if (table) {
-    table.innerHTML = KNN.map(([k, a]) => `<tr><td>${k}</td><td>${pct(a)}</td></tr>`).join('');
+  function fillKnnTable() {
+    if (table) table.innerHTML = KNN.map(([k, a]) => `<tr><td>${k}</td><td>${pct(a)}</td></tr>`).join('');
   }
+  fillKnnTable();
 
   function drawKnn() {
     if (!plot || !plot.clientWidth) return;
@@ -506,16 +509,16 @@
     const narrow = W < 420;
 
     plot.innerHTML = `
-      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Linha da acurácia do KNN para k de 3 a 49; pico de 79,0% em k = 23 e 77,6% em k = 27.">
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${tr('Linha da acurácia do KNN para k de 3 a 49; pico de 79,0% em k = 23 e 77,6% em k = 27.')}">
         <g class="grid">${grid}</g>
         <g class="axis">${yLabels}${xTicks}</g>
-        <text class="axis-title" x="${W - m.r}" y="${H - 4}" text-anchor="end">k (vizinhos)</text>
+        <text class="axis-title" x="${W - m.r}" y="${H - 4}" text-anchor="end">${tr('k (vizinhos)')}</text>
         <path class="area" d="${area}"/>
         <path class="line" d="${line}"/>
         <line class="crosshair" y1="${m.t}" y2="${H - m.b}"/>
         <circle class="mark" cx="${x(best[0])}" cy="${y(best[1])}" r="5"/>
         <circle class="mark" cx="${x(chosen[0])}" cy="${y(chosen[1])}" r="5"/>
-        <text class="mark-label" x="${x(best[0])}" y="${y(best[1]) - 12}" text-anchor="middle">pico: ${pct(best[1])} (k=23)</text>
+        <text class="mark-label" x="${x(best[0])}" y="${y(best[1]) - 12}" text-anchor="middle">${tr('pico')}: ${pct(best[1])} (k=23)</text>
         <text class="mark-label" x="${x(chosen[0]) + (narrow ? 0 : 10)}" y="${y(chosen[1]) + 22}" text-anchor="${narrow ? 'middle' : 'start'}">k=27 (≈√n): ${pct(chosen[1])}</text>
         <circle class="hover-dot" r="5"/>
       </svg>
@@ -544,6 +547,25 @@
     svg.addEventListener('pointerdown', (e) => showAt(e.clientX));
     svg.addEventListener('pointerleave', () => plot.classList.remove('is-hover'));
   }
+
+  // troca de idioma: refaz o que é montado por JS
+  window.addEventListener('langchange', () => {
+    fillKnnTable();
+    if (plot) drawKnn();
+    const open = nav.classList.contains('is-open');
+    toggle.querySelector('.sr-only').textContent = tr(open ? 'Fechar menu' : 'Abrir menu');
+    // a imagem principal de cada galeria acompanha a legenda da miniatura ativa
+    document.querySelectorAll('[data-gallery]').forEach((g) => {
+      const active = g.querySelector('.gallery__thumbs button.is-active[data-alt]');
+      const img = g.querySelector('[data-gallery-main] img');
+      if (active && img) img.alt = active.dataset.alt;
+    });
+    // textos mudam de tamanho: recalcula fitas, adesivos e rolagem horizontal
+    if (hs) setupHScroll();
+    buildBelt();
+    buildTrails();
+    onScroll();
+  });
 
   if (plot) {
     drawKnn();

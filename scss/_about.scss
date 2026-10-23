@@ -417,7 +417,7 @@
       padding: 0.2rem 0.65rem;
       border: 1.5px solid $ink;
       border-radius: 999px;
-      background: color.mix($white, $orange, 70%);
+      background: color-mix(in srgb, #{$white} 70%, #{$orange});
       font-size: 0.78rem;
       font-weight: 500;
     }

@@ -25,6 +25,7 @@ npm run build:css    # build final, minificado
 | `index.html` | Todas as seções |
 | `scss/` | `_tokens` (paleta, fontes, breakpoints) e um parcial por seção |
 | `js/squiggle.js` | Gera os rabiscos (trocoide com laços) e controla o "desenho" deles |
+| `js/prefs.js` | Tema claro/escuro e idioma PT-BR/EN (dicionário EN, escolha salva no navegador) |
 | `js/loader.js` | Preloader: logo + quatro blocos da paleta como barra de progresso real |
 | `js/eye-zoom.js` | Animação de rolagem do hero: zoom até a pupila (íris em círculos da paleta), túnel de anéis e portal para o Sobre |
 | `js/main.js` | Menu, revelação no scroll, fita das ferramentas, fitas de Projetos e Trajetória, galerias, visualizador, gráfico do KNN, rolagem horizontal |
@@ -67,6 +68,7 @@ npm run build:css    # build final, minificado
 | Branco | `#FFFFFF` | Fundo de todas as páginas (desde a rodada 1) | Deixa as cinco cores e a tipografia preta no máximo contraste, como no protótipo do hero |
 | Preto | `#000000` | Texto, botões, fundos escuros (túnel, rodapé) | O protótipo usa preto puro. Com fundo branco, o quase-preto quente da versão anterior perdeu o sentido |
 | Névoa | `#F8F4F4` | Rabiscos "fantasma" do fundo e superfícies claras (gráfico, miniaturas) | Dá textura ao fundo branco sem competir com as fitas coloridas |
+| Modo escuro | `#121212` fundo · `#F2EEE9` texto · `#1D1D1D` névoa | Substituem branco, preto e névoa quando o tema escuro está ativo (rodada 28) | As cinco cores da paleta não mudam. Os blocos coloridos (Sobre laranja, Trajetória lilás, painel do contato e painéis das fotos) mantêm texto preto nos dois temas, porque texto claro no laranja ou no lilás perderia contraste |
 | Bege | `#F2D6BE` | Apoio: texto sobre fundos escuros e detalhes (era o fundo até a rodada 1) | Continua sendo a cor quente da paleta original |
 | Vermelho-alaranjado | `#F2380F` | Destaque: palavras em script, hover dos botões, fundo do Contato | A cor de maior energia vai para o que eu quero que a pessoa faça (falar comigo) |
 | Lilás | `#DF98F2` | Rabiscos e fundo inteiro da Trajetória (com a prévia no fim de Projetos) | Suaviza a paleta e marca a seção mais "pessoal" |
@@ -358,6 +360,24 @@ Tenho conhecimento em Cloud Computing e boas práticas de projeto, incluindo ver
 Busco continuar me desenvolvendo e contribuir com soluções orientadas por dados, explorando desafios que unam tecnologia, inovação e impacto real.
 ```
 
+**Ajuste 23: Modo escuro, versão em inglês e responsividade**
+
+```text
+Agora só faltam três pontos agora pra fecharmos de vez:
+
+- Preciso que tenha a opção de trocar pra dark mode o alyout do site (deixe um botão simples pra isso em algum lugar inteitivo e que fique bom, tipo no menu)
+
+- Preciso que tenha versões PR-BR e EN do site com um lugar bom tambem pra ter esse item
+
+- Preciso de responsividade 100% adequada
+```
+
+**Ajuste 24: Tema claro como padrão**
+
+```text
+Ficou top, mas ta automatico, quando abre pela primeira vez, o tema claro, né?
+```
+
 _(Adicionar os próximos prompts aqui, na ordem e exatamente como foram enviados.)_
 
 ---
@@ -574,7 +594,35 @@ Uma ficha por prompt de correção, com os campos do PDF:
 | Resultado | Resolveu totalmente. Os dois parágrafos antigos foram substituídos pelos quatro do texto novo, sem alterar nenhuma palavra; só o trecho "Engenheiro de IA Júnior na NTT DATA Europe & Latam" ficou em negrito, como os destaques da versão anterior. Conferido no layout: o texto ocupa a mesma altura da fita de ferramentas ao lado |
 | Aprendizado | _(sugestão, revisar)_ A bio é o texto mais pessoal do portfólio e a IA só tinha o README do GitHub como fonte. Escrever esse texto eu mesmo e mandar no prompt inicial teria evitado uma versão genérica |
 
-| Campo | Rodada 28 |
+| Campo | Rodada 28: Modo escuro |
+| --- | --- |
+| Problema | O site só tinha o tema claro. Além disso, as cores eram variáveis do Sass, "congeladas" no CSS compilado, então não dava para trocar o tema sem recarregar outro arquivo de estilo |
+| Prompt de correção | Pedi a opção de modo escuro, com um botão simples num lugar intuitivo, como o menu. Texto completo: Ajuste 23, em 3.3 |
+| Resultado | Resolveu totalmente. Branco, preto e névoa passaram a ser variáveis CSS (`--paper`, `--ink`, `--mist`), que mudam com `html[data-theme="dark"]`; as transparências que dependiam do Sass viraram `color-mix()`. O botão fica na nav, ao lado da marca: um círculo com a lua no tema claro e o sol no escuro, que trocam com um giro. A escolha fica salva no navegador; na primeira visita o site abre sempre no claro (até a rodada 31 seguia o tema do sistema). O tema é aplicado no `<head>`, antes de a página aparecer, para não "piscar" branco. Decisões: os blocos coloridos (Sobre laranja, Trajetória lilás, painel do contato e painéis das fotos) mantêm texto preto nos dois temas, por contraste; a pupila do zoom, o rodapé e o visualizador de mídia continuam pretos. Testado seção por seção |
+| Aprendizado | _(sugestão, revisar)_ Se o modo escuro estivesse no prompt inicial, as cores teriam nascido como variáveis CSS e essa rodada seria só "escolher as cores do escuro". Requisitos globais (tema, idioma) custam menos no começo do projeto |
+
+| Campo | Rodada 29: Versão em inglês |
+| --- | --- |
+| Problema | O site existia só em português, o que limita o alcance para vagas e contatos internacionais, como na própria NTT DATA, que é global |
+| Prompt de correção | Pedi versões PT-BR e EN, com um lugar bom para o seletor. Texto completo: Ajuste 23, em 3.3 |
+| Resultado | Resolveu totalmente. Um seletor "PT \| EN" em formato de pílula fica na nav, ao lado do botão de tema. O HTML continua em português; `js/prefs.js` tem um dicionário EN com ~150 entradas (textos, `alt` das imagens, `aria-label`, título da aba e meta descrição) e guarda o original na primeira troca, então voltar para PT é exato. Textos montados por JavaScript (gráfico do KNN, tabela, menu, vídeos, preloader) também são traduzidos, e os números trocam a vírgula pelo ponto em inglês ("77.6%"). Ao trocar de idioma, o gráfico é redesenhado e as fitas e a rolagem horizontal são recalculadas, porque os textos mudam de tamanho. A escolha fica salva e é aplicada no `<head>`. Nomes próprios (Revi, Data Hive, TAMA, tecnologias, nomes da equipe) não foram traduzidos. Obs.: a tradução é minha (da IA) e vale uma revisão, principalmente o cargo da Oaktech ("Data Integration & AI Intern") e o tipo do curso da FIAP ("Associate degree in Technology") |
+| Aprendizado | _(sugestão, revisar)_ Para um site bilíngue, os textos em inglês deveriam ser escritos ou revisados por mim, como fiz com a bio. A IA traduz bem, mas cargos e títulos acadêmicos têm equivalências que só eu sei qual uso no meu currículo em inglês |
+
+| Campo | Rodada 30: Responsividade |
+| --- | --- |
+| Problema | A responsividade tinha sido testada em poucos tamanhos (1366×768, 390×844 e alguns desktops). Faltava garantir celulares pequenos, tablets em pé e deitados, celular deitado e monitores grandes, e incluir a nav nova com idioma e tema |
+| Prompt de correção | Pedi responsividade 100% adequada. Texto completo: Ajuste 23, em 3.3 |
+| Resultado | Resolveu, com uma ressalva. A IA criou uma varredura automática em 14 tamanhos (de 320×640 a 2560×1440, incluindo tablets em pé e deitados) que rola a página inteira e procura elementos vazando da tela, palavras estourando a caixa e itens da nav sobrepostos, em PT/claro e em EN/escuro. Correções: (1) "ENCONTRAR" estourava a caixa do título do contato em todas as larguras; (2) nos tablets em pé o hero empilhado ficava pequeno (nome com teto de 520px, foto de 260px) e agora cresce com a tela; (3) no **celular deitado** (667×375, 740×360, 844×390) o hero empilhado tinha o nome minúsculo e os botões fora da tela; agora usa o layout de duas colunas, compactado para telas baixas, e os botões cabem em todos; (4) a nav reorganiza idioma, tema e menu sem sobrepor nada, e em telas menores que 420px esconde o "PORTFÓLIO 2026" para caber. Resultado final: zero vazamentos nos 14 tamanhos, nos dois idiomas e temas. **Ressalva:** em monitores muito grandes (2560px) o hero fica pequeno no centro. É a contrapartida da rodada 3: para o zoom do navegador funcionar, o hero tem tamanho fixo em px, e fazer ele crescer com a largura da tela voltaria a anular o zoom |
+| Aprendizado | _(sugestão, revisar)_ "Responsividade 100%" só é verificável com uma lista de tamanhos. Definir no início as telas-alvo (ex.: 320, 390, 768, 1024, 1366, 1920 e celular deitado) teria permitido testar cada seção nesses tamanhos desde a primeira versão |
+
+| Campo | Rodada 31: Tema claro na primeira visita |
+| --- | --- |
+| Problema | Na primeira visita o site seguia o tema do sistema operacional: quem usa o sistema em modo escuro já abria o portfólio no escuro. Eu esperava que ele sempre abrisse no claro, que é a versão principal da identidade |
+| Prompt de correção | Perguntei se a primeira abertura era no tema claro. Texto completo: Ajuste 24, em 3.3 |
+| Resultado | Resolveu totalmente. A IA confirmou que não era (seguia o sistema) e mudou: sem escolha salva, o site abre sempre no claro; o escuro só entra quando a pessoa clica no botão, e aí fica salvo para as próximas visitas |
+| Aprendizado | _(sugestão, revisar)_ "Ter modo escuro" e "qual tema abre por padrão" são decisões diferentes. Vale dizer as duas no pedido |
+
+| Campo | Rodada 32 |
 | --- | --- |
 | Problema | |
 | Prompt de correção | |

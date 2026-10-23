@@ -257,7 +257,7 @@
       aspect-ratio: 16 / 10;
       padding: 0;
       overflow: hidden;
-      border: 2px solid color.change($ink, $alpha: 0.25);
+      border: 2px solid fade($ink, 0.25);
       border-radius: 10px;
       background: $paper;
       cursor: pointer;
@@ -277,7 +277,7 @@
     inset: 0;
     display: grid;
     place-items: center;
-    background: color.change($ink, $alpha: 0.45);
+    background: fade($black, 0.45);
     color: $beige;
     font-size: 1rem;
   }
@@ -308,9 +308,9 @@
 
     svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
-    .grid line { stroke: color.change($ink, $alpha: 0.12); stroke-width: 1; }
-    .axis text { fill: color.change($ink, $alpha: 0.7); font: 500 11px $font-body; }
-    .axis-title { fill: color.change($ink, $alpha: 0.7); font: 500 11px $font-body; }
+    .grid line { stroke: fade($ink, 0.12); stroke-width: 1; }
+    .axis text { fill: fade($ink, 0.7); font: 500 11px $font-body; }
+    .axis-title { fill: fade($ink, 0.7); font: 500 11px $font-body; }
     .line { fill: none; stroke: $blue; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
     .area { fill: color.change($blue, $alpha: 0.1); }
     .mark { fill: $red; stroke: $paper; stroke-width: 2; }

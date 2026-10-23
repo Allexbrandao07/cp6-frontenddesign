@@ -178,7 +178,7 @@
     .display {
       font-size: clamp(2.6rem, 5vw, 4.5rem);
       color: $beige;
-      text-shadow: 0 2px 24px color.change($ink, $alpha: 0.6);
+      text-shadow: 0 2px 24px color.change($black, $alpha: 0.6);
     }
     .script {
       margin-top: -0.2em;
